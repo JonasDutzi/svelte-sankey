@@ -1,0 +1,19 @@
+<script lang="ts">
+    import { onDestroy, onMount } from "svelte";
+    import type { SankeyLink } from "../types";
+    import { logError } from "../helper";
+    import { linksStore } from "../stores";
+
+    export let data: SankeyLink;
+
+    onMount(() => {
+        if (!data.source || !data.target) {
+            logError(`Sankey Link must have a source and a target - source: "${data.source}" target: "${data.target}"`);
+        }
+        linksStore.add(data);
+    });
+
+    onDestroy(() => {
+        linksStore.remove(data);
+    });
+</script>
