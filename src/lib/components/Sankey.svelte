@@ -1,3 +1,5 @@
+<svelte:options customElement="svsankey-chart" />
+
 <script lang="ts">
     import { pathsStore, wrapperStore, settingsStore } from "../stores/index";
     import SankeyLine from "./SankeyLine.svelte";

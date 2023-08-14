@@ -1,3 +1,5 @@
+<svelte:options customElement="svsankey-line" />
+
 <script lang="ts">
     import type { Path } from "../stores/paths";
     import { Axis } from "../types";

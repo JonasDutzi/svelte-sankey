@@ -1,23 +1,25 @@
+<svelte:options customElement="svsankey-label" />
+
 <script lang="ts">
-	export let label: string;
+    export let label: string;
 </script>
 
 <div class="sv-sankey__label">
-	<p>{label}</p>
+    <p>{label}</p>
 </div>
 
 <style>
-	p {
-		margin: 0;
-		padding: 0;
-	}
-	.sv-sankey__label {
-		margin-inline: 0.5rem;
-		position: relative;
-	}
-	.sv-sankey__label::before {
-		content: "";
-		position: absolute;
-		inset: 0;
-	}
+    p {
+        margin: 0;
+        padding: 0;
+    }
+    .sv-sankey__label {
+        margin-inline: 0.5rem;
+        position: relative;
+    }
+    .sv-sankey__label::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+    }
 </style>

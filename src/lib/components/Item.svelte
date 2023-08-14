@@ -1,3 +1,5 @@
+<svelte:options customElement="svsankey-item" />
+
 <script lang="ts">
     import { onMount } from "svelte";
     import Anchor from "./Anchor.svelte";

@@ -1,2 +1,2 @@
-export * from '$lib/components/index.ts';
-export * from '$types';
+export * from "./components/index";
+export * from "./types/index";

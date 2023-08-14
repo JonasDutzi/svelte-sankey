@@ -1,3 +1,5 @@
+<svelte:options customElement="svsankey-link" />
+
 <script lang="ts">
     import { onDestroy, onMount } from "svelte";
     import type { SankeyLink } from "../types";

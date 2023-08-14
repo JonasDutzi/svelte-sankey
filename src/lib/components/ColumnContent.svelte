@@ -1,3 +1,5 @@
+<svelte:options customElement="svsankey-column-content" />
+
 <script lang="ts">
     import { onDestroy, onMount } from "svelte";
     import type { SankeyColumn } from "../types";

@@ -1,3 +1,5 @@
+<svelte:options customElement="svsankey-anchor" />
+
 <script lang="ts">
     import { onDestroy } from "svelte";
     import type { SankeyKey } from "../types";

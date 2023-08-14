@@ -1,10 +1,10 @@
-<svelte:options tag="svelte-sankey-columns" />
+<svelte:options customElement="svsankey-columns" />
 
 <script lang="ts">
-	export let data: any;
+    export let data: any;
 </script>
 
 {#each data as column}
-	<slot {column} name="column-header" />
-	<slot {column} name="column-content" />
+    <slot {column} name="column-header" />
+    <slot {column} name="column-content" />
 {/each}
