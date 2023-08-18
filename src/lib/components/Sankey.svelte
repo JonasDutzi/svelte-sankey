@@ -1,4 +1,4 @@
-<svelte:options customElement="svsankey-chart" />
+<svelte:options customElement="sv-sankey" />
 
 <script lang="ts">
     import { pathsStore, wrapperStore, settingsStore } from "../stores/index";

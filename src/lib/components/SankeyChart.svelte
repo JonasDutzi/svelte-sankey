@@ -1,21 +1,24 @@
+<svelte:options customElement="svsankey-chart" />
+
 <script lang="ts">
-    import Sankey from "./lib/components/Sankey.svelte";
-    import { sankeyData } from "./lib/testdata/data.bigger";
-    import { ColumnHeader, ColumnContent, Item, Link } from "./lib/components";
+    import { ColumnContent, ColumnHeader, Item, Link, Sankey } from ".";
+    export let showheaders;
+    export let maxboxheight;
+    export let chartdata;
 </script>
 
 <main>
     <div>Svelte Sankey</div>
     <div>
-        <Sankey showHeaders maxBoxHeight={50}>
-            {#each sankeyData.data as data}
+        <Sankey showHeaders={showheaders} maxBoxHeight={maxboxheight}>
+            {#each chartdata.data as data}
                 <ColumnHeader>
                     <div style="font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: bold; margin-block: 1rem">
                         {data.columnLabel === "root" ? data?.rows?.[0].items?.[0]?.label : data.columnLabel}
                     </div>
                 </ColumnHeader>
             {/each}
-            {#each sankeyData.data as data}
+            {#each chartdata.data as data}
                 <ColumnContent {data}>
                     {#each data.rows as row}
                         <div class="row-label">{row.rowLabel}</div>
@@ -25,7 +28,7 @@
                     {/each}
                 </ColumnContent>
             {/each}
-            {#each sankeyData.links as data}
+            {#each chartdata.links as data}
                 <Link {data} />
             {/each}
         </Sankey>
