@@ -1,5 +1,5 @@
 import { SvelteComponentTyped } from "svelte";
-import type { SankeyLink } from "../types";
+import type { SankeyLink } from "../../types";
 declare const __propDef: {
     props: {
         data: SankeyLink;

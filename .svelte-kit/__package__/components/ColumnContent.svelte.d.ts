@@ -1,5 +1,5 @@
 import { SvelteComponentTyped } from "svelte";
-import type { SankeyColumn } from "../types";
+import type { SankeyColumn } from "../../types";
 declare const __propDef: {
     props: {
         data: SankeyColumn;

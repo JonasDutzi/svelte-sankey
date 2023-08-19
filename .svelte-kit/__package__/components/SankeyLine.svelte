@@ -1,7 +1,7 @@
 <svelte:options customElement="svsankey-line" />
 
-<script>import { Axis } from "../types";
-import { linksStore } from "../stores/index";
+<script>import { Axis } from "../../types";
+import { linksStore } from "../../stores/index";
 export let key;
 export let data;
 export let minPathWidth = 1;

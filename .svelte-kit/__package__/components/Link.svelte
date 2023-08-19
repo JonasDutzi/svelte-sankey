@@ -1,8 +1,8 @@
 <svelte:options customElement="svsankey-link" />
 
 <script>import { onDestroy, onMount } from "svelte";
-import { logError } from "../helper";
-import { linksStore } from "../stores";
+import { logError } from "../../helper";
+import { linksStore } from "../../stores";
 export let data;
 onMount(() => {
   if (!data.source || !data.target) {

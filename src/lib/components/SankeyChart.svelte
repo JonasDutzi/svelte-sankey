@@ -1,7 +1,7 @@
 <svelte:options customElement="svsankey-chart" />
 
 <script lang="ts">
-    import { ColumnContent, ColumnHeader, Item, Link, Sankey } from ".";
+    import { ColumnContent, ColumnHeader, Item, Link, Sankey } from "./index";
     export let showheaders;
     export let maxboxheight;
     export let chartdata;

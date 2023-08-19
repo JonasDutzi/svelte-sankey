@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { anchorsStore, dataStore, itemsStore, linksStore, pathsStore, settingsStore, wrapperStore } from "../stores/index";
+    import { anchorsStore, dataStore, itemsStore, linksStore, pathsStore, settingsStore, wrapperStore } from "../../stores/index";
 </script>
 
 <div class="inspector">

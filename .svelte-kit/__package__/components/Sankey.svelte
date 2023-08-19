@@ -1,6 +1,6 @@
 <svelte:options customElement="sv-sankey" />
 
-<script>import { pathsStore, wrapperStore, settingsStore } from "../stores/index";
+<script>import { pathsStore, wrapperStore, settingsStore } from "../../stores";
 import SankeyLine from "./SankeyLine.svelte";
 export let showHeaders = false;
 export let maxBoxHeight = 30;

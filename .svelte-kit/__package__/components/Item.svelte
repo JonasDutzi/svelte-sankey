@@ -3,7 +3,7 @@
 <script>import { onMount } from "svelte";
 import Anchor from "./Anchor.svelte";
 import Label from "./Label.svelte";
-import { logError } from "../helper";
+import { logError } from "../../helper";
 export let item;
 onMount(() => {
   if (!item.id) {

@@ -1,4 +1,4 @@
-<script>import { anchorsStore, dataStore, itemsStore, linksStore, pathsStore, settingsStore, wrapperStore } from "../stores/index";
+<script>import { anchorsStore, dataStore, itemsStore, linksStore, pathsStore, settingsStore, wrapperStore } from "../../stores/index";
 </script>
 
 <div class="inspector">

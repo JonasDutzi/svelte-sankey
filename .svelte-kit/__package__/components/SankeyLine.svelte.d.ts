@@ -1,5 +1,5 @@
 import { SvelteComponentTyped } from "svelte";
-import type { Path } from "../stores/paths";
+import type { Path } from "../../stores/paths";
 declare const __propDef: {
     props: {
         key: string;

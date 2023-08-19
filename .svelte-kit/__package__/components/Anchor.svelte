@@ -1,7 +1,7 @@
 <svelte:options customElement="svsankey-anchor" />
 
 <script>import { onDestroy } from "svelte";
-import { anchorsStore, itemsStore, wrapperStore } from "../stores";
+import { anchorsStore, itemsStore, wrapperStore } from "../../stores";
 let anchorRef;
 export let id;
 let anchorHeight = 1;
