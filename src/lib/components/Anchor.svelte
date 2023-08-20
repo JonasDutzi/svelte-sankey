@@ -2,7 +2,7 @@
 
 <script lang="ts">
     import { onDestroy } from "svelte";
-    import type { SankeyKey } from "../../types";
+    import type { SankeyKey } from "../types";
     import { anchorsStore, itemsStore, wrapperStore } from "../../stores";
 
     let anchorRef: HTMLDivElement;

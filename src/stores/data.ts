@@ -1,5 +1,5 @@
 import { writable } from "svelte/store";
-import type { SankeyColumn, SankeyKey } from "../types";
+import type { SankeyColumn, SankeyKey } from "../lib/types";
 import { logError } from "../helper";
 
 type DataStore = Map<SankeyKey, SankeyColumn>;

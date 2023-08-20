@@ -6,7 +6,7 @@ export default defineConfig({
     build: {
         outDir: "./dist/webc/",
         lib: {
-            entry: ["./src/webc.index.ts"],
+            entry: ["./src/lib/webc.index.ts"],
             formats: ["es"],
             name: "svelte-sankey",
             fileName: (format) =>

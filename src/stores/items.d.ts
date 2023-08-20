@@ -1,5 +1,5 @@
 /// <reference types="svelte" />
-import type { SankeyKey } from "../types";
+import type { SankeyKey } from "../lib/types";
 export type SankeyItem = {
     id: SankeyKey;
     label: string;

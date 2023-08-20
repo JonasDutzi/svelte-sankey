@@ -2,7 +2,7 @@
 
 <script lang="ts">
     import { onDestroy, onMount } from "svelte";
-    import type { SankeyLink } from "../../types";
+    import type { SankeyLink } from "../types";
     import { logError } from "../../helper";
     import { linksStore } from "../../stores";
 

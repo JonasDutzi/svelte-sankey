@@ -2,7 +2,7 @@
 
 <script lang="ts">
     import type { Path } from "../../stores/paths";
-    import { Axis } from "../../types";
+    import { Axis } from "../types";
     import { linksStore } from "../../stores/index";
 
     export let key: string;

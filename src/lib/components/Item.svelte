@@ -4,7 +4,7 @@
     import { onMount } from "svelte";
     import Anchor from "./Anchor.svelte";
     import Label from "./Label.svelte";
-    import type { SankeyItem } from "../../types";
+    import type { SankeyItem } from "../types";
     import { logError } from "../../helper";
 
     export let item: SankeyItem;
