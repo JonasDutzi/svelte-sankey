@@ -1,7 +1,9 @@
 {
     "name": "svelte-sankey",
-    "version": "0.0.2",
+    "description": "A svelte & web component library to create sankey diagrams",
+    "version": "0.0.4",
     "type": "module",
+    "license": "MIT",
     "scripts": {
         "dev": "vite",
         "build": "npm run package && vite build",
