@@ -1,9 +1,9 @@
 <svelte:options customElement="svsankey-line" />
 
 <script lang="ts">
-    import type { Path } from "../../stores/paths";
+    import type { Path } from "../stores/paths";
     import { Axis } from "../types";
-    import { linksStore } from "../../stores/index";
+    import { linksStore } from "../stores";
 
     export let key: string;
     export let data: Path;

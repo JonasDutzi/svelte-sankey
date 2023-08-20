@@ -8,11 +8,7 @@ export default defineConfig({
         lib: {
             entry: ["./src/webc.index.ts"],
             formats: ["es"],
-            name: "svelte-sankey",
-            fileName: (format) =>
-                ({
-                    es: `svelte-sankey-webc.js`
-                }[format])
+            name: "svelte-sankey"
         },
         rollupOptions: {
             output: {

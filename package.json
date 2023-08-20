@@ -21,7 +21,7 @@
             "types": "./dist/index.d.ts",
             "svelte": "./dist/index.js"
         },
-        "./*": "./dist/*"
+        "./svelte-sankey-webc": "./dist/webc/svelte-sankey-webc.js"
     },
     "devDependencies": {
         "@sveltejs/package": "^2.2.1",

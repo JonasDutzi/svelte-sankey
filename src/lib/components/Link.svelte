@@ -3,8 +3,8 @@
 <script lang="ts">
     import { onDestroy, onMount } from "svelte";
     import type { SankeyLink } from "../types";
-    import { logError } from "../../helper";
-    import { linksStore } from "../../stores";
+    import { logError } from "../helper";
+    import { linksStore } from "../stores";
 
     export let data: SankeyLink;
 
