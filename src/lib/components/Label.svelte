@@ -16,6 +16,7 @@
     .sv-sankey__label {
         margin-inline: 0.5rem;
         position: relative;
+        background-color: green;
     }
     .sv-sankey__label::before {
         content: "";

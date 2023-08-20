@@ -20,7 +20,8 @@
         ".": {
             "types": "./dist/index.d.ts",
             "svelte": "./dist/index.js"
-        }
+        },
+        "./*": "./dist/*"
     },
     "devDependencies": {
         "@sveltejs/package": "^2.2.1",
