@@ -1,9 +1,9 @@
-import { anchorsStore } from "./anchors.ts";
-import { dataStore } from "./data.ts";
-import { linksStore } from "./links.ts";
-import { pathsStore } from "./paths.ts";
-import { wrapperStore } from "./wrapper.ts";
-import { itemsStore } from "./items.ts";
-import { settingsStore } from "./settings.ts";
+import { anchorsStore } from "./anchors";
+import { dataStore } from "./data";
+import { linksStore } from "./links";
+import { pathsStore } from "./paths";
+import { wrapperStore } from "./wrapper";
+import { itemsStore } from "./items";
+import { settingsStore } from "./settings";
 
 export { anchorsStore, dataStore, linksStore, wrapperStore, pathsStore, itemsStore, settingsStore };
