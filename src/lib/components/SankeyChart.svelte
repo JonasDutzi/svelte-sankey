@@ -7,33 +7,28 @@
     export let chartdata;
 </script>
 
-<main>
-    <div>Svelte Sankey</div>
-    <div>
-        <Sankey showHeaders={showheaders} maxBoxHeight={maxboxheight}>
-            {#each chartdata.data as data}
-                <ColumnHeader>
-                    <div style="font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: bold; margin-block: 1rem">
-                        {data.columnLabel === "root" ? data?.rows?.[0].items?.[0]?.label : data.columnLabel}
-                    </div>
-                </ColumnHeader>
+<Sankey showHeaders={showheaders} maxBoxHeight={maxboxheight}>
+    {#each chartdata.data as data}
+        <ColumnHeader>
+            <div style="font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: bold; margin-block: 1rem">
+                {data.columnLabel === "root" ? data?.rows?.[0].items?.[0]?.label : data.columnLabel}
+            </div>
+        </ColumnHeader>
+    {/each}
+    {#each chartdata.data as data}
+        <ColumnContent {data}>
+            {#each data.rows as row}
+                <div class="row-label">{row.rowLabel}</div>
+                {#each row.items as item}
+                    <Item {item} />
+                {/each}
             {/each}
-            {#each chartdata.data as data}
-                <ColumnContent {data}>
-                    {#each data.rows as row}
-                        <div class="row-label">{row.rowLabel}</div>
-                        {#each row.items as item}
-                            <Item {item} />
-                        {/each}
-                    {/each}
-                </ColumnContent>
-            {/each}
-            {#each chartdata.links as data}
-                <Link {data} />
-            {/each}
-        </Sankey>
-    </div>
-</main>
+        </ColumnContent>
+    {/each}
+    {#each chartdata.links as data}
+        <Link {data} />
+    {/each}
+</Sankey>
 
 <style>
     * {

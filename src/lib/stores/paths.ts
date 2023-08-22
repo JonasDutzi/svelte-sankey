@@ -1,6 +1,6 @@
 import { derived } from "svelte/store";
 import { anchorsStore, linksStore } from "./index";
-import type { SankeyKey } from "../lib/types";
+import type { SankeyKey } from "../types";
 
 export type Path = {
     sourcePosition: Position;

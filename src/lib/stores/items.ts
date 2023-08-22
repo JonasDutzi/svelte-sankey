@@ -1,5 +1,5 @@
 import { derived } from "svelte/store";
-import type { SankeyKey } from "../lib/types";
+import type { SankeyKey } from "../types";
 import { dataStore, linksStore } from "./index";
 import { logError } from "../helper";
 
