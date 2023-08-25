@@ -1,7 +1,10 @@
 <svelte:options customElement="sv-sankey" />
 
 <script lang="ts">
-    import { pathsStore, wrapperStore, settingsStore } from "../stores";
+    import { settingsStore } from "../stores/settings";
+    import { wrapperStore } from "../stores/wrapper";
+    import { pathsStore } from "../stores/paths";
+
     import SankeyLine from "./SankeyLine.svelte";
 
     export let showHeaders: boolean = false;

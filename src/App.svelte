@@ -1,14 +1,12 @@
 <script lang="ts">
-    //import { Sankey, SankeyChart } from "./lib/components/index.ts";
     import { sankeyData } from "./testdata/data.bigger.ts";
-    import { sankeyData as sankeyData2 } from "./testdata/data.ts";
-    //import { ColumnHeader, ColumnContent, Item, Link } from "./lib/components";
-    import "../dist/webc/SankeyChart.js";
+    //import { sankeyData as sankeyData2 } from "./testdata/data.ts";
+    import { ColumnContent, ColumnHeader, Item, Link, Sankey } from "./lib/index";
 </script>
 
 <main>
     <!-- <div class="mt">Svelte Sankey 1</div> -->
-    <!-- <Sankey showHeaders maxBoxHeight={50}>
+    <Sankey showHeaders maxBoxHeight={50}>
         {#each sankeyData.data as data}
             <ColumnHeader>
                 <div style="font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: bold; margin-block: 1rem">
@@ -29,11 +27,11 @@
         {#each sankeyData.links as data}
             <Link {data} />
         {/each}
-    </Sankey> -->
+    </Sankey>
     <!-- <div class="mt">Svelte Sankey 2</div>
     <SankeyChart showheaders={true} maxboxheight={40} chartdata={sankeyData2} /> -->
-    <div class="mt">Svelte Sankey 3</div>
-    <svsankey-chart showheaders={true} maxboxheight={40} chartdata={sankeyData} />
+    <!-- <div class="mt">Svelte Sankey 3</div>
+    <svsankey-chart showheaders={true} maxboxheight={40} chartdata={sankeyData} /> -->
 
     <!-- <SankeyChart showheaders={true} maxboxheight={40} chartdata={sankeyData2} /> -->
 </main>

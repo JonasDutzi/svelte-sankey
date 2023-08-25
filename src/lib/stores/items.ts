@@ -1,7 +1,8 @@
 import { derived } from "svelte/store";
 import type { SankeyKey } from "../types";
-import { dataStore, linksStore } from "./index";
 import { logError } from "../helper";
+import { dataStore } from "./data";
+import { linksStore } from "./links";
 
 export type SankeyItem = {
     id: SankeyKey;

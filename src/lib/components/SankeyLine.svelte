@@ -3,7 +3,7 @@
 <script lang="ts">
     import type { Path } from "../stores/paths";
     import { Axis } from "../types";
-    import { linksStore } from "../stores";
+    import { linksStore } from "../stores/links";
 
     export let key: string;
     export let data: Path;

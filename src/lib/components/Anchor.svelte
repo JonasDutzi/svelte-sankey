@@ -4,7 +4,8 @@
     import { onDestroy } from "svelte";
     import type { SankeyKey } from "../types";
     import { itemsStore } from "../stores/items";
-    import { anchorsStore, wrapperStore } from "../stores";
+    import { wrapperStore } from "../stores/wrapper";
+    import { anchorsStore } from "../stores/anchors";
 
     let anchorRef: HTMLDivElement;
     export let id: SankeyKey;

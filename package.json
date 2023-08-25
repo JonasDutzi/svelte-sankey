@@ -1,7 +1,7 @@
 {
     "name": "svelte-sankey",
     "description": "A svelte & web component library to create sankey diagrams",
-    "version": "0.0.10",
+    "version": "0.0.12",
     "repository": {
         "type": "git",
         "url": "https://github.com/JonasDutzi/svelte-sankey.git"
@@ -34,7 +34,7 @@
         "vite": "^4.4.5"
     },
     "peerDependencies": {
-        "svelte": "^3.54.0"
+        "svelte": "*"
     },
     "files": [
         "dist"
