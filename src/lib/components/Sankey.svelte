@@ -1,11 +1,12 @@
 <svelte:options customElement="sv-sankey" />
 
 <script lang="ts">
-    import { settingsStore } from "../stores/settings";
+    import { sankeyStore } from "../stores/sankey";
     import { wrapperStore } from "../stores/wrapper";
     import { pathsStore } from "../stores/paths";
 
     import SankeyLine from "./SankeyLine.svelte";
+    import { linksStore } from "../stores/links";
 
     export let showHeaders: boolean = false;
     export let maxBoxHeight: number = 30;
@@ -15,8 +16,8 @@
 
     $: {
         if (maxBoxHeight) {
-            $settingsStore.maxBoxHeight = maxBoxHeight;
-            $settingsStore.minPathWidth = minPathWidth;
+            $sankeyStore.maxBoxHeight = maxBoxHeight;
+            $sankeyStore.minPathWidth = minPathWidth;
         }
     }
 

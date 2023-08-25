@@ -4,7 +4,7 @@
     import { itemsStore } from "../stores/items";
     import { linksStore } from "../stores/links";
     import { pathsStore } from "../stores/paths";
-    import { settingsStore } from "../stores/settings";
+    import { sankeyStore } from "../stores/sankey";
     import { wrapperStore } from "../stores/wrapper";
 </script>
 
@@ -47,7 +47,7 @@
     </div>
     <div>
         <b>Settings:</b>
-        <div>{JSON.stringify($settingsStore)}</div>
+        <div>{JSON.stringify($sankeyStore)}</div>
     </div>
 </div>
 
