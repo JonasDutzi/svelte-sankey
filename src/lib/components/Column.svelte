@@ -9,7 +9,6 @@
 
 <style>
     .sv-sankey__column-wrapper {
-        outline: 2px solid green;
         padding: 10px;
     }
 </style>

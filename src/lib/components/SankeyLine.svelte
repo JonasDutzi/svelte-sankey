@@ -4,10 +4,11 @@
     import type { Path } from "../stores/paths";
     import { Axis } from "../types";
     import { linksStore } from "../stores/links";
+    import { scaleValue } from "../helper";
+    import { sankeyStore } from "../stores/sankey";
 
     export let key: string;
     export let data: Path;
-    export let minPathWidth: number = 1;
 
     $: pathWidth = calculatePathWidth(key);
     $: x1 = getPosition(data.sourcePosition.x, pathWidth ?? 0, Axis.x);
@@ -17,10 +18,13 @@
 
     const calculatePathWidth = (pathKey: string) => {
         const linkData = $linksStore.get(pathKey);
-        if (linkData?.value! > minPathWidth) {
-            return linkData?.value;
+        let pathValue;
+        if (linkData?.value! > $sankeyStore.minPathHeight) {
+            pathValue = linkData?.value;
+        } else {
+            pathValue = $sankeyStore.minPathHeight;
         }
-        return minPathWidth;
+        return scaleValue(pathValue, [$sankeyStore.minPathHeight, $sankeyStore.maxPathHeight], $sankeyStore.minValue, $sankeyStore.maxValue);
     };
 
     const getPosition = (value: number | undefined, pathWidth: number, axis: Axis): number => {

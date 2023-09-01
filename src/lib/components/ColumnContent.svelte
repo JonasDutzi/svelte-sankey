@@ -22,6 +22,5 @@
 
 <style>
     :global(.sv-sankey__column-content) {
-        outline: black 1px solid;
     }
 </style>

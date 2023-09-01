@@ -10,8 +10,12 @@ export type SankeyItem = {
     columnKey: SankeyKey;
     sources?: Array<SankeyEdge>;
     targets?: Array<SankeyEdge>;
-    sourcesTotalValue: number;
-    targetsTotalValue: number;
+    totalValues: TotalValues;
+};
+
+export type TotalValues = {
+    sources: number;
+    targets: number;
 };
 
 export type SankeyEdge = {
@@ -47,8 +51,10 @@ const createItemsStore = () => {
                                 columnKey,
                                 sources,
                                 targets,
-                                sourcesTotalValue: getEdgeTotalValue(sources),
-                                targetsTotalValue: getEdgeTotalValue(targets)
+                                totalValues: {
+                                    sources: getEdgeTotalValue(sources),
+                                    targets: getEdgeTotalValue(targets)
+                                }
                             });
                         }
                     }

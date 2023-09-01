@@ -12,7 +12,7 @@ const createLinksStore = () => {
                 currentLinks.set(`${newLink.source}/${newLink.target}`, {
                     source: newLink.source,
                     target: newLink.target,
-                    value: newLink.value <= 0 ? 1 : newLink.value
+                    value: newLink.value <= 0 ? 0 : newLink.value
                 })
             ),
         remove: (link: SankeyLink) =>

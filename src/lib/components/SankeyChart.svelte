@@ -2,12 +2,12 @@
 
 <script lang="ts">
     import { ColumnContent, ColumnHeader, Item, Link, Sankey } from "./index";
-    export let showheaders;
-    export let maxboxheight;
+    export let showheaders = true;
+    export let maxpathheight = 50;
     export let chartdata;
 </script>
 
-<Sankey showHeaders={showheaders} maxBoxHeight={maxboxheight}>
+<Sankey {showheaders} {maxpathheight}>
     {#each chartdata.data as data}
         <ColumnHeader>
             <div style="font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: bold; margin-block: 1rem">

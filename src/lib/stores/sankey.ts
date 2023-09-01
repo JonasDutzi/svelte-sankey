@@ -1,13 +1,17 @@
 import { writable } from "svelte/store";
 
 export type SankeyStore = {
-    maxBoxHeight: number;
-    minPathWidth: number;
+    minPathHeight?: number;
+    maxPathHeight?: number;
+    minValue?: number;
+    maxValue?: number;
     isLoading: boolean;
 };
 
 export const sankeyStore = writable<SankeyStore>({
-    maxBoxHeight: 30,
-    minPathWidth: 1,
+    minPathHeight: 1,
+    maxPathHeight: null,
+    minValue: null,
+    maxValue: null,
     isLoading: true
 });

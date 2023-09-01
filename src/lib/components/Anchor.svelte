@@ -6,6 +6,8 @@
     import { itemsStore } from "../stores/items";
     import { wrapperStore } from "../stores/wrapper";
     import { anchorsStore } from "../stores/anchors";
+    import { scaleValue } from "../helper";
+    import { sankeyStore } from "../stores/sankey";
 
     let anchorRef: HTMLDivElement;
     export let id: SankeyKey;
@@ -15,7 +17,8 @@
     $: {
         let item = $itemsStore.get(id);
         if (item) {
-            anchorHeight = Math.max(item.sourcesTotalValue, item.targetsTotalValue);
+            const value = Math.max(item.totalValues.sources, item.totalValues.targets);
+            anchorHeight = scaleValue(value, [$sankeyStore.minPathHeight, $sankeyStore.maxPathHeight], $sankeyStore.minValue, $sankeyStore.maxValue);
         }
     }
 
