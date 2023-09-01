@@ -46,7 +46,7 @@
     };
 </script>
 
-<path d={bezierCurve} style:--path-width={pathWidth} />
+<path data-sankey-source="path-{key.split('/')[0]}" data-sankey-target="path-{key.split('/')[1]}" d={bezierCurve} style:--path-width={pathWidth} />
 
 <style>
     path {

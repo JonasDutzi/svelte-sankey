@@ -4,13 +4,17 @@
     import { ColumnContent, ColumnHeader, Item, Link, Sankey } from "./lib/index";
     import SankeyInspector from "./lib/components/SankeyInspector.svelte";
     import SankeyChart from "./lib/components/SankeyChart.svelte";
+
+    const onItemClicked = (e) => {
+        console.log("clicked item: ", e.detail.item);
+    };
 </script>
 
 <main>
     <h1 style="margin-block: 4rem;">Svelte Sankey</h1>
     <!-- <SankeyChart chartdata={sankeyData} showheaders={true} maxpathheight={40} /> -->
-    <SankeyChart showheaders={true} maxpathheight={40} chartdata={sankeyData2} />
-    <!-- <SankeyInspector /> -->
+    <SankeyChart showheaders={true} maxpathheight={40} chartdata={sankeyData2} on:itemclick={onItemClicked} />
+    <SankeyInspector />
 </main>
 
 <style>

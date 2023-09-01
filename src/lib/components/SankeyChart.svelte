@@ -20,7 +20,7 @@
             {#each data.rows as row}
                 <div class="row-label">{row.rowLabel}</div>
                 {#each row.items as item}
-                    <Item {item} />
+                    <Item {item} on:itemclick />
                 {/each}
             {/each}
         </ColumnContent>
