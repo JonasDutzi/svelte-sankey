@@ -8,13 +8,15 @@
 </script>
 
 <Sankey {showheaders} {maxpathheight}>
-    {#each chartdata.data as data}
-        <ColumnHeader>
-            <div style="font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: bold; margin-block: 1rem">
-                {data.columnLabel === "root" ? data?.rows?.[0].items?.[0]?.label : data.columnLabel}
-            </div>
-        </ColumnHeader>
-    {/each}
+    {#if showheaders}
+        {#each chartdata.data as data}
+            <ColumnHeader>
+                <div style="font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: bold; margin-block: 1rem">
+                    {data.columnLabel === "root" ? data?.rows?.[0].items?.[0]?.label : data.columnLabel}
+                </div>
+            </ColumnHeader>
+        {/each}
+    {/if}
     {#each chartdata.data as data}
         <ColumnContent {data}>
             {#each data.rows as row}

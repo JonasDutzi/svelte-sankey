@@ -1,4 +1,4 @@
-import type { SankeyData } from "$types";
+import type { SankeyData } from "../lib/index";
 
 export const sankeyData: SankeyData = {
     data: [

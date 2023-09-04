@@ -8,13 +8,29 @@
     const onItemClicked = (e) => {
         console.log("clicked item: ", e.detail.item);
     };
+
+    let size = 30;
+    let showHeaders = true;
 </script>
 
 <main>
-    <h1 style="margin-block: 4rem;">Svelte Sankey</h1>
+    <h1 style="margin-block: 2rem;">Svelte Sankey</h1>
+    <h2 style="margin-bottom: 1rem;">Settings/Props:</h2>
+    <div style="display: flex; align-items: center; gap: 1rem">
+        <div>
+            <div>Size (maxpathheight):</div>
+            <input type="range" min="1" max="100" bind:value={size} />
+        </div>
+        <div>
+            <div>Headers (showheaders):</div>
+            <input type="checkbox" bind:checked={showHeaders} />
+        </div>
+        <div style="margin-bottom: 2rem;" />
+    </div>
+    <div>__________________________________________________</div>
     <!-- <SankeyChart chartdata={sankeyData} showheaders={true} maxpathheight={40} /> -->
-    <SankeyChart showheaders={true} maxpathheight={40} chartdata={sankeyData2} on:itemclick={onItemClicked} />
-    <SankeyInspector />
+    <SankeyChart showheaders={showHeaders} maxpathheight={size} chartdata={sankeyData} on:itemclick={onItemClicked} />
+    <!-- <SankeyInspector /> -->
 </main>
 
 <style>
