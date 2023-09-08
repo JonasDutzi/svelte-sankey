@@ -2,7 +2,7 @@
     import { sankeyData } from "./testdata/data.bigger.ts";
     import { sankeyData as sankeyData2 } from "./testdata/data.ts";
     import { ColumnContent, ColumnHeader, Item, Link, Sankey } from "./lib/index";
-    import SankeyInspector from "./lib/components/SankeyInspector.svelte";
+    import SankeyInspector from "./inspector/Inspector.svelte";
     import SankeyChart from "./lib/components/SankeyChart.svelte";
 
     const onItemClicked = (e) => {
@@ -30,7 +30,7 @@
     <div>__________________________________________________</div>
     <!-- <SankeyChart chartdata={sankeyData} showheaders={true} maxpathheight={40} /> -->
     <SankeyChart showheaders={showHeaders} maxpathheight={size} chartdata={sankeyData} on:itemclick={onItemClicked} />
-    <!-- <SankeyInspector /> -->
+    <SankeyInspector />
 </main>
 
 <style>
