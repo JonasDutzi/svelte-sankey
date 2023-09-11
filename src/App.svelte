@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { sankeyData } from "./testdata/data.bigger.ts";
+    import { sankeyData } from "./testdata/data_new.ts";
     import { sankeyData as sankeyData2 } from "./testdata/data.ts";
     import SankeyInspector from "./inspector/Inspector.svelte";
     import SankeyChart from "./lib/components/SankeyChart.svelte";
@@ -8,8 +8,17 @@
         console.log(e.detail.item);
     };
 
+    const onAnchorMouseEnter = (e) => {
+        console.log(e.detail.item);
+    };
+
+    const onAnchorMouseLeave = (e) => {
+        console.log(e.detail.item);
+    };
+
     let size = 30;
     let showHeaders = true;
+    let highlightPaths = true;
 </script>
 
 <main>
@@ -24,12 +33,24 @@
             <div>Headers (showheaders):</div>
             <input type="checkbox" bind:checked={showHeaders} />
         </div>
+        <div>
+            <div>Highlight Paths (highlightpaths):</div>
+            <input type="checkbox" bind:checked={highlightPaths} />
+        </div>
         <div style="margin-bottom: 2rem;" />
     </div>
     <div style="margin-bottom: 3rem;">__________________________________________________</div>
     <!-- <SankeyChart chartdata={sankeyData} showheaders={true} maxpathheight={40} /> -->
     <!-- <SankeyChart showheaders={showHeaders} maxpathheight={size} chartdata={sankeyData} on:itemclick={onItemClicked} /> -->
-    <SankeyChart showheaders={showHeaders} maxpathheight={size} chartdata={sankeyData2} on:itemclick={onItemClicked} />
+    <SankeyChart
+        highlightpaths={highlightPaths}
+        showheaders={showHeaders}
+        maxpathheight={size}
+        chartdata={sankeyData}
+        on:itemclick={onItemClicked}
+        on:anchormouseenter={onAnchorMouseEnter}
+        on:anchormouseleave={onAnchorMouseLeave}
+    />
     <div style="margin-top: 3rem;">__________________________________________________</div>
     <SankeyInspector />
 </main>

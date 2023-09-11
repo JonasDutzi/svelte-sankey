@@ -1,61 +1,56 @@
 <svelte:options customElement="svsankey-item" />
 
 <script lang="ts">
-    import { createEventDispatcher, onMount } from "svelte";
+    import { onDestroy, onMount } from "svelte";
     import Anchor from "./Anchor.svelte";
-    import Label from "./Label.svelte";
     import type { SankeyItem } from "../types";
     import { logError } from "../helper";
     import { itemsStore } from "../stores/items";
+    import AnchorContent from "./AnchorContent.svelte";
+    import { linksStore } from "../stores/links";
+    import { sankeyStore } from "../stores/sankey";
 
     export let item: SankeyItem;
-
-    const dispatch = createEventDispatcher();
+    let data;
 
     $: itemData = $itemsStore.get(item.id);
     $: dataValue = Math.max(itemData?.totalValues?.sources, itemData?.totalValues?.targets);
+    $: data = { ...itemData, value: dataValue };
 
     onMount(() => {
         if (!item.id) {
             logError("Every Sankey Item must have a key");
         }
+
+        if (item.links) {
+            for (const link of item.links) {
+                if (!link.target) {
+                    logError(`Sankey Link must have a target. Item "${item.id}" does have an empty target.`);
+                }
+                linksStore.add({ source: item.id, target: link.target, value: link.value });
+                if (link.value && link.value > $sankeyStore.maxValue) {
+                    $sankeyStore.maxValue = link.value;
+                }
+
+                if (link.value && $sankeyStore.minValue) {
+                    if ($sankeyStore.minValue > link.value) {
+                        $sankeyStore.minValue = link.value;
+                    }
+                } else {
+                    $sankeyStore.minValue = link.value;
+                }
+            }
+        }
     });
 
-    const onButtonClicked = () => {
-        dispatch("itemclick", { item: { ...itemData, value: dataValue } });
-    };
-
-    const highlightPath = () => {
-        let paths = [
-            ...document.querySelectorAll(`[data-sankey-source=path-${item.id}]`),
-            ...document.querySelectorAll(`[data-sankey-target=path-${item.id}]`)
-        ];
-        paths.forEach((path: HTMLElement) => {
-            window.requestAnimationFrame(() => {
-                //TODO: replace this with dynamic stroke variable
-                path.style.stroke = "rgba(44, 61, 171, 0.6)";
-            });
-        });
-    };
-
-    const removePathHighlight = () => {
-        let paths = [
-            ...document.querySelectorAll(`[data-sankey-source=path-${item.id}]`),
-            ...document.querySelectorAll(`[data-sankey-target=path-${item.id}]`)
-        ];
-        paths.forEach((path: HTMLElement) => {
-            window.requestAnimationFrame(() => {
-                path.style.stroke = "";
-            });
-        });
-    };
+    onDestroy(() => {
+        for (const link of item.links) {
+            linksStore.remove({ source: item.id, target: link.target, value: link.value });
+        }
+    });
 </script>
 
 <div class="sv-sankey__item">
-    <Anchor id={item.id} />
-    <!-- <Label label={item.label} /> -->
-    <button class="btn" on:click={onButtonClicked} on:mouseenter={highlightPath} on:mouseleave={removePathHighlight}>{item.label}: {dataValue}</button>
-
     <slot />
 </div>
 
@@ -66,17 +61,5 @@
         justify-content: start;
         flex-direction: row;
         margin-block: 1em;
-    }
-    .btn {
-        cursor: pointer;
-        background-color: white;
-        border: 1px solid rgba(128, 128, 128, 0.2);
-        border-radius: 5px;
-        z-index: 1;
-        margin-inline: 0.75rem;
-    }
-
-    .btn:hover {
-        background-color: rgb(239, 239, 239);
     }
 </style>

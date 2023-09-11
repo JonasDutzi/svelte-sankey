@@ -1,13 +1,19 @@
-import type { SankeyLink } from "../types";
+import type { SankeyKey } from "../types";
 import { writable } from "svelte/store";
 
-export type LinksStore = Map<string, SankeyLink>;
+export type Link = {
+    source: SankeyKey;
+    target: SankeyKey;
+    value: number;
+};
+
+export type LinksStore = Map<string, Link>;
 
 const createLinksStore = () => {
     const { subscribe, update } = writable<LinksStore>(new Map());
     return {
         subscribe,
-        add: (newLink: SankeyLink) =>
+        add: (newLink: Link) =>
             update((currentLinks) =>
                 currentLinks.set(`${newLink.source}/${newLink.target}`, {
                     source: newLink.source,
@@ -15,7 +21,7 @@ const createLinksStore = () => {
                     value: newLink.value <= 0 ? 0 : newLink.value
                 })
             ),
-        remove: (link: SankeyLink) =>
+        remove: (link: Link) =>
             update((currentLinks) => {
                 currentLinks.delete(`${link.source}/${link.target}`);
                 return currentLinks;

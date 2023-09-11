@@ -6,6 +6,7 @@ export type SankeyStore = {
     minValue?: number;
     maxValue?: number;
     isLoading: boolean;
+    highlightPaths?: boolean;
 };
 
 export const sankeyStore = writable<SankeyStore>({
@@ -13,5 +14,6 @@ export const sankeyStore = writable<SankeyStore>({
     maxPathHeight: null,
     minValue: null,
     maxValue: null,
-    isLoading: true
+    isLoading: true,
+    highlightPaths: true
 });

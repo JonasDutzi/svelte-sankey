@@ -9,7 +9,7 @@
     import StoreInspector from "./StoreInspector.svelte";
 
     $: stores = [
-        // { store: $linksStore, name: "Links", iterable: true },
+        { store: $linksStore, name: "Links", iterable: true },
         { store: $dataStore, name: "Data", iterable: true },
         { store: $itemsStore, name: "Items", iterable: true },
         { store: $anchorsStore, name: "Anchors", iterable: true },
