@@ -9,6 +9,8 @@ import { sankeyStore } from "./sankey";
 export type Path = {
     sourcePosition: Position;
     targetPosition: Position;
+    strokeColor?: string;
+    strokeColorHover?: string;
 };
 
 export type Position = {
@@ -42,7 +44,9 @@ const createPathsStore = () => {
                         targetPosition: {
                             x: targetAnchor?.positionX,
                             y: targetAnchor?.positionY + (targetPositionMap.get(linkData.target) ?? 0)
-                        }
+                        },
+                        strokeColor: linkData.strokeColor,
+                        strokeColorHover: linkData.strokeColorHover
                     });
                     if (targetPositionMap.has(linkData.target)) {
                         targetPositionMap.set(linkData.target, scaledLinkValue + targetPositionMap.get(linkData.target));

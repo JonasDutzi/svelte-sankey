@@ -1,4 +1,4 @@
-<svelte:options customElement="svsankey-line" />
+<svelte:options customElement="svsankey-path" />
 
 <script lang="ts">
     import type { Path } from "../stores/paths";
@@ -28,17 +28,6 @@
     $: x2 = getPosition(data.targetPosition.x, pathWidth ?? 0, Axis.x);
     $: y2 = getPosition(data.targetPosition.y, pathWidth ?? 0, Axis.y);
 
-    const calculatePathWidth = (pathKey: string) => {
-        const linkData = $linksStore.get(pathKey);
-        let pathValue;
-        if (linkData?.value! > $sankeyStore.minPathHeight) {
-            pathValue = linkData?.value;
-        } else {
-            pathValue = $sankeyStore.minPathHeight;
-        }
-        return scaleValue(pathValue, [$sankeyStore.minPathHeight, $sankeyStore.maxPathHeight], $sankeyStore.minValue, $sankeyStore.maxValue);
-    };
-
     const getPosition = (value: number | undefined, pathWidth: number, axis: Axis): number => {
         if (axis === Axis.x && value) {
             return value;
@@ -58,16 +47,24 @@
     };
 </script>
 
-<path data-sankey-source="path-{key.split('/')[0]}" data-sankey-target="path-{key.split('/')[1]}" d={bezierCurve} style:--path-width={pathWidth} />
+<path
+    class="sv-sankey__path"
+    data-sankey-source="path-{key.split('/')[0]}"
+    data-sankey-target="path-{key.split('/')[1]}"
+    d={bezierCurve}
+    style:--path-width={pathWidth}
+    style:--stroke-color={data.strokeColor}
+    style:--stroke-color-hover={data.strokeColorHover}
+/>
 
 <style>
-    path {
+    :global(.sv-sankey__path) {
         z-index: -1;
-        stroke: rgba(44, 61, 171, 0.3);
+        stroke: var(--stroke-color, rgba(44, 61, 171, 0.3));
         stroke-width: var(--path-width);
         fill: none;
     }
-    path:hover {
-        stroke: rgba(44, 61, 171, 0.6);
+    :global(.sv-sankey__path:hover) {
+        stroke: var(--stroke-color-hover, rgba(44, 61, 171, 0.6));
     }
 </style>

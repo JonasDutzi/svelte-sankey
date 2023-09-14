@@ -2,11 +2,13 @@
 
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
-    import type { ItemData } from "../types";
+    import type { SankeyItem } from "../types";
     import { sankeyStore } from "../stores/sankey";
 
-    export let itemdata: ItemData;
+    export let item: SankeyItem;
     export let highlightpaths = true;
+    export let pathhighlightcolor = "rgba(44, 61, 171, 0.6)";
+
     let isPathHighlightingOn;
 
     $: {
@@ -20,40 +22,40 @@
     const dispatch = createEventDispatcher();
 
     const onContentClicked = () => {
-        dispatch("itemclick", { item: itemdata });
+        dispatch("itemclick", { item });
     };
 
     const onContentMouseEnter = () => {
         if (isPathHighlightingOn) {
             highlightSankeyPaths();
         }
-        dispatch("anchormouseenter", { item: itemdata });
+        dispatch("anchormouseenter", { item });
     };
 
     const onContentMouseLeave = () => {
         if (isPathHighlightingOn) {
             removeSankeyPathsHighlight();
         }
-        dispatch("anchormouseleave", { item: itemdata });
+        dispatch("anchormouseleave", { item });
     };
 
     const highlightSankeyPaths = () => {
         let paths = [
-            ...document.querySelectorAll(`[data-sankey-source=path-${itemdata.id}]`),
-            ...document.querySelectorAll(`[data-sankey-target=path-${itemdata.id}]`)
+            ...document.querySelectorAll(`[data-sankey-source=path-${item.id}]`),
+            ...document.querySelectorAll(`[data-sankey-target=path-${item.id}]`)
         ];
         paths.forEach((path: HTMLElement) => {
             window.requestAnimationFrame(() => {
                 //TODO: replace this with dynamic stroke variable
-                path.style.stroke = "rgba(44, 61, 171, 0.6)";
+                path.style.stroke = pathhighlightcolor;
             });
         });
     };
 
     const removeSankeyPathsHighlight = () => {
         let paths = [
-            ...document.querySelectorAll(`[data-sankey-source=path-${itemdata.id}]`),
-            ...document.querySelectorAll(`[data-sankey-target=path-${itemdata.id}]`)
+            ...document.querySelectorAll(`[data-sankey-source=path-${item.id}]`),
+            ...document.querySelectorAll(`[data-sankey-target=path-${item.id}]`)
         ];
         paths.forEach((path: HTMLElement) => {
             window.requestAnimationFrame(() => {
@@ -78,14 +80,12 @@
 <style>
     :global(.sv-sankey__anchorcontent) {
         cursor: pointer;
-        background-color: white;
-        border: 1px solid rgba(128, 128, 128, 0.2);
+        background-color: rgba(239, 239, 239);
+        border: 1px solid rgba(239, 239, 239, 0.2);
         border-radius: 5px;
         z-index: 1;
         margin-inline: 0.75rem;
-    }
-
-    :global(.sv-sankey__anchorcontent) {
-        background-color: rgb(239, 239, 239);
+        padding-inline: 0.5rem;
+        padding-block: 0.25rem;
     }
 </style>

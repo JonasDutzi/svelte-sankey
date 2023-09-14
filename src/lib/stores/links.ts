@@ -5,6 +5,8 @@ export type Link = {
     source: SankeyKey;
     target: SankeyKey;
     value: number;
+    strokeColor?: string;
+    strokeColorHover?: string;
 };
 
 export type LinksStore = Map<string, Link>;
@@ -18,7 +20,9 @@ const createLinksStore = () => {
                 currentLinks.set(`${newLink.source}/${newLink.target}`, {
                     source: newLink.source,
                     target: newLink.target,
-                    value: newLink.value <= 0 ? 0 : newLink.value
+                    value: newLink.value <= 0 ? 0 : newLink.value,
+                    strokeColor: newLink.strokeColor,
+                    strokeColorHover: newLink.strokeColorHover
                 })
             ),
         remove: (link: Link) =>
