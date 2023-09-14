@@ -1,16 +1,39 @@
 <script lang="ts">
-    import { sankeyData } from "./testdata/data.bigger.ts";
+    import { sankeyData } from "./testdata/data_new.ts";
     import { sankeyData as sankeyData2 } from "./testdata/data.ts";
-    import { ColumnContent, ColumnHeader, Item, Link, Sankey } from "./lib/index";
-    import SankeyInspector from "./lib/components/SankeyInspector.svelte";
+    import SankeyInspector from "./inspector/Inspector.svelte";
     import SankeyChart from "./lib/components/SankeyChart.svelte";
+
+    const onItemClicked = (e) => {
+        console.log(e.detail.item);
+    };
+
+    const onAnchorMouseEnter = (e) => {
+        console.log(e.detail.item);
+    };
+
+    const onAnchorMouseLeave = (e) => {
+        console.log(e.detail.item);
+    };
+
+    let highlightPaths;
+    let showHeaders;
+    let size;
 </script>
 
 <main>
-    <h1 style="margin-block: 4rem;">Svelte Sankey</h1>
     <!-- <SankeyChart chartdata={sankeyData} showheaders={true} maxpathheight={40} /> -->
-    <SankeyChart showheaders={true} maxpathheight={40} chartdata={sankeyData2} />
-    <!-- <SankeyInspector /> -->
+    <!-- <SankeyChart showheaders={showHeaders} maxpathheight={size} chartdata={sankeyData} on:itemclick={onItemClicked} /> -->
+    <SankeyChart
+        highlightpaths={highlightPaths}
+        showheaders={showHeaders}
+        maxpathheight={size}
+        chartdata={sankeyData}
+        on:itemclick={onItemClicked}
+        on:anchormouseenter={onAnchorMouseEnter}
+        on:anchormouseleave={onAnchorMouseLeave}
+    />
+    <SankeyInspector bind:highlightPaths bind:showHeaders bind:size />
 </main>
 
 <style>

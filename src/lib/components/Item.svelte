@@ -1,24 +1,56 @@
 <svelte:options customElement="svsankey-item" />
 
 <script lang="ts">
-    import { onMount } from "svelte";
+    import { onDestroy, onMount } from "svelte";
     import Anchor from "./Anchor.svelte";
-    import Label from "./Label.svelte";
     import type { SankeyItem } from "../types";
     import { logError } from "../helper";
+    import { itemsStore } from "../stores/items";
+    import AnchorContent from "./AnchorContent.svelte";
+    import { linksStore } from "../stores/links";
+    import { sankeyStore } from "../stores/sankey";
 
     export let item: SankeyItem;
+    let data;
+
+    $: itemData = $itemsStore.get(item.id);
+    $: dataValue = Math.max(itemData?.totalValues?.sources, itemData?.totalValues?.targets);
+    $: data = { ...itemData, value: dataValue };
 
     onMount(() => {
         if (!item.id) {
             logError("Every Sankey Item must have a key");
         }
+
+        if (item.links) {
+            for (const link of item.links) {
+                if (!link.target) {
+                    logError(`Sankey Link must have a target. Item "${item.id}" does have an empty target.`);
+                }
+                linksStore.add({ source: item.id, target: link.target, value: link.value });
+                if (link.value && link.value > $sankeyStore.maxValue) {
+                    $sankeyStore.maxValue = link.value;
+                }
+
+                if (link.value && $sankeyStore.minValue) {
+                    if ($sankeyStore.minValue > link.value) {
+                        $sankeyStore.minValue = link.value;
+                    }
+                } else {
+                    $sankeyStore.minValue = link.value;
+                }
+            }
+        }
+    });
+
+    onDestroy(() => {
+        for (const link of item.links) {
+            linksStore.remove({ source: item.id, target: link.target, value: link.value });
+        }
     });
 </script>
 
 <div class="sv-sankey__item">
-    <Anchor id={item.id} />
-    <Label label={item.label} />
     <slot />
 </div>
 

@@ -7,6 +7,5 @@ import ColumnHeader from "./ColumnHeader.svelte";
 import Group from "./Group.svelte";
 import Item from "./Item.svelte";
 import Label from "./Label.svelte";
-import Link from "./Link.svelte";
 
-export { Sankey, SankeyChart, Anchor, Column, ColumnContent, ColumnHeader, Group, Item, Label, Link };
+export { Sankey, SankeyChart, Anchor, Column, ColumnContent, ColumnHeader, Group, Item, Label };

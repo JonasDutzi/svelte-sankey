@@ -10,7 +10,19 @@
     export let key: string;
     export let data: Path;
 
-    $: pathWidth = calculatePathWidth(key);
+    let pathWidth;
+
+    $: {
+        const linkData = $linksStore.get(key);
+        let pathValue;
+        if (linkData?.value! > $sankeyStore.minPathHeight) {
+            pathValue = linkData?.value;
+        } else {
+            pathValue = $sankeyStore.minPathHeight;
+        }
+        pathWidth = scaleValue(pathValue, [$sankeyStore.minPathHeight, $sankeyStore.maxPathHeight], $sankeyStore.minValue, $sankeyStore.maxValue);
+    }
+
     $: x1 = getPosition(data.sourcePosition.x, pathWidth ?? 0, Axis.x);
     $: y1 = getPosition(data.sourcePosition.y, pathWidth ?? 0, Axis.y);
     $: x2 = getPosition(data.targetPosition.x, pathWidth ?? 0, Axis.x);
@@ -46,7 +58,7 @@
     };
 </script>
 
-<path d={bezierCurve} style:--path-width={pathWidth} />
+<path data-sankey-source="path-{key.split('/')[0]}" data-sankey-target="path-{key.split('/')[1]}" d={bezierCurve} style:--path-width={pathWidth} />
 
 <style>
     path {

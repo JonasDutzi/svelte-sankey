@@ -8,12 +8,17 @@
     import SankeyLine from "./SankeyLine.svelte";
 
     export let showheaders: boolean = false;
+    export let highlightpaths: boolean = true;
     export let maxpathheight: number = 30;
 
     let wrapperRef: HTMLDivElement;
 
     $: {
         $sankeyStore.maxPathHeight = maxpathheight;
+    }
+
+    $: {
+        $sankeyStore.highlightPaths = highlightpaths;
     }
 
     $: {

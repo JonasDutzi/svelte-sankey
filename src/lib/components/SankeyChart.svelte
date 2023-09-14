@@ -1,32 +1,37 @@
 <svelte:options customElement="svsankey-chart" />
 
 <script lang="ts">
-    import { ColumnContent, ColumnHeader, Item, Link, Sankey } from "./index";
+    import Anchor from "./Anchor.svelte";
+    import AnchorContent from "./AnchorContent.svelte";
+    import { ColumnContent, ColumnHeader, Item, Sankey } from "./index";
     export let showheaders = true;
+    export let highlightpaths = true;
     export let maxpathheight = 50;
     export let chartdata;
 </script>
 
-<Sankey {showheaders} {maxpathheight}>
+<Sankey {showheaders} {maxpathheight} {highlightpaths}>
     {#each chartdata.data as data}
-        <ColumnHeader>
-            <div style="font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: bold; margin-block: 1rem">
-                {data.columnLabel === "root" ? data?.rows?.[0].items?.[0]?.label : data.columnLabel}
-            </div>
-        </ColumnHeader>
-    {/each}
-    {#each chartdata.data as data}
+        {#if showheaders}
+            <ColumnHeader>
+                <div style="font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: bold; margin-block: 1rem">
+                    {data.columnLabel === "root" ? data?.rows?.[0].items?.[0]?.label : data.columnLabel}
+                </div>
+            </ColumnHeader>
+        {/if}
         <ColumnContent {data}>
             {#each data.rows as row}
                 <div class="row-label">{row.rowLabel}</div>
                 {#each row.items as item}
-                    <Item {item} />
+                    <Item {item} on:itemclick on:anchormouseenter on:anchormouseleave>
+                        <Anchor id={item.id} />
+                        <AnchorContent on:itemclick on:anchormouseenter on:anchormouseleave itemdata={item}>
+                            <div>{item.label}</div>
+                        </AnchorContent>
+                    </Item>
                 {/each}
             {/each}
         </ColumnContent>
-    {/each}
-    {#each chartdata.links as data}
-        <Link {data} />
     {/each}
 </Sankey>
 
