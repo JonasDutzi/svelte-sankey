@@ -22,6 +22,7 @@ type SankeyItem = {
     id: SankeyKey;
     label: string;
     links?: Array<SankeyLink>;
+    anchorColor?: string;
     data?: Record<any, any>;
 };
 

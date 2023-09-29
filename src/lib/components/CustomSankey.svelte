@@ -22,9 +22,9 @@
                 <div class="row-label">{row.rowLabel}</div>
                 {#each row.items as item}
                     <Item {item} on:itemclick on:anchormouseenter on:anchormouseleave>
-                        <Anchor {item} backgroundcolor={item.data.totalValue >= 8 ? "red" : "var(--custom-color)"} />
-                        <AnchorContent pathhighlightcolor="var(--custom-color)" on:itemclick on:anchormouseenter on:anchormouseleave {item}>
-                            <div style="background-color: {item.data.color};">{item.label}: {item.data.totalValue} kilogram</div>
+                        <Anchor {item} />
+                        <AnchorContent on:itemclick on:anchormouseenter on:anchormouseleave {item}>
+                            <div>{item.label}: {item.data.totalValue} kilogram</div>
                         </AnchorContent>
                     </Item>
                 {/each}

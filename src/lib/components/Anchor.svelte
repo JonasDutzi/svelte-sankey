@@ -11,7 +11,6 @@
 
     let anchorRef: HTMLDivElement;
     export let item: SankeyItem;
-    export let backgroundcolor = "darkblue";
 
     let anchorHeight = 1;
 
@@ -40,7 +39,7 @@
     });
 </script>
 
-<div class="sv-sankey__anchor" style:--anchor-height="{anchorHeight}px" style:--background-color={backgroundcolor} bind:this={anchorRef} />
+<div class="sv-sankey__anchor" style:--anchor-height="{anchorHeight}px" style:--background-color={item.anchorColor} bind:this={anchorRef} />
 
 <style>
     :global(.sv-sankey__anchor) {

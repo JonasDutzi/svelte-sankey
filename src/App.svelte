@@ -20,7 +20,7 @@
 
     let highlightPaths;
     let showHeaders;
-    let size = 3;
+    let size = 105;
 </script>
 
 <main>

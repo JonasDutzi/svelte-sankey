@@ -7,7 +7,6 @@
 
     export let item: SankeyItem;
     export let highlightpaths = true;
-    export let pathhighlightcolor = "rgba(44, 61, 171, 0.6)";
 
     let isPathHighlightingOn;
 
@@ -46,8 +45,7 @@
         ];
         paths.forEach((path: HTMLElement) => {
             window.requestAnimationFrame(() => {
-                //TODO: replace this with dynamic stroke variable
-                path.style.stroke = pathhighlightcolor;
+                path.style.stroke = item.anchorColor;
             });
         });
     };

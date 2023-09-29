@@ -24,8 +24,8 @@
                 <div class="row-label">{row.rowLabel}</div>
                 {#each row.items as item}
                     <Item {item} on:itemclick on:anchormouseenter on:anchormouseleave>
-                        <Anchor id={item.id} />
-                        <AnchorContent on:itemclick on:anchormouseenter on:anchormouseleave itemdata={item}>
+                        <Anchor {item} />
+                        <AnchorContent on:itemclick on:anchormouseenter on:anchormouseleave {item}>
                             <div>{item.label}</div>
                         </AnchorContent>
                     </Item>

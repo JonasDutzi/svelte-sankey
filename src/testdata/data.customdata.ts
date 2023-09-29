@@ -16,14 +16,14 @@ export const sankeyData: SankeyData = {
                                 {
                                     target: "semi_finished_good",
                                     value: 5,
-                                    strokeColor: "green",
-                                    strokeColorHover: "darkgreen"
+                                    strokeColor: "var(--stroke-color-1)",
+                                    strokeColorHover: "var(--stroke-color-1-hover)"
                                 }
                             ],
                             data: {
-                                totalValue: 5,
-                                color: "var(--custom-color)"
-                            }
+                                totalValue: 5
+                            },
+                            anchorColor: "var(--stroke-color-1-hover)"
                         },
                         {
                             id: "biscuit",
@@ -31,12 +31,15 @@ export const sankeyData: SankeyData = {
                             links: [
                                 {
                                     target: "semi_finished_good",
-                                    value: 3
+                                    value: 3,
+                                    strokeColor: "var(--stroke-color-2)",
+                                    strokeColorHover: "var(--stroke-color-2-hover)"
                                 }
                             ],
                             data: {
                                 totalValue: 3
-                            }
+                            },
+                            anchorColor: "var(--stroke-color-2-hover)"
                         }
                     ]
                 },
@@ -49,12 +52,15 @@ export const sankeyData: SankeyData = {
                             links: [
                                 {
                                     target: "semi_finished_good",
-                                    value: 8
+                                    value: 8,
+                                    strokeColor: "var(--stroke-color-3)",
+                                    strokeColorHover: "var(--stroke-color-3-hover)"
                                 }
                             ],
                             data: {
                                 totalValue: 8
-                            }
+                            },
+                            anchorColor: "var(--stroke-color-3-hover)"
                         }
                     ]
                 }
@@ -73,16 +79,21 @@ export const sankeyData: SankeyData = {
                             links: [
                                 {
                                     target: "strawberrycake",
-                                    value: 8
+                                    value: 8,
+                                    strokeColor: "var(--stroke-color-4)",
+                                    strokeColorHover: "var(--stroke-color-4-hover)"
                                 },
                                 {
                                     target: "chococake",
-                                    value: 8
+                                    value: 8,
+                                    strokeColor: "var(--stroke-color-1)",
+                                    strokeColorHover: "var(--stroke-color-1-hover)"
                                 }
                             ],
                             data: {
                                 totalValue: 16
-                            }
+                            },
+                            anchorColor: "var(--stroke-color-4-hover)"
                         }
                     ]
                 }
@@ -100,14 +111,16 @@ export const sankeyData: SankeyData = {
                             label: "Strawberry Cake",
                             data: {
                                 totalValue: 8
-                            }
+                            },
+                            anchorColor: "var(--stroke-color-4-hover)"
                         },
                         {
                             id: "chococake",
                             label: "Chocolate Cake",
                             data: {
                                 totalValue: 8
-                            }
+                            },
+                            anchorColor: "var(--stroke-color-1-hover)"
                         }
                     ]
                 }
