@@ -21,33 +21,39 @@
     export let size = 30;
     export let showHeaders = true;
     export let highlightPaths = true;
+    export let showStores = true;
+    export let showSettings = true;
 </script>
 
 <div class="inspector">
     <b>Sankey Inspector:</b>
-    <p style="margin-bottom: 1rem;">Settings/Props:</p>
-    <div style="display: flex; align-items: center; gap: 2rem">
-        <div>
-            <div>Size (maxpathheight):</div>
-            <input type="range" min="30" max="200" bind:value={size} />
+    {#if showSettings}
+        <p style="margin-bottom: 1rem;">Settings/Props:</p>
+        <div style="display: flex; align-items: center; gap: 2rem">
+            <div>
+                <div>Size (maxpathheight):</div>
+                <input type="range" min="1" max="200" bind:value={size} />
+            </div>
+            <div>
+                <div>Headers (showheaders):</div>
+                <input type="checkbox" bind:checked={showHeaders} />
+            </div>
+            <div>
+                <div>Highlight Paths (highlightpaths):</div>
+                <input type="checkbox" bind:checked={highlightPaths} />
+            </div>
+            <div style="margin-bottom: 2rem;" />
         </div>
-        <div>
-            <div>Headers (showheaders):</div>
-            <input type="checkbox" bind:checked={showHeaders} />
+        <div style="margin-bottom: 3rem;">__________________________________________________</div>
+    {/if}
+    {#if showStores}
+        <div class="stores">
+            {#each stores as { store, name, iterable }}
+                <div class="store-name"><b>{name}</b></div>
+                <StoreInspector {store} {iterable} />
+            {/each}
         </div>
-        <div>
-            <div>Highlight Paths (highlightpaths):</div>
-            <input type="checkbox" bind:checked={highlightPaths} />
-        </div>
-        <div style="margin-bottom: 2rem;" />
-    </div>
-    <div style="margin-bottom: 3rem;">__________________________________________________</div>
-    <div class="stores">
-        {#each stores as { store, name, iterable }}
-            <div class="store-name"><b>{name}</b></div>
-            <StoreInspector {store} {iterable} />
-        {/each}
-    </div>
+    {/if}
 </div>
 
 <style>

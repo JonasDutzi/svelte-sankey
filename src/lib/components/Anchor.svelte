@@ -25,6 +25,7 @@
 
     $: {
         if (anchorRef) {
+            anchorHeight = anchorHeight; // needed for svelte reactivity
             const rect = anchorRef.getBoundingClientRect();
             anchorsStore.setAnchor({
                 id: item.id,

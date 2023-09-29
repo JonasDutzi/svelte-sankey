@@ -20,7 +20,7 @@
 
     let highlightPaths;
     let showHeaders;
-    let size;
+    let size = 3;
 </script>
 
 <main>
@@ -33,8 +33,8 @@
         on:anchormouseenter={onAnchorMouseEnter}
         on:anchormouseleave={onAnchorMouseLeave}
     /> -->
-    <CustomSankey showheaders={true} chartdata={sankeyData} />
-    <SankeyInspector bind:highlightPaths bind:showHeaders bind:size />
+    <CustomSankey showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={sankeyData} />
+    <SankeyInspector bind:highlightPaths bind:showHeaders bind:size showStores={true} />
 </main>
 
 <style>
