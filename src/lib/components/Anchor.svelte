@@ -2,7 +2,7 @@
 
 <script lang="ts">
     import { onDestroy } from "svelte";
-    import type { SankeyKey } from "../types";
+    import type { SankeyItem, SankeyKey } from "../types";
     import { itemsStore } from "../stores/items";
     import { wrapperStore } from "../stores/wrapper";
     import { anchorsStore } from "../stores/anchors";
@@ -10,23 +10,24 @@
     import { sankeyStore } from "../stores/sankey";
 
     let anchorRef: HTMLDivElement;
-    export let id: SankeyKey;
+    export let item: SankeyItem;
 
     let anchorHeight = 1;
 
     $: {
-        let item = $itemsStore.get(id);
-        if (item) {
-            const value = Math.max(item.totalValues.sources, item.totalValues.targets);
+        let currentItem = $itemsStore.get(item.id);
+        if (currentItem) {
+            const value = Math.max(currentItem.totalValues.sources, currentItem.totalValues.targets);
             anchorHeight = scaleValue(value, [$sankeyStore.minPathHeight, $sankeyStore.maxPathHeight], $sankeyStore.minValue, $sankeyStore.maxValue);
         }
     }
 
     $: {
         if (anchorRef) {
+            anchorHeight = anchorHeight; // needed for svelte reactivity
             const rect = anchorRef.getBoundingClientRect();
             anchorsStore.setAnchor({
-                id: id,
+                id: item.id,
                 positionX: rect.x - $wrapperStore.left,
                 positionY: rect.y - $wrapperStore.top
             });
@@ -34,17 +35,17 @@
     }
 
     onDestroy(() => {
-        anchorsStore.remove(id);
+        anchorsStore.remove(item.id);
     });
 </script>
 
-<div style:--anchor-height="{anchorHeight}px" bind:this={anchorRef} />
+<div class="sv-sankey__anchor" style:--anchor-height="{anchorHeight}px" style:--background-color={item.anchorColor} bind:this={anchorRef} />
 
 <style>
-    div {
+    :global(.sv-sankey__anchor) {
         z-index: 1;
         width: 15px;
-        background-color: darkblue;
+        background-color: var(--background-color);
         height: var(--anchor-height);
     }
 </style>

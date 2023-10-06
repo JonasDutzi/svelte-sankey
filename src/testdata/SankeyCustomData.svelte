@@ -1,9 +1,7 @@
-<svelte:options customElement="svsankey-chart" />
-
 <script lang="ts">
-    import Anchor from "./Anchor.svelte";
-    import AnchorContent from "./AnchorContent.svelte";
-    import { ColumnContent, ColumnHeader, Item, Sankey } from "./index";
+    import Anchor from "../lib/components/Anchor.svelte";
+    import AnchorContent from "../lib/components/AnchorContent.svelte";
+    import { ColumnContent, ColumnHeader, Item, Sankey } from "../lib/components/index";
     export let showheaders = true;
     export let highlightpaths = true;
     export let maxpathheight = 50;
@@ -26,7 +24,7 @@
                     <Item {item} on:itemclick on:anchormouseenter on:anchormouseleave>
                         <Anchor {item} />
                         <AnchorContent on:itemclick on:anchormouseenter on:anchormouseleave {item}>
-                            <div>{item.label}</div>
+                            <div>{item.label}: {item.data.totalValue} kilogram</div>
                         </AnchorContent>
                     </Item>
                 {/each}

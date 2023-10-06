@@ -1,6 +1,10 @@
 <script lang="ts">
-    import { sankeyData } from "./testdata/data_new.ts";
-    import { sankeyData as sankeyData2 } from "./testdata/data.ts";
+    import "./index.css";
+    import { sankeyData as customData } from "./testdata/data.customdata.ts";
+    import { sankeyData as dataBigger } from "./testdata/data.bigger.ts";
+    import { sankeyData as dataInconsistent } from "./testdata/data.inconsistent.ts";
+    import SankeyCustomData from "./testdata/SankeyCustomData.svelte";
+    import SankeyDataBigger from "./testdata/SankeyDataBigger.svelte";
     import SankeyInspector from "./inspector/Inspector.svelte";
     import SankeyChart from "./lib/components/SankeyChart.svelte";
 
@@ -18,13 +22,11 @@
 
     let highlightPaths;
     let showHeaders;
-    let size;
+    let size = 105;
 </script>
 
 <main>
-    <!-- <SankeyChart chartdata={sankeyData} showheaders={true} maxpathheight={40} /> -->
-    <!-- <SankeyChart showheaders={showHeaders} maxpathheight={size} chartdata={sankeyData} on:itemclick={onItemClicked} /> -->
-    <SankeyChart
+    <!-- <SankeyChart
         highlightpaths={highlightPaths}
         showheaders={showHeaders}
         maxpathheight={size}
@@ -32,8 +34,11 @@
         on:itemclick={onItemClicked}
         on:anchormouseenter={onAnchorMouseEnter}
         on:anchormouseleave={onAnchorMouseLeave}
-    />
-    <SankeyInspector bind:highlightPaths bind:showHeaders bind:size />
+    /> -->
+    <SankeyCustomData showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={customData} />
+    <!-- <SankeyDataBigger showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={dataBigger} /> -->
+    <!-- <SankeyDataBigger showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={dataInconsistent} /> -->
+    <SankeyInspector bind:highlightPaths bind:showHeaders bind:size showStores={false} />
 </main>
 
 <style>

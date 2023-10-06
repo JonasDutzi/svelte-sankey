@@ -2,11 +2,9 @@
 
 <script lang="ts">
     import { onDestroy, onMount } from "svelte";
-    import Anchor from "./Anchor.svelte";
     import type { SankeyItem } from "../types";
     import { logError } from "../helper";
     import { itemsStore } from "../stores/items";
-    import AnchorContent from "./AnchorContent.svelte";
     import { linksStore } from "../stores/links";
     import { sankeyStore } from "../stores/sankey";
 
@@ -27,7 +25,13 @@
                 if (!link.target) {
                     logError(`Sankey Link must have a target. Item "${item.id}" does have an empty target.`);
                 }
-                linksStore.add({ source: item.id, target: link.target, value: link.value });
+                linksStore.add({
+                    source: item.id,
+                    target: link.target,
+                    value: link.value,
+                    strokeColor: link.strokeColor,
+                    strokeColorHover: link.strokeColorHover
+                });
                 if (link.value && link.value > $sankeyStore.maxValue) {
                     $sankeyStore.maxValue = link.value;
                 }
@@ -44,8 +48,10 @@
     });
 
     onDestroy(() => {
-        for (const link of item.links) {
-            linksStore.remove({ source: item.id, target: link.target, value: link.value });
+        if (item.links) {
+            for (const link of item.links) {
+                linksStore.remove({ source: item.id, target: link.target, value: link.value });
+            }
         }
     });
 </script>

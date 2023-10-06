@@ -22,6 +22,7 @@ type SankeyItem = {
     id: SankeyKey;
     label: string;
     links?: Array<SankeyLink>;
+    anchorColor?: string;
     data?: Record<any, any>;
 };
 
@@ -30,6 +31,9 @@ type ItemData = ItemDataStore & { value: number };
 type SankeyLink = {
     target: SankeyKey;
     value: number;
+    strokeColor?: string;
+    strokeColorHover?: string;
+    data?: Record<any, any>;
 };
 
 type SankeyKey = string | number;

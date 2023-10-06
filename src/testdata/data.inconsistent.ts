@@ -24,7 +24,18 @@ export const sankeyData: SankeyData = {
                 },
                 {
                     rowLabel: "Resource Usage",
-                    items: [{ id: "chocolate_production", label: "Chocolate Production" }]
+                    items: [
+                        {
+                            id: "chocolate_production",
+                            label: "Chocolate Production",
+                            links: [
+                                {
+                                    target: "semi_finished_good",
+                                    value: 4
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         },
@@ -34,7 +45,22 @@ export const sankeyData: SankeyData = {
             rows: [
                 {
                     rowLabel: "Product",
-                    items: [{ id: "semi_finished_good", label: "Semi-finished good" }]
+                    items: [
+                        {
+                            id: "semi_finished_good",
+                            label: "Semi-finished good",
+                            links: [
+                                {
+                                    target: "strawberrycake",
+                                    value: 5
+                                },
+                                {
+                                    target: "",
+                                    value: 8
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         },
@@ -50,33 +76,6 @@ export const sankeyData: SankeyData = {
                     ]
                 }
             ]
-        }
-    ],
-    links: [
-        {
-            source: "flour",
-            target: "semi_finished_good",
-            value: 180
-        },
-        {
-            source: "biscuit",
-            target: "semi_finished_good",
-            value: 9
-        },
-        {
-            source: "chocolate_production",
-            target: "semi_finished_good",
-            value: 4
-        },
-        {
-            source: "semi_finished_good",
-            target: "strawberrycake",
-            value: 5
-        },
-        {
-            source: "semi_finished_good",
-            target: "",
-            value: 8
         }
     ]
 };

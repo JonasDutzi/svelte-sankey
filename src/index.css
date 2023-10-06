@@ -1,0 +1,21 @@
+:root {
+    --custom-color: hsla(203, 100%, 15%, 1);
+    --stroke-color: hsla(203, 100%, 50%, 0.7);
+    --stroke-color-hover: hsla(203, 100%, 50%, 0.9);
+
+    --stroke-color-1: hsla(41, 100%, 25%, 0.7);
+    --stroke-color-1-hover: hsla(41, 100%, 15%, 80%);
+
+    --stroke-color-2: hsla(172, 100%, 25%, 70%);
+    --stroke-color-2-hover: hsla(172, 100%, 15%, 80%);
+
+    --stroke-color-3: hsla(202, 100%, 25%, 70%);
+    --stroke-color-3-hover: hsla(202, 100%, 15%, 80%);
+
+    --stroke-color-4: hsla(221, 100%, 25%, 70%);
+    --stroke-color-4-hover: hsla(221, 100%, 15%, 80%);
+}
+
+.sv-sankey__anchor {
+    background-color: hsla(203, 100%, 30%, 1) !important;
+}
