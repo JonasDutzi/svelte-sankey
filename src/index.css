@@ -16,6 +16,6 @@
     --stroke-color-4-hover: hsla(221, 100%, 15%, 80%);
 }
 
-.sv-sankey__anchor {
-    background-color: hsla(203, 100%, 30%, 1) !important;
+.sv-sankey__path[data-sankey-source="path-flour"] {
+    stroke: black;
 }

@@ -27,6 +27,13 @@
 
 <div class="inspector">
     <b>Sankey Inspector:</b>
+    <div>
+        <label for="showHeaders">Settings</label>
+        <input id="showHeaders" type="checkbox" bind:checked={showSettings} />
+        <label for="showStores">Stores</label>
+        <input id="showStores" type="checkbox" bind:checked={showStores} />
+    </div>
+
     {#if showSettings}
         <p style="margin-bottom: 1rem;">Settings/Props:</p>
         <div style="display: flex; align-items: center; gap: 2rem">

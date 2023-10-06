@@ -10,6 +10,7 @@
     export let showheaders: boolean = false;
     export let highlightpaths: boolean = true;
     export let maxpathheight: number = 30;
+    export let key: string;
 
     let wrapperRef: HTMLDivElement;
 
@@ -33,6 +34,7 @@
 </script>
 
 <div
+    data-sankey-key={key}
     bind:this={wrapperRef}
     bind:clientWidth={$wrapperStore.width}
     bind:clientHeight={$wrapperStore.height}
