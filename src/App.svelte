@@ -1,10 +1,13 @@
 <script lang="ts">
     import "./index.css";
-    import { sankeyData } from "./testdata/data.customdata.ts";
-    import { sankeyData as sankeyData2 } from "./testdata/data.ts";
+    import { sankeyData as customData } from "./testdata/data.customdata.ts";
+    import SankeyCustomData from "./testdata/SankeyCustomData.svelte";
+
+    import { sankeyData as dataBigger } from "./testdata/data.bigger.ts";
+    import SankeyDataBigger from "./testdata/SankeyDataBigger.svelte";
+
     import SankeyInspector from "./inspector/Inspector.svelte";
     import SankeyChart from "./lib/components/SankeyChart.svelte";
-    import CustomSankey from "./lib/components/CustomSankey.svelte";
 
     const onItemClicked = (e) => {
         console.log(e.detail.item);
@@ -33,8 +36,9 @@
         on:anchormouseenter={onAnchorMouseEnter}
         on:anchormouseleave={onAnchorMouseLeave}
     /> -->
-    <CustomSankey showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={sankeyData} />
-    <SankeyInspector bind:highlightPaths bind:showHeaders bind:size showStores={true} />
+    <!-- <SankeyCustomData showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={customData} /> -->
+    <SankeyDataBigger showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={dataBigger} />
+    <SankeyInspector bind:highlightPaths bind:showHeaders bind:size showStores={false} />
 </main>
 
 <style>
