@@ -8,6 +8,7 @@
     import { linksStore } from "../stores/links";
     import { sankeyStore } from "../stores/sankey";
 
+    export let sankeyid: string | null = null;
     export let item: SankeyItem;
     let data;
 
@@ -32,16 +33,16 @@
                     strokeColor: link.strokeColor,
                     strokeColorHover: link.strokeColorHover
                 });
-                if (link.value && link.value > $sankeyStore.maxValue) {
-                    $sankeyStore.maxValue = link.value;
+                if (link.value && link.value > $sankeyStore.get(sankeyid).maxValue) {
+                    $sankeyStore.get(sankeyid).maxValue = link.value;
                 }
 
-                if (link.value && $sankeyStore.minValue) {
-                    if ($sankeyStore.minValue > link.value) {
-                        $sankeyStore.minValue = link.value;
+                if (link.value && $sankeyStore.get(sankeyid).minValue) {
+                    if ($sankeyStore.get(sankeyid).minValue > link.value) {
+                        $sankeyStore.get(sankeyid).minValue = link.value;
                     }
                 } else {
-                    $sankeyStore.minValue = link.value;
+                    $sankeyStore.get(sankeyid).minValue = link.value;
                 }
             }
         }
@@ -56,12 +57,12 @@
     });
 </script>
 
-<div class="sv-sankey__item">
+<div class="svsankey-item" data-svsankey-id={sankeyid}>
     <slot />
 </div>
 
 <style>
-    :global(.sv-sankey__item) {
+    :global(.svsankey-item) {
         display: flex;
         align-items: center;
         justify-content: start;

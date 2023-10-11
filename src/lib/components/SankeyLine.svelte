@@ -7,6 +7,7 @@
     import { scaleValue } from "../helper";
     import { sankeyStore } from "../stores/sankey";
 
+    export let sankeyid: string | null = null;
     export let key: string;
     export let data: Path;
 
@@ -15,12 +16,17 @@
     $: {
         const linkData = $linksStore.get(key);
         let pathValue;
-        if (linkData?.value! > $sankeyStore.minPathHeight) {
+        if (linkData?.value! > $sankeyStore.get(sankeyid).minPathHeight) {
             pathValue = linkData?.value;
         } else {
-            pathValue = $sankeyStore.minPathHeight;
+            pathValue = $sankeyStore.get(sankeyid).minPathHeight;
         }
-        pathWidth = scaleValue(pathValue, [$sankeyStore.minPathHeight, $sankeyStore.maxPathHeight], $sankeyStore.minValue, $sankeyStore.maxValue);
+        pathWidth = scaleValue(
+            pathValue,
+            [$sankeyStore.get(sankeyid).minPathHeight, $sankeyStore.get(sankeyid).maxPathHeight],
+            $sankeyStore.get(sankeyid).minValue,
+            $sankeyStore.get(sankeyid).maxValue
+        );
     }
 
     $: x1 = getPosition(data.sourcePosition.x, pathWidth ?? 0, Axis.x);
@@ -48,9 +54,10 @@
 </script>
 
 <path
-    class="sv-sankey__path"
-    data-sankey-source="path-{key.split('/')[0]}"
-    data-sankey-target="path-{key.split('/')[1]}"
+    class="svsankey-path"
+    data-svsankey-id={sankeyid}
+    data-svsankey-source="path-{key.split('/')[0]}"
+    data-svsankey-target="path-{key.split('/')[1]}"
     d={bezierCurve}
     style:--path-width={pathWidth}
     style:--stroke-color={data.strokeColor}
@@ -58,13 +65,13 @@
 />
 
 <style>
-    :global(.sv-sankey__path) {
+    :global(.svsankey-path) {
         z-index: -1;
         stroke: var(--stroke-color, rgba(44, 61, 171, 0.3));
         stroke-width: var(--path-width);
         fill: none;
     }
-    :global(.sv-sankey__path:hover) {
+    :global(.svsankey-path:hover) {
         stroke: var(--stroke-color-hover, rgba(44, 61, 171, 0.6));
     }
 </style>

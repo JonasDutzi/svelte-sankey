@@ -6,51 +6,78 @@
     import { pathsStore } from "../stores/paths";
 
     import SankeyLine from "./SankeyLine.svelte";
+    import { onMount } from "svelte";
 
     export let showheaders: boolean = false;
     export let highlightpaths: boolean = true;
     export let maxpathheight: number = 30;
-    export let key: string;
+    export let sankeyid: string | null = null;
+
+    let width;
+    let height;
 
     let wrapperRef: HTMLDivElement;
 
     $: {
-        $sankeyStore.maxPathHeight = maxpathheight;
+        if (!$sankeyStore.has(sankeyid)) {
+            sankeyStore.create(sankeyid);
+        }
     }
 
     $: {
-        $sankeyStore.highlightPaths = highlightpaths;
+        if (!$wrapperStore.has(sankeyid)) {
+            wrapperStore.create(sankeyid);
+        }
     }
 
     $: {
-        if (wrapperRef) {
+        if ($sankeyStore.get(sankeyid)) {
+            $sankeyStore.get(sankeyid).maxPathHeight = maxpathheight;
+        }
+    }
+
+    $: {
+        if ($sankeyStore.get(sankeyid)) {
+            $sankeyStore.get(sankeyid).highlightPaths = highlightpaths;
+        }
+    }
+
+    $: {
+        if ($wrapperStore.get(sankeyid)) {
+            $wrapperStore.get(sankeyid).width = width;
+            $wrapperStore.get(sankeyid).height = height;
+        }
+    }
+
+    $: {
+        if (wrapperRef && $wrapperStore.get(sankeyid)) {
             const wrapperRect = wrapperRef?.getBoundingClientRect();
-            $wrapperStore.width = wrapperRect.width;
-            $wrapperStore.height = wrapperRect.height;
-            $wrapperStore.top = wrapperRect.top;
-            $wrapperStore.left = wrapperRect.left;
+            $wrapperStore.get(sankeyid).width = wrapperRect.width;
+            $wrapperStore.get(sankeyid).height = wrapperRect.height;
+            $wrapperStore.get(sankeyid).top = wrapperRect.top;
+            $wrapperStore.get(sankeyid).left = wrapperRect.left;
         }
     }
 </script>
 
 <div
-    data-sankey-key={key}
+    data-svsankey-id={sankeyid}
     bind:this={wrapperRef}
-    bind:clientWidth={$wrapperStore.width}
-    bind:clientHeight={$wrapperStore.height}
+    bind:clientWidth={width}
+    bind:clientHeight={height}
     style:--grid-auto-flow={showheaders ? "row" : "column"}
-    class="sv-sankey__wrapper"
+    class="svsankey-wrapper"
 >
-    <svg width={$wrapperStore.width} height={$wrapperStore.height}>
+    <svg data-svsankey-id={sankeyid} {width} {height}>
         {#each Array.from($pathsStore) as [key, data]}
-            <SankeyLine {key} {data} />
+            <SankeyLine {sankeyid} {key} {data} />
         {/each}
     </svg>
     <slot />
 </div>
 
 <style>
-    :global(.sv-sankey__wrapper) {
+    :global(.svsankey-wrapper) {
         margin: 0;
         padding: 0;
         box-sizing: border-box;

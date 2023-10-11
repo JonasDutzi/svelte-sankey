@@ -8,24 +8,25 @@
     export let highlightpaths = true;
     export let maxpathheight = 50;
     export let chartdata;
+    export let sankeyid: string | null = null;
 </script>
 
-<Sankey {showheaders} {maxpathheight} {highlightpaths}>
+<Sankey {sankeyid} {showheaders} {maxpathheight} {highlightpaths}>
     {#each chartdata.data as data}
         {#if showheaders}
-            <ColumnHeader>
+            <ColumnHeader {sankeyid}>
                 <div style="font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: bold; margin-block: 1rem">
                     {data.columnLabel === "root" ? data?.rows?.[0].items?.[0]?.label : data.columnLabel}
                 </div>
             </ColumnHeader>
         {/if}
-        <ColumnContent {data}>
+        <ColumnContent {sankeyid} {data}>
             {#each data.rows as row}
                 <div class="row-label">{row.rowLabel}</div>
                 {#each row.items as item}
-                    <Item {item} on:itemclick on:anchormouseenter on:anchormouseleave>
-                        <Anchor {item} />
-                        <AnchorContent on:itemclick on:anchormouseenter on:anchormouseleave {item}>
+                    <Item {sankeyid} {item} on:itemclick on:anchormouseenter on:anchormouseleave>
+                        <Anchor {sankeyid} {item} />
+                        <AnchorContent {sankeyid} on:itemclick on:anchormouseenter on:anchormouseleave {item}>
                             <div>{item.label}</div>
                         </AnchorContent>
                     </Item>

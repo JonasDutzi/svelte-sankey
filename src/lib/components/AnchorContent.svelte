@@ -6,12 +6,13 @@
     import { sankeyStore } from "../stores/sankey";
 
     export let item: SankeyItem;
+    export let sankeyid: string | null = null;
     export let highlightpaths = true;
 
     let isPathHighlightingOn;
 
     $: {
-        if ($sankeyStore.highlightPaths === false) {
+        if ($sankeyStore.get(sankeyid).highlightPaths === false) {
             isPathHighlightingOn = false;
         } else {
             isPathHighlightingOn = highlightpaths;
@@ -40,8 +41,8 @@
 
     const highlightSankeyPaths = () => {
         let paths = [
-            ...document.querySelectorAll(`[data-sankey-source=path-${item.id}]`),
-            ...document.querySelectorAll(`[data-sankey-target=path-${item.id}]`)
+            ...document.querySelectorAll(`[data-svsankey-source=path-${item.id}]`),
+            ...document.querySelectorAll(`[data-svsankey-target=path-${item.id}]`)
         ];
         paths.forEach((path: HTMLElement) => {
             window.requestAnimationFrame(() => {
@@ -52,8 +53,8 @@
 
     const removeSankeyPathsHighlight = () => {
         let paths = [
-            ...document.querySelectorAll(`[data-sankey-source=path-${item.id}]`),
-            ...document.querySelectorAll(`[data-sankey-target=path-${item.id}]`)
+            ...document.querySelectorAll(`[data-svsankey-source=path-${item.id}]`),
+            ...document.querySelectorAll(`[data-svsankey-target=path-${item.id}]`)
         ];
         paths.forEach((path: HTMLElement) => {
             window.requestAnimationFrame(() => {
@@ -64,7 +65,8 @@
 </script>
 
 <div
-    class="sv-sankey__anchorcontent"
+    class="svsankey-anchor-content"
+    data-svsankey-id={sankeyid}
     role="button"
     tabindex="0"
     on:click={onContentClicked}
@@ -76,7 +78,7 @@
 </div>
 
 <style>
-    :global(.sv-sankey__anchorcontent) {
+    :global(.svsankey-anchor-content) {
         cursor: pointer;
         background-color: rgba(239, 239, 239);
         border: 1px solid rgba(239, 239, 239, 0.2);

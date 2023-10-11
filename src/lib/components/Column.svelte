@@ -1,6 +1,6 @@
 <svelte:options customElement="svsankey-column" />
 
-<div class="sv-sankey__column-wrapper">
+<div class="svsankey-column-wrapper">
     {#if $$slots.label}
         <slot name="label" />
     {/if}
@@ -8,7 +8,7 @@
 </div>
 
 <style>
-    .sv-sankey__column-wrapper {
+    .svsankey-column-wrapper {
         padding: 10px;
     }
 </style>

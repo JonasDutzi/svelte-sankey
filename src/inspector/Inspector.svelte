@@ -14,8 +14,8 @@
         { store: $itemsStore, name: "Items", iterable: true },
         { store: $anchorsStore, name: "Anchors", iterable: true },
         { store: $pathsStore, name: "Paths", iterable: true },
-        { store: $wrapperStore, name: "Wrapper", iterable: false },
-        { store: $sankeyStore, name: "Sankey", iterable: false }
+        { store: $wrapperStore, name: "Wrapper", iterable: true },
+        { store: $sankeyStore, name: "Sankey", iterable: true }
     ];
 
     export let size = 30;

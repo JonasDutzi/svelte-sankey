@@ -5,6 +5,7 @@
     import type { SankeyColumn } from "../types";
     import { dataStore } from "../stores/data";
 
+    export let sankeyid: string | null = null;
     export let data: SankeyColumn;
 
     onMount(() => {
@@ -16,11 +17,11 @@
     });
 </script>
 
-<div class="sv-sankey__column-content">
+<div class="svsankey-column-content" data-svsankey-id={sankeyid}>
     <slot />
 </div>
 
 <style>
-    :global(.sv-sankey__column-content) {
+    :global(.svsankey-column-content) {
     }
 </style>

@@ -11,22 +11,21 @@ export type NewAnchor = {
     positionX: number;
     positionY: number;
 };
-
-export type AnchorsStore = Map<SankeyKey, Anchor>;
+export type AnchorsStore = Map<string, Map<SankeyKey, Anchor>>;
 
 const createAnchorsStore = () => {
     const { subscribe, update } = writable<AnchorsStore>(new Map());
     return {
         subscribe,
-        setAnchor: (anchor: NewAnchor) =>
-            update((currentAnchors) => {
+        add: (anchor: NewAnchor, sankeyId: string) =>
+            update((currentAnchorStores) => {
                 const { id, ...data } = anchor;
-                return currentAnchors.set(id, data);
+                return currentAnchorStores.get(sankeyId).set(id, data);
             }),
-        remove: (anchorId: SankeyKey) =>
-            update((currentAnchors) => {
-                currentAnchors.delete(anchorId);
-                return currentAnchors;
+        remove: (anchorId: SankeyKey, sankeyId: string) =>
+            update((currentAnchorStores) => {
+                currentAnchorStores.get(sankeyId).delete(anchorId);
+                return currentAnchorStores;
             })
     };
 };

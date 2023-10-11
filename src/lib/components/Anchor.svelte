@@ -10,6 +10,7 @@
     import { sankeyStore } from "../stores/sankey";
 
     let anchorRef: HTMLDivElement;
+    export let sankeyid: string | null = null;
     export let item: SankeyItem;
 
     let anchorHeight = 1;
@@ -18,7 +19,12 @@
         let currentItem = $itemsStore.get(item.id);
         if (currentItem) {
             const value = Math.max(currentItem.totalValues.sources, currentItem.totalValues.targets);
-            anchorHeight = scaleValue(value, [$sankeyStore.minPathHeight, $sankeyStore.maxPathHeight], $sankeyStore.minValue, $sankeyStore.maxValue);
+            anchorHeight = scaleValue(
+                value,
+                [$sankeyStore.get(sankeyid).minPathHeight, $sankeyStore.get(sankeyid).maxPathHeight],
+                $sankeyStore.get(sankeyid).minValue,
+                $sankeyStore.get(sankeyid).maxValue
+            );
         }
     }
 
@@ -26,23 +32,32 @@
         if (anchorRef) {
             anchorHeight = anchorHeight; // needed for svelte reactivity
             const rect = anchorRef.getBoundingClientRect();
-            anchorsStore.setAnchor({
-                id: item.id,
-                positionX: rect.x - $wrapperStore.left,
-                positionY: rect.y - $wrapperStore.top
-            });
+            anchorsStore.add(
+                {
+                    id: item.id,
+                    positionX: rect.x - $wrapperStore.get(sankeyid).left,
+                    positionY: rect.y - $wrapperStore.get(sankeyid).top
+                },
+                sankeyid
+            );
         }
     }
 
     onDestroy(() => {
-        anchorsStore.remove(item.id);
+        anchorsStore.remove(item.id, sankeyid);
     });
 </script>
 
-<div class="sv-sankey__anchor" style:--anchor-height="{anchorHeight}px" style:--background-color={item.anchorColor} bind:this={anchorRef} />
+<div
+    class="svsankey-anchor"
+    data-svsankey-id={sankeyid}
+    style:--anchor-height="{anchorHeight}px"
+    style:--background-color={item.anchorColor}
+    bind:this={anchorRef}
+/>
 
 <style>
-    :global(.sv-sankey__anchor) {
+    :global(.svsankey-anchor) {
         z-index: 1;
         width: 15px;
         background-color: var(--background-color);

@@ -26,16 +26,17 @@
 </script>
 
 <main>
-    <!-- <SankeyChart
+    <SankeyChart
+        sankeyid="testid"
         highlightpaths={highlightPaths}
         showheaders={showHeaders}
         maxpathheight={size}
-        chartdata={sankeyData}
+        chartdata={customData}
         on:itemclick={onItemClicked}
         on:anchormouseenter={onAnchorMouseEnter}
         on:anchormouseleave={onAnchorMouseLeave}
-    /> -->
-    <SankeyCustomData showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={customData} />
+    />
+    <!-- <SankeyCustomData showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={customData} /> -->
     <!-- <SankeyDataBigger showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={dataBigger} /> -->
     <!-- <SankeyDataBigger showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={dataInconsistent} /> -->
     <SankeyInspector bind:highlightPaths bind:showHeaders bind:size />

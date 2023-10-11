@@ -4,12 +4,12 @@
     export let label: string;
 </script>
 
-<div class="sv-sankey__label">
+<div class="svsankey-label">
     <p>{label}</p>
 </div>
 
 <style>
-    .sv-sankey__label {
+    .svsankey-label {
         margin-inline: 0.5rem;
         position: relative;
     }
