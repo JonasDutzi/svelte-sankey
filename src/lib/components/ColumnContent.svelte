@@ -9,11 +9,11 @@
     export let data: SankeyColumn;
 
     onMount(() => {
-        dataStore.addColumn(data);
+        dataStore.addColumn(sankeyid, data);
     });
 
     onDestroy(() => {
-        dataStore.removeColumn(data);
+        dataStore.removeColumn(sankeyid, data);
     });
 </script>
 

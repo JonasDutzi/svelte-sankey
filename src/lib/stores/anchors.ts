@@ -1,3 +1,4 @@
+import { logError } from "../helper";
 import type { SankeyKey } from "../types";
 import { writable } from "svelte/store";
 
@@ -11,21 +12,34 @@ export type NewAnchor = {
     positionX: number;
     positionY: number;
 };
-export type AnchorsStore = Map<string, Map<SankeyKey, Anchor>>;
+export type AnchorStore = Map<string, OneAnchor>;
+export type OneAnchor = Map<SankeyKey, Anchor>;
 
 const createAnchorsStore = () => {
-    const { subscribe, update } = writable<AnchorsStore>(new Map());
+    const { subscribe, update } = writable<AnchorStore>(new Map());
     return {
         subscribe,
-        add: (anchor: NewAnchor, sankeyId: string) =>
-            update((currentAnchorStores) => {
+        add: (sankeyId: string, anchor: NewAnchor) =>
+            update((currentData) => {
                 const { id, ...data } = anchor;
-                return currentAnchorStores.get(sankeyId).set(id, data);
+                if (currentData.has(sankeyId)) {
+                    let currentAnchors = currentData.get(sankeyId);
+                    if (currentAnchors.has(id)) {
+                        logError(`Sankey Anchor id must be unique. Anchor with id "${id}" already exists.`);
+                    } else {
+                        currentAnchors.set(id, data);
+                    }
+                } else {
+                    const anchorsData = new Map<SankeyKey, NewAnchor>();
+                    anchorsData.set(id, anchor);
+                    currentData.set(sankeyId, anchorsData);
+                }
+                return currentData;
             }),
-        remove: (anchorId: SankeyKey, sankeyId: string) =>
-            update((currentAnchorStores) => {
-                currentAnchorStores.get(sankeyId).delete(anchorId);
-                return currentAnchorStores;
+        remove: (sankeyId: string, anchorId: SankeyKey) =>
+            update((currentData) => {
+                currentData.get(sankeyId).delete(anchorId);
+                return currentData;
             })
     };
 };

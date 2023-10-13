@@ -1,6 +1,12 @@
 <script lang="ts">
     export let store;
+    export let name;
     export let iterable = true;
+
+    $: {
+        console.log(`${name}:`);
+        console.log(store);
+    }
 </script>
 
 {#if iterable}

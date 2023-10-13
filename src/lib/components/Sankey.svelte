@@ -6,8 +6,6 @@
     import { pathsStore } from "../stores/paths";
 
     import SankeyLine from "./SankeyLine.svelte";
-    import { onMount } from "svelte";
-
     export let showheaders: boolean = false;
     export let highlightpaths: boolean = true;
     export let maxpathheight: number = 30;

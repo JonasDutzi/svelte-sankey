@@ -36,6 +36,16 @@
         on:anchormouseenter={onAnchorMouseEnter}
         on:anchormouseleave={onAnchorMouseLeave}
     />
+    <SankeyChart
+        sankeyid="testid2"
+        highlightpaths={highlightPaths}
+        showheaders={showHeaders}
+        maxpathheight={size}
+        chartdata={customData}
+        on:itemclick={onItemClicked}
+        on:anchormouseenter={onAnchorMouseEnter}
+        on:anchormouseleave={onAnchorMouseLeave}
+    />
     <!-- <SankeyCustomData showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={customData} /> -->
     <!-- <SankeyDataBigger showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={dataBigger} /> -->
     <!-- <SankeyDataBigger showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={dataInconsistent} /> -->

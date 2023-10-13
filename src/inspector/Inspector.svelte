@@ -57,7 +57,7 @@
         <div class="stores">
             {#each stores as { store, name, iterable }}
                 <div class="store-name"><b>{name}</b></div>
-                <StoreInspector {store} {iterable} />
+                <StoreInspector {store} {name} {iterable} />
             {/each}
         </div>
     {/if}

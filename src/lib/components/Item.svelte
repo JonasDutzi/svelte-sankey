@@ -26,7 +26,7 @@
                 if (!link.target) {
                     logError(`Sankey Link must have a target. Item "${item.id}" does have an empty target.`);
                 }
-                linksStore.add({
+                linksStore.add(sankeyid, {
                     source: item.id,
                     target: link.target,
                     value: link.value,
@@ -51,7 +51,7 @@
     onDestroy(() => {
         if (item.links) {
             for (const link of item.links) {
-                linksStore.remove({ source: item.id, target: link.target, value: link.value });
+                linksStore.remove(sankeyid, { source: item.id, target: link.target, value: link.value });
             }
         }
     });

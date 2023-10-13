@@ -32,19 +32,16 @@
         if (anchorRef) {
             anchorHeight = anchorHeight; // needed for svelte reactivity
             const rect = anchorRef.getBoundingClientRect();
-            anchorsStore.add(
-                {
-                    id: item.id,
-                    positionX: rect.x - $wrapperStore.get(sankeyid).left,
-                    positionY: rect.y - $wrapperStore.get(sankeyid).top
-                },
-                sankeyid
-            );
+            anchorsStore.add(sankeyid, {
+                id: item.id,
+                positionX: rect.x - $wrapperStore.get(sankeyid).left,
+                positionY: rect.y - $wrapperStore.get(sankeyid).top
+            });
         }
     }
 
     onDestroy(() => {
-        anchorsStore.remove(item.id, sankeyid);
+        anchorsStore.remove(sankeyid, item.id);
     });
 </script>
 
