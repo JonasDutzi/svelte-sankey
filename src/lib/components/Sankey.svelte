@@ -13,6 +13,7 @@
 
     let width;
     let height;
+    let links = [];
 
     let wrapperRef: HTMLDivElement;
 
@@ -48,12 +49,24 @@
     }
 
     $: {
-        if (wrapperRef && $wrapperStore.get(sankeyid)) {
+        if (wrapperRef) {
             const wrapperRect = wrapperRef?.getBoundingClientRect();
-            $wrapperStore.get(sankeyid).width = wrapperRect.width;
-            $wrapperStore.get(sankeyid).height = wrapperRect.height;
-            $wrapperStore.get(sankeyid).top = wrapperRect.top;
-            $wrapperStore.get(sankeyid).left = wrapperRect.left;
+            $wrapperStore.set(sankeyid, {
+                width: wrapperRect.width,
+                height: wrapperRect.height,
+                top: wrapperRect.top,
+                left: wrapperRect.left
+            });
+            // $wrapperStore.get(sankeyid).width = wrapperRect.width;
+            // $wrapperStore.get(sankeyid).height = wrapperRect.height;
+            // $wrapperStore.get(sankeyid).top = wrapperRect.top;
+            // $wrapperStore.get(sankeyid).left = wrapperRect.left;
+        }
+    }
+
+    $: {
+        if ($pathsStore.has(sankeyid)) {
+            links = Array.from($pathsStore.get(sankeyid));
         }
     }
 </script>
@@ -67,7 +80,7 @@
     class="svsankey-wrapper"
 >
     <svg data-svsankey-id={sankeyid} {width} {height}>
-        {#each Array.from($pathsStore) as [key, data]}
+        {#each links as [key, data]}
             <SankeyLine {sankeyid} {key} {data} />
         {/each}
     </svg>

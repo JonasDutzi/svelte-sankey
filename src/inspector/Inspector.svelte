@@ -9,13 +9,13 @@
     import StoreInspector from "./StoreInspector.svelte";
 
     $: stores = [
-        { store: $linksStore, name: "Links", iterable: true },
-        { store: $dataStore, name: "Data", iterable: true },
-        { store: $itemsStore, name: "Items", iterable: true },
-        { store: $anchorsStore, name: "Anchors", iterable: true },
-        { store: $pathsStore, name: "Paths", iterable: true },
-        { store: $wrapperStore, name: "Wrapper", iterable: true },
-        { store: $sankeyStore, name: "Sankey", iterable: true }
+        { store: $linksStore, name: "Links" },
+        { store: $dataStore, name: "Data" },
+        { store: $itemsStore, name: "Items" },
+        { store: $anchorsStore, name: "Anchors" },
+        { store: $pathsStore, name: "Paths" },
+        { store: $wrapperStore, name: "Wrapper" },
+        { store: $sankeyStore, name: "Sankey" }
     ];
 
     export let size = 30;
@@ -55,9 +55,9 @@
     {/if}
     {#if showStores}
         <div class="stores">
-            {#each stores as { store, name, iterable }}
+            {#each stores as { store, name }}
                 <div class="store-name"><b>{name}</b></div>
-                <StoreInspector {store} {name} {iterable} />
+                <StoreInspector {store} {name} />
             {/each}
         </div>
     {/if}

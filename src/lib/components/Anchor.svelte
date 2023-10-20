@@ -16,7 +16,7 @@
     let anchorHeight = 1;
 
     $: {
-        let currentItem = $itemsStore.get(item.id);
+        let currentItem = $itemsStore.has(sankeyid) ? $itemsStore.get(sankeyid).get(item.id) : null;
         if (currentItem) {
             const value = Math.max(currentItem.totalValues.sources, currentItem.totalValues.targets);
             anchorHeight = scaleValue(
@@ -29,6 +29,7 @@
     }
 
     $: {
+        console.log("anchorRef changed");
         if (anchorRef) {
             anchorHeight = anchorHeight; // needed for svelte reactivity
             const rect = anchorRef.getBoundingClientRect();

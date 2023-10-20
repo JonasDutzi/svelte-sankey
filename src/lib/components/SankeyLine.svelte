@@ -14,7 +14,7 @@
     let pathWidth;
 
     $: {
-        const linkData = $linksStore.get(key);
+        const linkData = $linksStore.get(sankeyid).get(key);
         let pathValue;
         if (linkData?.value! > $sankeyStore.get(sankeyid).minPathHeight) {
             pathValue = linkData?.value;

@@ -12,7 +12,7 @@
     export let item: SankeyItem;
     let data;
 
-    $: itemData = $itemsStore.get(item.id);
+    $: itemData = $itemsStore.get(sankeyid) ? $itemsStore.get(sankeyid).get(item.id) : null;
     $: dataValue = Math.max(itemData?.totalValues?.sources, itemData?.totalValues?.targets);
     $: data = { ...itemData, value: dataValue };
 

@@ -34,6 +34,7 @@ const createAnchorsStore = () => {
                     anchorsData.set(id, anchor);
                     currentData.set(sankeyId, anchorsData);
                 }
+                console.log("anchor updated");
                 return currentData;
             }),
         remove: (sankeyId: string, anchorId: SankeyKey) =>

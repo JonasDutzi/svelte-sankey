@@ -3,16 +3,22 @@
     export let name;
     export let iterable = true;
 
+    let storeData;
+
     $: {
-        console.log(`${name}:`);
-        console.log(store);
+        storeData = store.get("testid") ?? [];
     }
 </script>
 
-{#if iterable}
+{#each Array.from(storeData) as data}
+    <div>{JSON.stringify(data)}</div>
+{/each}
+{#if name === "Wrapper" || name === "Sankey"}
     {#each Array.from(store) as data}
         <div>{JSON.stringify(data)}</div>
     {/each}
-{:else}
-    <div>{JSON.stringify(store)}</div>
+    <!-- content here -->
 {/if}
+<!-- {#each stores as aStore}
+    <div>{JSON.stringify(aStore)}</div>
+{/each} -->
