@@ -9,13 +9,11 @@
     import { sankeyStore } from "../stores/sankey";
 
     export let item: SankeyItem;
-    let data;
 
     $: itemData = $itemsStore.get(item.id);
     $: dataValue = Math.max(itemData?.totalValues?.sources, itemData?.totalValues?.targets);
-    $: data = { ...itemData, value: dataValue };
 
-    onMount(() => {
+    $: {
         if (!item.id) {
             logError("Every Sankey Item must have a key");
         }
@@ -45,15 +43,7 @@
                 }
             }
         }
-    });
-
-    onDestroy(() => {
-        if (item.links) {
-            for (const link of item.links) {
-                linksStore.remove({ source: item.id, target: link.target, value: link.value });
-            }
-        }
-    });
+    }
 </script>
 
 <div class="sv-sankey__item">

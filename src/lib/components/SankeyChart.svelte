@@ -11,7 +11,7 @@
 </script>
 
 <Sankey {showheaders} {maxpathheight} {highlightpaths}>
-    {#each chartdata.data as data}
+    {#each chartdata as data}
         {#if showheaders}
             <ColumnHeader>
                 <div style="font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: bold; margin-block: 1rem">

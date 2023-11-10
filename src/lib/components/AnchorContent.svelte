@@ -71,6 +71,7 @@
     on:keypress={onContentClicked}
     on:mouseenter={onContentMouseEnter}
     on:mouseleave={onContentMouseLeave}
+    style:--item-id={item.id}
 >
     <slot />
 </div>
@@ -85,5 +86,6 @@
         margin-inline: 0.75rem;
         padding-inline: 0.5rem;
         padding-block: 0.25rem;
+        view-transition-name: var(--item-id);
     }
 </style>

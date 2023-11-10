@@ -24,7 +24,7 @@
                     <Item {item} on:itemclick on:anchormouseenter on:anchormouseleave>
                         <Anchor {item} />
                         <AnchorContent on:itemclick on:anchormouseenter on:anchormouseleave {item}>
-                            <div>{item.label}: {item.data.totalValue} kilogram</div>
+                            <div>{item.label}: {item.data?.totalValue ?? ""} kilogram</div>
                         </AnchorContent>
                     </Item>
                 {/each}

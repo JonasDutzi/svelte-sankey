@@ -1,3 +1,7 @@
+/* :root {
+    view-transition-name: none;
+} */
+
 :root {
     --custom-color: hsla(203, 100%, 15%, 1);
     --stroke-color: hsla(203, 100%, 50%, 0.7);

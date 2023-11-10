@@ -55,6 +55,7 @@
     style:--path-width={pathWidth}
     style:--stroke-color={data.strokeColor}
     style:--stroke-color-hover={data.strokeColorHover}
+    style:--path-key={key}
 />
 
 <style>
@@ -63,8 +64,26 @@
         stroke: var(--stroke-color, rgba(44, 61, 171, 0.3));
         stroke-width: var(--path-width);
         fill: none;
+        view-transition-name: var(--path-key);
+        stroke-dashoffset: 0;
+        stroke-dasharray: 1000;
+        animation: pathanimation 700ms linear forwards;
     }
+
     :global(.sv-sankey__path:hover) {
         stroke: var(--stroke-color-hover, rgba(44, 61, 171, 0.6));
+        transition: stroke 300ms;
+    }
+
+    @media (prefers-reduced-motion) {
+        :global(.sv-sankey__path) {
+            animation: none;
+        }
+    }
+
+    @keyframes pathanimation {
+        from {
+            stroke-dashoffset: 1000;
+        }
     }
 </style>
