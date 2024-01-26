@@ -1,26 +1,31 @@
 <svelte:options customElement="svsankey-path" />
 
 <script lang="ts">
-    import type { Path } from "../stores/paths";
+    import type { Path } from "../stores/paths.svelte.ts";
     import { Axis } from "../types";
-    import { linksStore } from "../stores/links";
+    import { linksStore } from "../stores/links.svelte.ts";
     import { scaleValue } from "../helper";
-    import { sankeyStore } from "../stores/sankey";
+    import { sankeyStore } from "../stores/sankey.svelte.ts";
 
     export let key: string;
     export let data: Path;
 
-    let pathWidth;
+    let pathWidth = 0;
 
     $: {
-        const linkData = $linksStore.get(key);
-        let pathValue;
-        if (linkData?.value! > $sankeyStore.minPathHeight) {
-            pathValue = linkData?.value;
+        const linkData = linksStore.value.get(key);
+        let pathValue = 0;
+        if (linkData?.value! > sankeyStore.value.minPathHeight) {
+            pathValue = linkData?.value!;
         } else {
-            pathValue = $sankeyStore.minPathHeight;
+            pathValue = sankeyStore.value.minPathHeight;
         }
-        pathWidth = scaleValue(pathValue, [$sankeyStore.minPathHeight, $sankeyStore.maxPathHeight], $sankeyStore.minValue, $sankeyStore.maxValue);
+        pathWidth = scaleValue(
+            pathValue,
+            [sankeyStore.value.minPathHeight, sankeyStore.value.maxPathHeight],
+            sankeyStore.value.minValue,
+            sankeyStore.value.maxValue
+        );
     }
 
     $: x1 = getPosition(data.sourcePosition.x, pathWidth ?? 0, Axis.x);

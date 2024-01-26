@@ -7,7 +7,7 @@
     export let showheaders = true;
     export let highlightpaths = true;
     export let maxpathheight = 50;
-    export let chartdata;
+    export let chartdata: any;
 </script>
 
 <Sankey {showheaders} {maxpathheight} {highlightpaths}>

@@ -3,15 +3,21 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
     import type { SankeyItem } from "../types";
-    import { sankeyStore } from "../stores/sankey";
+    import { sankeyStore } from "../stores/sankey.svelte.ts";
+
+    type SVGPathElement = {
+        style: {
+            stroke: string | undefined;
+        };
+    };
 
     export let item: SankeyItem;
     export let highlightpaths = true;
 
-    let isPathHighlightingOn;
+    let isPathHighlightingOn: boolean;
 
     $: {
-        if ($sankeyStore.highlightPaths === false) {
+        if (sankeyStore.value.highlightPaths === false) {
             isPathHighlightingOn = false;
         } else {
             isPathHighlightingOn = highlightpaths;
@@ -43,9 +49,9 @@
             ...document.querySelectorAll(`[data-sankey-source=path-${item.id}]`),
             ...document.querySelectorAll(`[data-sankey-target=path-${item.id}]`)
         ];
-        paths.forEach((path: HTMLElement) => {
+        paths.forEach((path) => {
             window.requestAnimationFrame(() => {
-                path.style.stroke = item.anchorColor;
+                (path as unknown as SVGPathElement).style.stroke = item.anchorColor;
             });
         });
     };
@@ -55,9 +61,9 @@
             ...document.querySelectorAll(`[data-sankey-source=path-${item.id}]`),
             ...document.querySelectorAll(`[data-sankey-target=path-${item.id}]`)
         ];
-        paths.forEach((path: HTMLElement) => {
+        paths.forEach((path) => {
             window.requestAnimationFrame(() => {
-                path.style.stroke = "";
+                (path as unknown as SVGPathElement).style.stroke = "";
             });
         });
     };

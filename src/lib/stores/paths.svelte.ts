@@ -1,10 +1,8 @@
-import { derived } from "svelte/store";
-
-import type { SankeyKey } from "../types";
-import { anchorsStore } from "./anchors";
-import { linksStore } from "./links";
-import { scaleValue } from "../helper";
-import { sankeyStore } from "./sankey";
+import type { SankeyKey } from "../types/index.ts";
+import { anchorsStore } from "./anchors.svelte.ts";
+import { linksStore } from "./links.svelte.ts";
+import { scaleValue } from "../helper.ts";
+import { sankeyStore } from "./sankey.svelte.ts";
 
 export type Path = {
     sourcePosition: Position;
@@ -18,25 +16,25 @@ export type Position = {
     y: number | undefined;
 };
 
-export type PathsStore = Map<string, Path>;
+export type PathsStore = Record<string, Path>;
 
 const createPathsStore = () => {
-    const { subscribe } = derived([anchorsStore, linksStore, sankeyStore], ([$anchorsStore, $linksStore, $sankeyStore]) => {
-        const paths = new Map<string, Path>();
-        if ($linksStore?.size > 0) {
+    const getPaths = () => {
+        const paths: PathsStore = {};
+        if (Object.entries(linksStore.value).length > 0) {
             const targetPositionMap = new Map<SankeyKey, number>();
             const sourcePositionMap = new Map<SankeyKey, number>();
-            for (const [linkKey, linkData] of $linksStore.entries()) {
-                const sourceAnchor = $anchorsStore.get(linkData.source);
-                const targetAnchor = $anchorsStore.get(linkData.target);
+            for (const [linkKey, linkData] of Object.entries(linksStore.value)) {
+                const sourceAnchor = anchorsStore.value[linkData.source];
+                const targetAnchor = anchorsStore.value[linkData.target];
                 const scaledLinkValue = scaleValue(
                     linkData.value,
-                    [$sankeyStore.minPathHeight, $sankeyStore.maxPathHeight],
-                    $sankeyStore.minValue,
-                    $sankeyStore.maxValue
+                    [sankeyStore.value.minPathHeight, sankeyStore.value.maxPathHeight],
+                    sankeyStore.value.minValue,
+                    sankeyStore.value.maxValue
                 );
                 if (sourceAnchor && targetAnchor) {
-                    paths.set(linkKey, {
+                    paths[linkKey] = {
                         sourcePosition: {
                             x: sourceAnchor?.positionX,
                             y: sourceAnchor?.positionY + (sourcePositionMap.get(linkData.source) ?? 0)
@@ -47,14 +45,14 @@ const createPathsStore = () => {
                         },
                         strokeColor: linkData.strokeColor,
                         strokeColorHover: linkData.strokeColorHover
-                    });
+                    };
                     if (targetPositionMap.has(linkData.target)) {
-                        targetPositionMap.set(linkData.target, scaledLinkValue + targetPositionMap.get(linkData.target));
+                        targetPositionMap.set(linkData.target, scaledLinkValue + targetPositionMap.get(linkData.target)!);
                     } else {
                         targetPositionMap.set(linkData.target, scaledLinkValue);
                     }
                     if (sourcePositionMap.has(linkData.source)) {
-                        sourcePositionMap.set(linkData.source, scaledLinkValue + sourcePositionMap.get(linkData.source));
+                        sourcePositionMap.set(linkData.source, scaledLinkValue + sourcePositionMap.get(linkData.source)!);
                     } else {
                         sourcePositionMap.set(linkData.source, scaledLinkValue);
                     }
@@ -62,10 +60,13 @@ const createPathsStore = () => {
             }
         }
         return paths;
-    });
+    };
 
+    let paths = $derived(getPaths());
     return {
-        subscribe
+        get value() {
+            return paths;
+        }
     };
 };
 

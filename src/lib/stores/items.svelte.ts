@@ -1,8 +1,7 @@
-import { derived } from "svelte/store";
-import type { SankeyKey } from "../types";
-import { logError } from "../helper";
-import { dataStore } from "./data";
-import { linksStore } from "./links";
+import type { SankeyKey } from "../types/index.ts";
+import { logError } from "../helper.ts";
+import { dataStore } from "./data.svelte.ts";
+import { linksStore } from "./links.svelte.ts";
 
 export type SankeyItem = {
     id: SankeyKey;
@@ -23,18 +22,18 @@ export type SankeyEdge = {
     value: number;
 };
 
-export type ItemsStore = Map<string, SankeyItem>;
+export type ItemsStore = Record<string, SankeyItem>;
 
 const createItemsStore = () => {
-    const { subscribe } = derived([dataStore, linksStore], ([$dataStore, $linksStore]) => {
-        const items = new Map<SankeyKey, SankeyItem>();
-        if ($dataStore?.size > 0) {
-            for (const [columnKey, columnData] of $dataStore.entries()) {
+    const getItems = () => {
+        const items: ItemsStore = {};
+        if (Object.entries(dataStore.value).length > 0) {
+            for (const [columnKey, columnData] of Object.entries(dataStore.value)) {
                 for (const row of columnData.rows) {
                     for (const item of row.items) {
                         const sources: Array<SankeyEdge> = [];
                         const targets: Array<SankeyEdge> = [];
-                        for (const link of $linksStore.values()) {
+                        for (const [, link] of Object.entries(linksStore.value)) {
                             if (link.source === item.id) {
                                 targets.push({ id: link.target, value: link.value });
                             }
@@ -42,10 +41,10 @@ const createItemsStore = () => {
                                 sources.push({ id: link.source, value: link.value });
                             }
                         }
-                        if (items.has(item.id)) {
+                        if (items[item.id]) {
                             logError(`Sankey Item id must be unique. Item with id "${item.id}" already exists.`);
                         } else {
-                            items.set(item.id, {
+                            items[item.id] = {
                                 id: item.id,
                                 label: item.label,
                                 columnKey,
@@ -55,17 +54,20 @@ const createItemsStore = () => {
                                     sources: getEdgeTotalValue(sources),
                                     targets: getEdgeTotalValue(targets)
                                 }
-                            });
+                            };
                         }
                     }
                 }
             }
         }
         return items;
-    });
+    };
 
+    let items = $derived(getItems());
     return {
-        subscribe
+        get value() {
+            return items;
+        }
     };
 };
 

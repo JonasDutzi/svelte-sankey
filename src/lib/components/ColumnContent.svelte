@@ -3,7 +3,7 @@
 <script lang="ts">
     import { onDestroy, onMount } from "svelte";
     import type { SankeyColumn } from "../types";
-    import { dataStore } from "../stores/data";
+    import { dataStore } from "../stores/data.svelte";
 
     export let data: SankeyColumn;
 

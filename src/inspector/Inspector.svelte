@@ -1,28 +1,34 @@
 <script lang="ts">
-    import { anchorsStore } from "../lib/stores/anchors";
-    import { dataStore } from "../lib/stores/data";
-    import { itemsStore } from "../lib/stores/items";
-    import { linksStore } from "../lib/stores/links";
-    import { pathsStore } from "../lib/stores/paths";
-    import { sankeyStore } from "../lib/stores/sankey";
-    import { wrapperStore } from "../lib/stores/wrapper";
+    import { anchorsStore } from "../lib/stores/anchors.svelte.ts";
+    import { dataStore } from "../lib/stores/data.svelte.ts";
+    import { itemsStore } from "../lib/stores/items.svelte.ts";
+    import { linksStore } from "../lib/stores/links.svelte.ts";
+    import { pathsStore } from "../lib/stores/paths.svelte.ts";
+    import { sankeyStore } from "../lib/stores/sankey.svelte.ts";
+    import { wrapperStore } from "../lib/stores/wrapper.svelte.ts";
     import StoreInspector from "./StoreInspector.svelte";
 
-    $: stores = [
-        { store: $linksStore, name: "Links", iterable: true },
-        { store: $dataStore, name: "Data", iterable: true },
-        { store: $itemsStore, name: "Items", iterable: true },
-        { store: $anchorsStore, name: "Anchors", iterable: true },
-        { store: $pathsStore, name: "Paths", iterable: true },
-        { store: $wrapperStore, name: "Wrapper", iterable: false },
-        { store: $sankeyStore, name: "Sankey", iterable: false }
-    ];
+    let stores = $state<any>([]);
 
-    export let size = 30;
-    export let showHeaders = true;
-    export let highlightPaths = true;
-    export let showStores = true;
-    export let showSettings = true;
+    $effect(() => {
+        stores = [
+            { store: linksStore.value, name: "Links", iterable: false },
+            { store: dataStore.value, name: "Data", iterable: false },
+            { store: itemsStore.value, name: "Items", iterable: false },
+            { store: anchorsStore.value, name: "Anchors", iterable: false },
+            { store: pathsStore.value, name: "Paths", iterable: false },
+            { store: wrapperStore.value, name: "Wrapper", iterable: false },
+            { store: sankeyStore.value, name: "Sankey", iterable: false }
+        ];
+    });
+
+    let { size, showHeaders, highlightPaths, showStores, showSettings } = $props<{
+        size: number;
+        showHeaders: boolean;
+        highlightPaths: boolean;
+        showStores: boolean;
+        showSettings?: boolean;
+    }>();
 </script>
 
 <div class="inspector">

@@ -3,22 +3,34 @@
 <script lang="ts">
     import { onDestroy } from "svelte";
     import type { SankeyItem, SankeyKey } from "../types";
-    import { itemsStore } from "../stores/items";
-    import { wrapperStore } from "../stores/wrapper";
-    import { anchorsStore } from "../stores/anchors";
     import { scaleValue } from "../helper";
-    import { sankeyStore } from "../stores/sankey";
+    import { itemsStore } from "../stores/items.svelte.ts";
+    import { sankeyStore } from "../stores/sankey.svelte.ts";
+    import { anchorsStore } from "../stores/anchors.svelte.ts";
+    import { wrapperStore } from "../stores/wrapper.svelte.ts";
+    import { dataStore } from "../stores/data.svelte.ts";
 
     let anchorRef: HTMLDivElement;
     export let item: SankeyItem;
 
     let anchorHeight = 1;
+    let currentItem;
 
     $: {
-        let currentItem = $itemsStore.get(item.id);
+        // currentItem = itemsStore.value.get(item.id);
+        // console.log(currentItem);
+    }
+
+    $: {
+        let currentItem = itemsStore.value[item.id];
         if (currentItem) {
             const value = Math.max(currentItem.totalValues.sources, currentItem.totalValues.targets);
-            anchorHeight = scaleValue(value, [$sankeyStore.minPathHeight, $sankeyStore.maxPathHeight], $sankeyStore.minValue, $sankeyStore.maxValue);
+            anchorHeight = scaleValue(
+                value,
+                [sankeyStore.value.minPathHeight, sankeyStore.value.maxPathHeight],
+                sankeyStore.value.minValue,
+                sankeyStore.value.maxValue
+            );
         }
     }
 
@@ -28,8 +40,8 @@
             const rect = anchorRef.getBoundingClientRect();
             anchorsStore.setAnchor({
                 id: item.id,
-                positionX: rect.x - $wrapperStore.left,
-                positionY: rect.y - $wrapperStore.top
+                positionX: rect.x - wrapperStore.value.left,
+                positionY: rect.y - wrapperStore.value.top
             });
         }
     }

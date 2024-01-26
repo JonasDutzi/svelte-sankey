@@ -1,6 +1,5 @@
 <script lang="ts">
-    export let store;
-    export let iterable = true;
+    let { store, iterable } = $props<{ store: any; iterable: boolean }>();
 </script>
 
 {#if iterable}
