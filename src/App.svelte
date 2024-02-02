@@ -38,7 +38,7 @@
     <SankeyCustomData showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={customData} />
     <!-- <SankeyDataBigger showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={dataBigger} /> -->
     <!-- <SankeyDataBigger showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={dataInconsistent} /> -->
-    <SankeyInspector bind:highlightPaths bind:showHeaders bind:size showStores={false} />
+    <SankeyInspector bind:highlightPaths bind:showHeaders bind:size showStores={true} />
 </main>
 
 <style>

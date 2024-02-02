@@ -16,15 +16,16 @@ const createLinksStore = () => {
     return {
         subscribe,
         add: (newLink: Link) =>
-            update((currentLinks) =>
+            update((currentLinks) => {
                 currentLinks.set(`${newLink.source}/${newLink.target}`, {
                     source: newLink.source,
                     target: newLink.target,
                     value: newLink.value <= 0 ? 0 : newLink.value,
                     strokeColor: newLink.strokeColor,
                     strokeColorHover: newLink.strokeColorHover
-                })
-            ),
+                });
+                return currentLinks;
+            }),
         remove: (link: Link) =>
             update((currentLinks) => {
                 currentLinks.delete(`${link.source}/${link.target}`);

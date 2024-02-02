@@ -15,7 +15,7 @@ export const logError = (message?: unknown, ...optionalParams: Array<unknown>) =
 export const scaleValue = (value: number, range: Array<number>, minValue: number, maxValue: number): number => {
     const [minRange, maxRange] = range;
     if (isNaN(value) || value === 0 || maxValue === 0) {
-        return 1;
+        return 0;
     }
     if (minValue === maxValue) {
         return maxRange;

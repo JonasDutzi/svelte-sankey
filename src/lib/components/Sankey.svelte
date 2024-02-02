@@ -6,6 +6,7 @@
     import { pathsStore } from "../stores/paths";
 
     import SankeyLine from "./SankeyLine.svelte";
+    import { onDestroy, onMount } from "svelte";
 
     export let showheaders: boolean = false;
     export let highlightpaths: boolean = true;
@@ -30,6 +31,21 @@
             $wrapperStore.left = wrapperRect.left;
         }
     }
+
+    const updateSankey = () => {
+        wrapperRef = wrapperRef;
+    };
+
+    onMount(() => {
+        if (window) {
+            window.addEventListener("resize", updateSankey);
+        }
+    });
+    onDestroy(() => {
+        if (window) {
+            window.removeEventListener("resize", updateSankey);
+        }
+    });
 </script>
 
 <div

@@ -15,7 +15,7 @@ export const sankeyData: SankeyData = {
                             links: [
                                 {
                                     target: "semi_finished_good",
-                                    value: 5,
+                                    value: 0,
                                     strokeColor: "var(--stroke-color-1)",
                                     strokeColorHover: "var(--stroke-color-1-hover)"
                                 }

@@ -1,7 +1,6 @@
 import { writable } from "svelte/store";
 
 export type SankeyStore = {
-    minPathHeight?: number;
     maxPathHeight?: number;
     minValue?: number;
     maxValue?: number;
@@ -10,7 +9,6 @@ export type SankeyStore = {
 };
 
 export const sankeyStore = writable<SankeyStore>({
-    minPathHeight: 1,
     maxPathHeight: null,
     minValue: null,
     maxValue: null,

@@ -14,13 +14,10 @@
 
     $: {
         const linkData = $linksStore.get(key);
-        let pathValue;
-        if (linkData?.value! > $sankeyStore.minPathHeight) {
-            pathValue = linkData?.value;
-        } else {
-            pathValue = $sankeyStore.minPathHeight;
+        pathWidth = scaleValue(linkData.value, [1, $sankeyStore.maxPathHeight], $sankeyStore.minValue, $sankeyStore.maxValue);
+        if (pathWidth === 0) {
+            pathWidth = 1;
         }
-        pathWidth = scaleValue(pathValue, [$sankeyStore.minPathHeight, $sankeyStore.maxPathHeight], $sankeyStore.minValue, $sankeyStore.maxValue);
     }
 
     $: x1 = getPosition(data.sourcePosition.x, pathWidth ?? 0, Axis.x);

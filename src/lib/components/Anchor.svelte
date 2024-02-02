@@ -18,7 +18,7 @@
         let currentItem = $itemsStore.get(item.id);
         if (currentItem) {
             const value = Math.max(currentItem.totalValues.sources, currentItem.totalValues.targets);
-            anchorHeight = scaleValue(value, [$sankeyStore.minPathHeight, $sankeyStore.maxPathHeight], $sankeyStore.minValue, $sankeyStore.maxValue);
+            anchorHeight = scaleValue(value, [1, $sankeyStore.maxPathHeight], $sankeyStore.minValue, $sankeyStore.maxValue);
         }
     }
 
