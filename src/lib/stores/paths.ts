@@ -29,12 +29,7 @@ const createPathsStore = () => {
             for (const [linkKey, linkData] of $linksStore.entries()) {
                 const sourceAnchor = $anchorsStore.get(linkData.source);
                 const targetAnchor = $anchorsStore.get(linkData.target);
-                const scaledLinkValue = scaleValue(
-                    linkData.value,
-                    [$sankeyStore.minPathHeight, $sankeyStore.maxPathHeight],
-                    $sankeyStore.minValue,
-                    $sankeyStore.maxValue
-                );
+                const scaledLinkValue = scaleValue(linkData.value, [1, $sankeyStore.maxPathHeight], $sankeyStore.minValue, $sankeyStore.maxValue);
                 if (sourceAnchor && targetAnchor) {
                     paths.set(linkKey, {
                         sourcePosition: {
