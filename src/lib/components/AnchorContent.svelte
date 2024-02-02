@@ -11,18 +11,17 @@
         };
     };
 
-    export let item: SankeyItem;
-    export let highlightpaths = true;
+    let { item, highlightpaths, children } = $props<{ item: SankeyItem; highlightpaths: boolean; children?: () => {} }>();
 
-    let isPathHighlightingOn: boolean;
+    let isPathHighlightingOn = $state(true);
 
-    $: {
+    $effect(() => {
         if (sankeyStore.value.highlightPaths === false) {
             isPathHighlightingOn = false;
         } else {
             isPathHighlightingOn = highlightpaths;
         }
-    }
+    });
 
     const dispatch = createEventDispatcher();
 

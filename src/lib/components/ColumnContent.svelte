@@ -1,18 +1,16 @@
 <svelte:options customElement="svsankey-column-content" />
 
 <script lang="ts">
-    import { onDestroy, onMount } from "svelte";
     import type { SankeyColumn } from "../types";
     import { dataStore } from "../stores/data.svelte";
 
-    export let data: SankeyColumn;
+    let { data, children } = $props<{ data: SankeyColumn; children?: () => {} }>();
 
-    onMount(() => {
+    $effect(() => {
         dataStore.addColumn(data);
-    });
-
-    onDestroy(() => {
-        dataStore.removeColumn(data);
+        () => {
+            dataStore.removeColumn(data);
+        };
     });
 </script>
 

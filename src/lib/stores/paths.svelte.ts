@@ -18,12 +18,14 @@ export type Position = {
 
 export type PathsStore = Record<string, Path>;
 
+type Positions = Record<SankeyKey, number>;
+
 const createPathsStore = () => {
     const getPaths = () => {
         const paths: PathsStore = {};
         if (Object.entries(linksStore.value).length > 0) {
-            const targetPositionMap = new Map<SankeyKey, number>();
-            const sourcePositionMap = new Map<SankeyKey, number>();
+            const targetPositions: Positions = {};
+            const sourcePositions: Positions = {};
             for (const [linkKey, linkData] of Object.entries(linksStore.value)) {
                 const sourceAnchor = anchorsStore.value[linkData.source];
                 const targetAnchor = anchorsStore.value[linkData.target];
@@ -37,24 +39,24 @@ const createPathsStore = () => {
                     paths[linkKey] = {
                         sourcePosition: {
                             x: sourceAnchor?.positionX,
-                            y: sourceAnchor?.positionY + (sourcePositionMap.get(linkData.source) ?? 0)
+                            y: sourceAnchor?.positionY + (sourcePositions[linkData.source] ?? 0)
                         },
                         targetPosition: {
                             x: targetAnchor?.positionX,
-                            y: targetAnchor?.positionY + (targetPositionMap.get(linkData.target) ?? 0)
+                            y: targetAnchor?.positionY + (targetPositions[linkData.target] ?? 0)
                         },
                         strokeColor: linkData.strokeColor,
                         strokeColorHover: linkData.strokeColorHover
                     };
-                    if (targetPositionMap.has(linkData.target)) {
-                        targetPositionMap.set(linkData.target, scaledLinkValue + targetPositionMap.get(linkData.target)!);
+                    if (targetPositions[linkData.target]) {
+                        targetPositions[linkData.target] = scaledLinkValue + targetPositions[linkData.target];
                     } else {
-                        targetPositionMap.set(linkData.target, scaledLinkValue);
+                        targetPositions[linkData.target] = scaledLinkValue;
                     }
-                    if (sourcePositionMap.has(linkData.source)) {
-                        sourcePositionMap.set(linkData.source, scaledLinkValue + sourcePositionMap.get(linkData.source)!);
+                    if (sourcePositions[linkData.source]) {
+                        sourcePositions[linkData.source] = scaledLinkValue + sourcePositions[linkData.source];
                     } else {
-                        sourcePositionMap.set(linkData.source, scaledLinkValue);
+                        sourcePositions[linkData.source] = scaledLinkValue;
                     }
                 }
             }

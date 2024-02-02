@@ -2,6 +2,7 @@ import type { SankeyKey } from "../types/index.ts";
 import { logError } from "../helper.ts";
 import { dataStore } from "./data.svelte.ts";
 import { linksStore } from "./links.svelte.ts";
+import { anchorsStore } from "./anchors.svelte.ts";
 
 export type SankeyItem = {
     id: SankeyKey;
@@ -27,7 +28,12 @@ export type ItemsStore = Record<string, SankeyItem>;
 const createItemsStore = () => {
     const getItems = () => {
         const items: ItemsStore = {};
-        if (Object.entries(dataStore.value).length > 0) {
+        if (
+            Object.keys(dataStore.value).length > 0 &&
+            Object.keys(linksStore.value).length > 0
+            // &&
+            // Object.keys(anchorsStore.value).length === Object.keys(linksStore.value).length
+        ) {
             for (const [columnKey, columnData] of Object.entries(dataStore.value)) {
                 for (const row of columnData.rows) {
                     for (const item of row.items) {

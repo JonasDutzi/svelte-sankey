@@ -1,15 +1,14 @@
 <svelte:options customElement="svsankey-item" />
 
 <script lang="ts">
-    import { onDestroy, onMount } from "svelte";
     import type { SankeyItem } from "../types";
     import { logError } from "../helper";
     import { linksStore } from "../stores/links.svelte.ts";
     import { sankeyStore } from "../stores/sankey.svelte.ts";
 
-    export let item: SankeyItem;
+    let { item, children } = $props<{ item: SankeyItem; children?: () => {} }>();
 
-    onMount(() => {
+    $effect(() => {
         if (!item.id) {
             logError("Every Sankey Item must have a key");
         }
@@ -39,14 +38,13 @@
                 }
             }
         }
-    });
-
-    onDestroy(() => {
-        if (item.links) {
-            for (const link of item.links) {
-                linksStore.remove({ source: item.id, target: link.target, value: link.value });
+        () => {
+            if (item.links) {
+                for (const link of item.links) {
+                    linksStore.remove({ source: item.id, target: link.target, value: link.value });
+                }
             }
-        }
+        };
     });
 </script>
 

@@ -7,32 +7,6 @@
     import { scaleValue } from "../helper";
     import { sankeyStore } from "../stores/sankey.svelte.ts";
 
-    export let key: string;
-    export let data: Path;
-
-    let pathWidth = 0;
-
-    $: {
-        const linkData = linksStore.value.get(key);
-        let pathValue = 0;
-        if (linkData?.value! > sankeyStore.value.minPathHeight) {
-            pathValue = linkData?.value!;
-        } else {
-            pathValue = sankeyStore.value.minPathHeight;
-        }
-        pathWidth = scaleValue(
-            pathValue,
-            [sankeyStore.value.minPathHeight, sankeyStore.value.maxPathHeight],
-            sankeyStore.value.minValue,
-            sankeyStore.value.maxValue
-        );
-    }
-
-    $: x1 = getPosition(data.sourcePosition.x, pathWidth ?? 0, Axis.x);
-    $: y1 = getPosition(data.sourcePosition.y, pathWidth ?? 0, Axis.y);
-    $: x2 = getPosition(data.targetPosition.x, pathWidth ?? 0, Axis.x);
-    $: y2 = getPosition(data.targetPosition.y, pathWidth ?? 0, Axis.y);
-
     const getPosition = (value: number | undefined, pathWidth: number, axis: Axis): number => {
         if (axis === Axis.x && value) {
             return value;
@@ -43,13 +17,35 @@
         return 0;
     };
 
-    $: bezierCurve = bezierCurveTo(x1, y1, x2, y2);
+    const getPathWidth = () => {
+        const linkData = linksStore.value[key];
+        let pathValue = 0;
+        if (linkData?.value! > sankeyStore.value.minPathHeight) {
+            pathValue = linkData?.value!;
+        } else {
+            pathValue = sankeyStore.value.minPathHeight;
+        }
+        return scaleValue(
+            pathValue,
+            [sankeyStore.value.minPathHeight, sankeyStore.value.maxPathHeight],
+            sankeyStore.value.minValue,
+            sankeyStore.value.maxValue
+        );
+    };
 
     const bezierCurveTo = (x1: number, y1: number, x2: number, y2: number): string => {
         const xMove = 2;
         const xFactor = (x1 + x2) * (1 / xMove);
         return `M${x1},${y1} C${xFactor},${y1} ${xFactor},${y2}  ${x2},${y2}`;
     };
+
+    let { key, data } = $props<{ key: string; data: Path }>();
+    let pathWidth = $derived(getPathWidth());
+    let x1 = $derived(getPosition(data.sourcePosition.x, pathWidth ?? 0, Axis.x));
+    let y1 = $derived(getPosition(data.sourcePosition.y, pathWidth ?? 0, Axis.y));
+    let x2 = $derived(getPosition(data.targetPosition.x, pathWidth ?? 0, Axis.x));
+    let y2 = $derived(getPosition(data.targetPosition.y, pathWidth ?? 0, Axis.y));
+    let bezierCurve = $derived(bezierCurveTo(x1, y1, x2, y2));
 </script>
 
 <path

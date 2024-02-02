@@ -1,7 +1,7 @@
 <svelte:options customElement="svsankey-label" />
 
 <script lang="ts">
-    export let label: string;
+    let { label } = $props<{ label: string }>();
 </script>
 
 <div class="sv-sankey__label">

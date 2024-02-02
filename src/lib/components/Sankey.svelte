@@ -7,19 +7,16 @@
 
     import SankeyLine from "./SankeyLine.svelte";
     import type { SvelteComponent } from "svelte";
+    import { itemsStore } from "../stores/items.svelte.ts";
 
     let { showheaders, highlightpaths, maxpathheight, children } = $props<{
         showheaders: boolean;
         highlightpaths: boolean;
         maxpathheight: number;
-        children: () => {};
+        children?: () => {};
     }>();
 
     let wrapperRef = $state<HTMLDivElement | undefined>();
-    let divClientWidth = $state<number>();
-    let divClientHeight = $state<number>();
-    let svgClientWidth = $state<number>();
-    let svgClientHeight = $state<number>();
 
     $effect(() => {
         sankeyStore.setHighlightPaths(highlightpaths);
@@ -48,7 +45,7 @@
 
 <div bind:this={wrapperRef} style:--grid-auto-flow={showheaders ? "row" : "column"} class="sv-sankey__wrapper">
     <!-- <svg width={wrapperStore.value.width} height={wrapperStore.value.height}>
-        {#each Array.from(pathsStore.value) as [key, data]}
+        {#each Object.entries(pathsStore.value) as [key, data]}
             <SankeyLine {key} {data} />
         {/each}
     </svg> -->

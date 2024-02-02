@@ -4,10 +4,13 @@
     import Anchor from "./Anchor.svelte";
     import AnchorContent from "./AnchorContent.svelte";
     import { ColumnContent, ColumnHeader, Item, Sankey } from "./index";
-    export let showheaders = true;
-    export let highlightpaths = true;
-    export let maxpathheight = 50;
-    export let chartdata: any;
+
+    let { showheaders, highlightpaths, maxpathheight, chartdata } = $props<{
+        showheaders: boolean;
+        highlightpaths: boolean;
+        maxpathheight: number;
+        chartdata: any;
+    }>();
 </script>
 
 <Sankey {showheaders} {maxpathheight} {highlightpaths}>
