@@ -8,6 +8,14 @@
     import { wrapperStore } from "../lib/stores/wrapper.svelte.ts";
     import StoreInspector from "./StoreInspector.svelte";
 
+    type Props = {
+        size: number,
+        showHeaders: boolean,
+        highlightPaths: boolean,
+        showStores: boolean,
+        showSettings: boolean
+    }
+
     let stores = $state<any>([]);
 
     $effect(() => {
@@ -22,13 +30,7 @@
         ];
     });
 
-    let { size, showHeaders, highlightPaths, showStores, showSettings } = $props<{
-        size: number;
-        showHeaders: boolean;
-        highlightPaths: boolean;
-        showStores: boolean;
-        showSettings?: boolean;
-    }>();
+    let { size, showHeaders, highlightPaths, showStores, showSettings } : Props = $props();
 </script>
 
 <div class="inspector">
