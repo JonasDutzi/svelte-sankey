@@ -6,15 +6,18 @@
   import { pathsStore } from "../stores/paths.svelte.ts";
 
   import SankeyLine from "./SankeyLine.svelte";
-  import type { SvelteComponent } from "svelte";
+  import type { Snippet, SvelteComponent } from "svelte";
   import { itemsStore } from "../stores/items.svelte.ts";
 
-  let { showheaders, highlightpaths, maxpathheight, children } = $props<{
+  type Props = {
     showheaders: boolean;
     highlightpaths: boolean;
     maxpathheight: number;
-    children?: () => {};
-  }>();
+    children?: Snippet;
+  };
+
+  let { showheaders, highlightpaths, maxpathheight, children }: Props =
+    $props();
 
   let wrapperRef = $state<HTMLDivElement | undefined>();
 
@@ -53,7 +56,9 @@
       <SankeyLine {key} {data} />
     {/each}
   </svg>
-  <slot />
+  {#if children}
+    {@render children()}
+  {/if}
 </div>
 
 <style>

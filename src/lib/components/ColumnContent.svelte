@@ -4,10 +4,12 @@
   import type { SankeyColumn } from "../types";
   import { dataStore } from "../stores/data.svelte";
 
-  let { data, children } = $props<{
+  type Props = {
     data: SankeyColumn;
     children?: () => {};
-  }>();
+  };
+
+  let { data, children }: Props = $props();
 
   $effect(() => {
     dataStore.addColumn(data);
