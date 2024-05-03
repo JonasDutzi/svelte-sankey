@@ -8,6 +8,7 @@
   import SankeyLine from "./SankeyLine.svelte";
   import type { Snippet, SvelteComponent } from "svelte";
   import { itemsStore } from "../stores/items.svelte.ts";
+  import Children from "./Children.svelte";
 
   type Props = {
     showheaders: boolean;
@@ -56,9 +57,7 @@
       <SankeyLine {key} {data} />
     {/each}
   </svg>
-  {#if children}
-    {@render children()}
-  {/if}
+  <Children {children}></Children>
 </div>
 
 <style>
