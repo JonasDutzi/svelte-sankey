@@ -39,6 +39,7 @@
               on:anchormouseenter
               on:anchormouseleave
               {item}
+              {highlightpaths}
             >
               <div>{item.label}</div>
             </AnchorContent>

@@ -13,17 +13,16 @@
   };
 
   const onAnchorMouseEnter = (e: any) => {
-    console.log(e.detail.item);
+    //console.log(e.detail.item);
   };
 
   const onAnchorMouseLeave = (e: any) => {
-    console.log(e.detail.item);
+    //console.log(e.detail.item);
   };
 
   let highlightPaths = $state(true);
   let showHeaders = $state(true);
-  let size = $state(25);
-  let test = $state(true);
+  let size = $state(3);
 </script>
 
 <main>
