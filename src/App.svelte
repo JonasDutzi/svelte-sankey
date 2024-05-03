@@ -23,6 +23,7 @@
   let highlightPaths = $state(true);
   let showHeaders = $state(true);
   let size = $state(25);
+  let test = $state(true);
 </script>
 
 <main>
@@ -45,7 +46,13 @@
     showStores={true}
     showSettings={true}
   /> -->
-  <SankeyInspector showStores={true} showSettings={true} />
+  <SankeyInspector
+    showStores={true}
+    showSettings={true}
+    bind:showHeaders
+    bind:size
+    bind:highlightPaths
+  />
 </main>
 
 <style>

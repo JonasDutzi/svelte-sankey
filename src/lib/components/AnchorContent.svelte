@@ -4,6 +4,7 @@
   import { createEventDispatcher, type Snippet } from "svelte";
   import type { SankeyItem } from "../types";
   import { sankeyStore } from "../stores/sankey.svelte.ts";
+  import Children from "./Children.svelte";
 
   type SVGPathElement = {
     style: {
@@ -83,7 +84,7 @@
   onmouseenter={onContentMouseEnter}
   onmouseleave={onContentMouseLeave}
 >
-  <slot />
+  <Children {children}></Children>
 </div>
 
 <style>

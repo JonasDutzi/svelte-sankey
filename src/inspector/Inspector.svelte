@@ -30,8 +30,13 @@
     ];
   });
 
-  let { size, showHeaders, highlightPaths, showStores, showSettings }: Props =
-    $props();
+  let {
+    size = $bindable(),
+    showHeaders = $bindable(),
+    highlightPaths = $bindable(),
+    showStores = $bindable(),
+    showSettings = $bindable(),
+  }: Props = $props();
 </script>
 
 <div class="inspector">

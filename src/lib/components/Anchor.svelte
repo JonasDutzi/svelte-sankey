@@ -1,15 +1,12 @@
 <svelte:options customElement="svsankey-anchor" />
 
 <script lang="ts">
-  import type { SankeyItem, SankeyKey } from "../types";
+  import type { SankeyItem } from "../types";
   import { scaleValue } from "../helper";
   import { itemsStore } from "../stores/items.svelte.ts";
   import { sankeyStore } from "../stores/sankey.svelte.ts";
   import { anchorsStore } from "../stores/anchors.svelte.ts";
   import { wrapperStore } from "../stores/wrapper.svelte.ts";
-  import { dataStore } from "../stores/data.svelte.ts";
-  import { pathsStore } from "../stores/paths.svelte.ts";
-  import { linksStore } from "../stores/links.svelte.ts";
 
   type Props = {
     item: SankeyItem;
