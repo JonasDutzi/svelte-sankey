@@ -7,7 +7,6 @@
   import { sankeyStore } from "../stores/sankey.svelte.ts";
   import { anchorsStore } from "../stores/anchors.svelte.ts";
   import { wrapperStore } from "../stores/wrapper.svelte.ts";
-  import { tick } from "svelte";
 
   type Props = {
     item: SankeyItem;
@@ -38,7 +37,7 @@
           anchorsStore.setAnchor({
             id: item.id,
             positionX: anchorRect.x - wrapperStore.value.left,
-            positionY: anchorRect.y - wrapperStore.value.top - 8, //why 8?
+            positionY: anchorRect.y - wrapperStore.value.top,
           });
         }
       }

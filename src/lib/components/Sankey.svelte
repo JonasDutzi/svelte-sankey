@@ -34,12 +34,15 @@
     const resizeObserver = new ResizeObserver((entries) => {
       const wrapper = entries.at(0);
       if (wrapper) {
-        wrapperStore.set({
-          width: wrapper.contentRect.width,
-          height: wrapper.contentRect.height,
-          top: wrapper.contentRect.top,
-          left: wrapper.contentRect.left,
-        });
+        const clientRect = wrapperRef?.getBoundingClientRect();
+        if (clientRect) {
+          wrapperStore.set({
+            width: clientRect.width,
+            height: clientRect.height,
+            top: clientRect.top,
+            left: clientRect.left,
+          });
+        }
       }
     });
     resizeObserver.observe(wrapperRef!);

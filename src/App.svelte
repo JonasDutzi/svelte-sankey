@@ -26,7 +26,7 @@
 </script>
 
 <main>
-  <SankeyChart
+  <!-- <SankeyChart
     highlightpaths={highlightPaths}
     showheaders={showHeaders}
     maxpathheight={size}
@@ -34,9 +34,14 @@
     on:itemclick={onItemClicked}
     on:anchormouseenter={onAnchorMouseEnter}
     on:anchormouseleave={onAnchorMouseLeave}
-  />
+  /> -->
   <!-- <SankeyCustomData showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={customData} /> -->
-  <!-- <SankeyDataBigger showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={dataBigger} /> -->
+  <SankeyDataBigger
+    showheaders={showHeaders}
+    maxpathheight={size}
+    highlightpaths={highlightPaths}
+    chartdata={dataBigger}
+  />
   <!-- <SankeyDataBigger showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={dataInconsistent} /> -->
   <!-- <SankeyInspector
     bind:khighlightPaths
