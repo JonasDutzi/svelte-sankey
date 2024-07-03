@@ -7,12 +7,13 @@
   import { sankeyStore } from "../stores/sankey.svelte.ts";
   import { anchorsStore } from "../stores/anchors.svelte.ts";
   import { wrapperStore } from "../stores/wrapper.svelte.ts";
+  import { tick } from "svelte";
 
   type Props = {
     item: SankeyItem;
   };
 
-  let anchorRef = $state<HTMLDivElement | undefined>(undefined);
+  let anchorRef = $state<HTMLDivElement>();
   let { item }: Props = $props();
 
   let anchorHeight = $state(1);
@@ -31,22 +32,17 @@
           sankeyStore.value.minValue,
           sankeyStore.value.maxValue
         );
+        const anchorRect = anchorRef?.getBoundingClientRect();
+        console.log(`Anchor rect ${item.id}:  ${JSON.stringify(anchorRect)}`);
+        if (anchorRect) {
+          anchorsStore.setAnchor({
+            id: item.id,
+            positionX: anchorRect.x - wrapperStore.value.left,
+            positionY: anchorRect.y - wrapperStore.value.top - 8, //why 8?
+          });
+        }
       }
     }
-  });
-
-  $effect(() => {
-    if (anchorRef) {
-      const rect = anchorRef.getBoundingClientRect();
-      anchorsStore.setAnchor({
-        id: item.id,
-        positionX: rect.x - wrapperStore.value.left,
-        positionY: rect.y - wrapperStore.value.top,
-      });
-    }
-    () => {
-      anchorsStore.remove(item.id);
-    };
   });
 </script>
 

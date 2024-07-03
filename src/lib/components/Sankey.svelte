@@ -6,9 +6,9 @@
   import { pathsStore } from "../stores/paths.svelte.ts";
 
   import SankeyLine from "./SankeyLine.svelte";
-  import type { Snippet, SvelteComponent } from "svelte";
-  import { itemsStore } from "../stores/items.svelte.ts";
+  import type { Snippet } from "svelte";
   import Children from "./Children.svelte";
+  import { anchorsStore } from "../stores/anchors.svelte.ts";
 
   type Props = {
     showheaders: boolean;

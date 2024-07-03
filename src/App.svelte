@@ -1,6 +1,6 @@
 <script lang="ts">
   import "./index.css";
-  import { sankeyData } from "./testdata/data.customdata.ts";
+  import { sankeyData as data } from "./testdata/data.customdata.ts";
   import { sankeyData as dataBigger } from "./testdata/data.bigger.ts";
   // import { sankeyData as dataInconsistent } from "./testdata/data.inconsistent.ts";
   import SankeyCustomData from "./testdata/SankeyCustomData.svelte";
@@ -22,7 +22,7 @@
 
   let highlightPaths = $state(true);
   let showHeaders = $state(true);
-  let size = $state(3);
+  let size = $state(260);
 </script>
 
 <main>
@@ -30,7 +30,7 @@
     highlightpaths={highlightPaths}
     showheaders={showHeaders}
     maxpathheight={size}
-    chartdata={sankeyData}
+    chartdata={data}
     on:itemclick={onItemClicked}
     on:anchormouseenter={onAnchorMouseEnter}
     on:anchormouseleave={onAnchorMouseLeave}
