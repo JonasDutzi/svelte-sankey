@@ -56,7 +56,7 @@
   let { key, data }: Props = $props();
   let pathWidth = $derived(getPathWidth());
 
-  const FIX_NO_BOX_HEIGHT = 0.00001;
+  const FIX_NO_BOX_HEIGHT = 0.001;
   let x1 = $derived.by(() => {
     const value = getPosition(data.sourcePosition.x, pathWidth ?? 0, Axis.x);
     return value + FIX_NO_BOX_HEIGHT;
