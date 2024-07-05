@@ -20,9 +20,22 @@
     //console.log(e.detail.item);
   };
 
+  //basic example of resizing based on window breakpoints
+  $effect(() => {
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 1025) {
+        return; //use default size
+      } else if (window.innerWidth > 768) {
+        size = 150;
+      } else {
+        size = 60;
+      }
+    });
+  });
+
   let highlightPaths = $state(true);
   let showHeaders = $state(true);
-  let size = $state(260);
+  let size = $state(280);
 </script>
 
 <main>
