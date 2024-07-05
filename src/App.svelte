@@ -35,7 +35,7 @@
 
   let highlightPaths = $state(true);
   let showHeaders = $state(true);
-  let size = $state(280);
+  let size = $state(260);
 </script>
 
 <main>

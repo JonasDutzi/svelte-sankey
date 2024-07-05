@@ -46,7 +46,7 @@
     <div style="display: flex; align-items: center; gap: 2rem">
       <div>
         <div>Size (maxpathheight):</div>
-        <input type="range" min="1" max="200" bind:value={size} />
+        <input type="range" min="1" max="400" bind:value={size} />
       </div>
       <div>
         <div>Headers (showheaders):</div>
