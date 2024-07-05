@@ -3,12 +3,14 @@ import type { SankeyKey } from "../types";
 export type Anchor = {
   positionX: number;
   positionY: number;
+  anchorColor?: string;
 };
 
 export type NewAnchor = {
   id: SankeyKey;
   positionX: number;
   positionY: number;
+  anchorColor?: string;
 };
 
 export type AnchorsStore = Record<SankeyKey, Anchor>;

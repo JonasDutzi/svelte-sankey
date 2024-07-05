@@ -32,12 +32,12 @@
           sankeyStore.value.maxValue
         );
         const anchorRect = anchorRef?.getBoundingClientRect();
-        console.log(`Anchor rect ${item.id}:  ${JSON.stringify(anchorRect)}`);
         if (anchorRect) {
           anchorsStore.setAnchor({
             id: item.id,
             positionX: anchorRect.x - wrapperStore.value.left,
             positionY: anchorRect.y - wrapperStore.value.top,
+            anchorColor: item.anchorColor,
           });
         }
       }
@@ -47,6 +47,7 @@
 
 <div
   class="sv-sankey__anchor"
+  data-sankey-key={item.id}
   style:--anchor-height="{anchorHeight}px"
   style:--background-color={item.anchorColor}
   bind:this={anchorRef}

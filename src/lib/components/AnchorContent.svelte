@@ -8,7 +8,7 @@
 
   type SVGPathElement = {
     style: {
-      stroke: string | undefined;
+      filter: string | undefined;
     };
   };
 
@@ -57,7 +57,7 @@
     ];
     paths.forEach((path) => {
       window.requestAnimationFrame(() => {
-        (path as unknown as SVGPathElement).style.stroke = item.anchorColor;
+        (path as unknown as SVGPathElement).style.filter = "brightness(0.8)";
       });
     });
   };
@@ -69,7 +69,7 @@
     ];
     paths.forEach((path) => {
       window.requestAnimationFrame(() => {
-        (path as unknown as SVGPathElement).style.stroke = "";
+        (path as unknown as SVGPathElement).style.filter = "";
       });
     });
   };
@@ -90,12 +90,12 @@
 <style>
   :global(.sv-sankey__anchorcontent) {
     cursor: pointer;
-    background-color: rgba(239, 239, 239);
+    background-color: rgba(255, 255, 255);
     border: 1px solid rgba(239, 239, 239, 0.2);
     border-radius: 5px;
     z-index: 1;
     margin-inline: 0.75rem;
-    padding-inline: 0.5rem;
-    padding-block: 0.25rem;
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
   }
 </style>

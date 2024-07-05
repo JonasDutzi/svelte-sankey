@@ -9,6 +9,7 @@
   import type { Snippet } from "svelte";
   import Children from "./Children.svelte";
   import { anchorsStore } from "../stores/anchors.svelte.ts";
+  import Gradient from "./Gradient.svelte";
 
   type Props = {
     showheaders: boolean;
@@ -56,6 +57,11 @@
   class="sv-sankey__wrapper"
 >
   <svg width={wrapperStore.value.width} height={wrapperStore.value.height}>
+    <defs>
+      {#each Object.entries(pathsStore.value) as [pathKey, pathData]}
+        <Gradient key={pathKey} />
+      {/each}
+    </defs>
     {#each Object.entries(pathsStore.value) as [key, data]}
       <SankeyLine {key} {data} />
     {/each}

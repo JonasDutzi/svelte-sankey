@@ -55,12 +55,16 @@
 
   let { key, data }: Props = $props();
   let pathWidth = $derived(getPathWidth());
-  let x1 = $derived.by(() =>
-    getPosition(data.sourcePosition.x, pathWidth ?? 0, Axis.x)
-  );
-  let y1 = $derived.by(() =>
-    getPosition(data.sourcePosition.y, pathWidth ?? 0, Axis.y)
-  );
+
+  const FIX_NO_BOX_HEIGHT = 0.00001;
+  let x1 = $derived.by(() => {
+    const value = getPosition(data.sourcePosition.x, pathWidth ?? 0, Axis.x);
+    return value + FIX_NO_BOX_HEIGHT;
+  });
+  let y1 = $derived.by(() => {
+    const value = getPosition(data.sourcePosition.y, pathWidth ?? 0, Axis.y);
+    return value + FIX_NO_BOX_HEIGHT;
+  });
   let x2 = $derived.by(() =>
     getPosition(data.targetPosition.x, pathWidth ?? 0, Axis.x)
   );
@@ -72,22 +76,22 @@
 
 <path
   class="sv-sankey__path"
+  data-sankey-key={key}
   data-sankey-source="path-{key.split('/')[0]}"
   data-sankey-target="path-{key.split('/')[1]}"
   d={bezierCurve}
   style:--path-width={pathWidth}
   style:--stroke-color={data.strokeColor}
   style:--stroke-color-hover={data.strokeColorHover}
+  style="stroke: url(#sv-sankey__gradient-{key});"
 />
 
 <style>
   :global(.sv-sankey__path) {
     z-index: -1;
-    stroke: var(--stroke-color, rgba(44, 61, 171, 0.3));
+    /* stroke: var(--stroke-color, rgba(44, 61, 171, 0.3)); */
     stroke-width: var(--path-width);
     fill: none;
-  }
-  :global(.sv-sankey__path:hover) {
-    stroke: var(--stroke-color-hover, rgba(44, 61, 171, 0.6));
+    opacity: 0.8;
   }
 </style>

@@ -43,15 +43,8 @@
     chartdata={dataBigger}
   /> -->
   <!-- <SankeyDataBigger showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={dataInconsistent} /> -->
-  <!-- <SankeyInspector
-    bind:khighlightPaths
-    bind:showHeaders
-    bind:size
-    showStores={true}
-    showSettings={true}
-  /> -->
   <SankeyInspector
-    showStores={true}
+    showStores={false}
     showSettings={true}
     bind:showHeaders
     bind:size
@@ -64,5 +57,9 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: sans-serif;
+  }
+  :global(body) {
+    background-color: hsl(0, 0%, 93%);
   }
 </style>
