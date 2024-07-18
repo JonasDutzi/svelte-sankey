@@ -36,12 +36,10 @@
           sankeyStore.setMaxValue(link.value);
         }
 
-        if (link.value && sankeyStore.value.minValue) {
+        if (link.value && link.value > 0 && sankeyStore.value.minValue) {
           if (sankeyStore.value.minValue > link.value) {
             sankeyStore.value.minValue = link.value;
           }
-        } else {
-          sankeyStore.setMinValue(link.value);
         }
       }
     }

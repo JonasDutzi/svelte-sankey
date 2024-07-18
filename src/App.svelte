@@ -2,6 +2,7 @@
   import "./index.css";
   import { sankeyData as data } from "./testdata/data.customdata.ts";
   import { sankeyData as dataBigger } from "./testdata/data.bigger.ts";
+  import { sankeyData as dataNegatives } from "./testdata/data.negatives.ts";
   // import { sankeyData as dataInconsistent } from "./testdata/data.inconsistent.ts";
   import SankeyCustomData from "./testdata/SankeyCustomData.svelte";
   import SankeyDataBigger from "./testdata/SankeyDataBigger.svelte";
@@ -43,7 +44,7 @@
     highlightpaths={highlightPaths}
     showheaders={showHeaders}
     maxpathheight={size}
-    chartdata={data}
+    chartdata={dataNegatives}
     on:itemclick={onItemClicked}
     on:anchormouseenter={onAnchorMouseEnter}
     on:anchormouseleave={onAnchorMouseLeave}
@@ -57,7 +58,7 @@
   /> -->
   <!-- <SankeyDataBigger showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={dataInconsistent} /> -->
   <SankeyInspector
-    showStores={false}
+    showStores={true}
     showSettings={true}
     bind:showHeaders
     bind:size

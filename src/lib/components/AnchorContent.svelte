@@ -75,17 +75,14 @@
   };
 </script>
 
-<div
+<button
   class="sv-sankey__anchorcontent"
-  role="button"
-  tabindex="0"
   onclick={onContentClicked}
-  onkeypress={onContentClicked}
   onmouseenter={onContentMouseEnter}
   onmouseleave={onContentMouseLeave}
 >
   <Children {children}></Children>
-</div>
+</button>
 
 <style>
   :global(.sv-sankey__anchorcontent) {

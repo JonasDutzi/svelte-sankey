@@ -29,7 +29,9 @@
   const getPathWidth = () => {
     const linkData = linksStore.value[key];
     let pathValue = 0;
-    if (linkData?.value! > sankeyStore.value.minPathHeight) {
+    if (linkData.value === 0) {
+      return 1;
+    } else if (linkData?.value! > sankeyStore.value.minPathHeight) {
       pathValue = linkData?.value!;
     } else {
       pathValue = sankeyStore.value.minPathHeight;

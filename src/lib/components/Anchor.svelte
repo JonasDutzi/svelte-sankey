@@ -7,42 +7,53 @@
   import { sankeyStore } from "../stores/sankey.svelte.ts";
   import { anchorsStore } from "../stores/anchors.svelte.ts";
   import { wrapperStore } from "../stores/wrapper.svelte.ts";
+  import { createEventDispatcher, type Snippet } from "svelte";
+  import Children from "./Children.svelte";
 
   type Props = {
     item: SankeyItem;
+    children?: Snippet;
   };
 
   let anchorRef = $state<HTMLDivElement>();
-  let { item }: Props = $props();
+  let { item, children }: Props = $props();
 
   let anchorHeight = $state(1);
 
+  let currentItem: any = $derived.by(() => itemsStore.value[item.id]);
+
   $effect(() => {
-    if (Object.keys(itemsStore.value).length > 0) {
-      const currentItem = itemsStore.value[item.id];
-      if (currentItem) {
-        const value = Math.max(
-          currentItem.totalValues.sources,
-          currentItem.totalValues.targets
-        );
-        anchorHeight = scaleValue(
-          value,
-          [sankeyStore.value.minPathHeight, sankeyStore.value.maxPathHeight],
-          sankeyStore.value.minValue,
-          sankeyStore.value.maxValue
-        );
-        const anchorRect = anchorRef?.getBoundingClientRect();
-        if (anchorRect) {
-          anchorsStore.setAnchor({
-            id: item.id,
-            positionX: anchorRect.x - wrapperStore.value.left,
-            positionY: anchorRect.y - wrapperStore.value.top,
-            anchorColor: item.anchorColor,
-          });
-        }
+    if (currentItem) {
+      const value = Math.max(
+        currentItem.totalValues.sources,
+        currentItem.totalValues.targets
+      );
+      const scaledValue = scaleValue(
+        value,
+        [sankeyStore.value.minPathHeight, sankeyStore.value.maxPathHeight],
+        sankeyStore.value.minValue,
+        sankeyStore.value.maxValue
+      );
+      if (scaledValue !== 0) {
+        anchorHeight = scaledValue;
+      }
+      const anchorRect = anchorRef?.getBoundingClientRect();
+      if (anchorRect) {
+        anchorsStore.setAnchor({
+          id: item.id,
+          positionX: anchorRect.x - wrapperStore.value.left,
+          positionY: anchorRect.y - wrapperStore.value.top,
+          anchorColor: item.anchorColor,
+        });
       }
     }
   });
+
+  const dispatch = createEventDispatcher();
+
+  const onAnchorClicked = () => {
+    dispatch("anchorclick", { item });
+  };
 </script>
 
 <div
@@ -51,7 +62,9 @@
   style:--anchor-height="{anchorHeight}px"
   style:--background-color={item.anchorColor}
   bind:this={anchorRef}
-></div>
+>
+  <Children {children}></Children>
+</div>
 
 <style>
   :global(.sv-sankey__anchor) {
