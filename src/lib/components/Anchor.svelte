@@ -1,51 +1,76 @@
 <svelte:options customElement="svsankey-anchor" />
 
 <script lang="ts">
-    import { onDestroy } from "svelte";
-    import type { SankeyItem, SankeyKey } from "../types";
-    import { itemsStore } from "../stores/items";
-    import { wrapperStore } from "../stores/wrapper";
-    import { anchorsStore } from "../stores/anchors";
-    import { scaleValue } from "../helper";
-    import { sankeyStore } from "../stores/sankey";
+  import type { SankeyItem } from "../types";
+  import { scaleValue } from "../helper";
+  import { itemsStore } from "../stores/items.svelte.ts";
+  import { sankeyStore } from "../stores/sankey.svelte.ts";
+  import { anchorsStore } from "../stores/anchors.svelte.ts";
+  import { wrapperStore } from "../stores/wrapper.svelte.ts";
+  import { createEventDispatcher, type Snippet } from "svelte";
+  import Children from "./Children.svelte";
 
-    let anchorRef: HTMLDivElement;
-    export let item: SankeyItem;
+  type Props = {
+    item: SankeyItem;
+    children?: Snippet;
+  };
 
-    let anchorHeight = 1;
+  let anchorRef = $state<HTMLDivElement>();
+  let { item, children }: Props = $props();
 
-    $: {
-        let currentItem = $itemsStore.get(item.id);
-        if (currentItem) {
-            const value = Math.max(currentItem.totalValues.sources, currentItem.totalValues.targets);
-            anchorHeight = scaleValue(value, [1, $sankeyStore.maxPathHeight], $sankeyStore.minValue, $sankeyStore.maxValue);
-        }
+  let anchorHeight = $state(1);
+
+  let currentItem: any = $derived.by(() => itemsStore.value[item.id]);
+
+  $effect(() => {
+    if (currentItem) {
+      const value = Math.max(
+        currentItem.totalValues.sources,
+        currentItem.totalValues.targets
+      );
+      const scaledValue = scaleValue(
+        value,
+        [sankeyStore.value.minPathHeight, sankeyStore.value.maxPathHeight],
+        sankeyStore.value.minValue,
+        sankeyStore.value.maxValue
+      );
+      if (scaledValue !== 0) {
+        anchorHeight = scaledValue;
+      }
+      const anchorRect = anchorRef?.getBoundingClientRect();
+      if (anchorRect) {
+        anchorsStore.setAnchor({
+          id: item.id,
+          positionX: anchorRect.x - wrapperStore.value.left,
+          positionY: anchorRect.y - wrapperStore.value.top,
+          anchorColor: item.anchorColor,
+        });
+      }
     }
+  });
 
-    $: {
-        if (anchorRef) {
-            anchorHeight = anchorHeight; // needed for svelte reactivity
-            const rect = anchorRef.getBoundingClientRect();
-            anchorsStore.setAnchor({
-                id: item.id,
-                positionX: rect.x - $wrapperStore.left,
-                positionY: rect.y - $wrapperStore.top
-            });
-        }
-    }
+  const dispatch = createEventDispatcher();
 
-    onDestroy(() => {
-        anchorsStore.remove(item.id);
-    });
+  const onAnchorClicked = () => {
+    dispatch("anchorclick", { item });
+  };
 </script>
 
-<div class="sv-sankey__anchor" style:--anchor-height="{anchorHeight}px" style:--background-color={item.anchorColor} bind:this={anchorRef} />
+<div
+  class="sv-sankey__anchor"
+  data-sankey-key={item.id}
+  style:--anchor-height="{anchorHeight}px"
+  style:--background-color={item.anchorColor}
+  bind:this={anchorRef}
+>
+  <Children {children}></Children>
+</div>
 
 <style>
-    :global(.sv-sankey__anchor) {
-        z-index: 1;
-        width: 15px;
-        background-color: var(--background-color);
-        height: var(--anchor-height);
-    }
+  :global(.sv-sankey__anchor) {
+    z-index: 1;
+    width: 15px;
+    background-color: var(--background-color);
+    height: var(--anchor-height);
+  }
 </style>

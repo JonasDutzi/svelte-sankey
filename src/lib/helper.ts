@@ -1,8 +1,14 @@
-export const logWarning = (message?: unknown, ...optionalParams: Array<unknown>) => {
-    console.warn("svelte-sankey: ", message, ...optionalParams);
+export const logWarning = (
+  message?: unknown,
+  ...optionalParams: Array<unknown>
+) => {
+  console.warn("svelte-sankey: ", message, ...optionalParams);
 };
-export const logError = (message?: unknown, ...optionalParams: Array<unknown>) => {
-    console.error("svelte-sankey: ", message, ...optionalParams);
+export const logError = (
+  message?: unknown,
+  ...optionalParams: Array<unknown>
+) => {
+  console.error("svelte-sankey: ", message, ...optionalParams);
 };
 
 /**
@@ -12,13 +18,18 @@ export const logError = (message?: unknown, ...optionalParams: Array<unknown>) =
  * @param min the min value of the dataset
  * @param max the max value of the dataset
  */
-export const scaleValue = (value: number, range: Array<number>, minValue: number, maxValue: number): number => {
-    const [minRange, maxRange] = range;
-    if (isNaN(value) || value === 0 || maxValue === 0) {
-        return 0;
-    }
-    if (minValue === maxValue) {
-        return maxRange;
-    }
-    return Math.max(minRange, (value / maxValue) * maxRange);
+export const scaleValue = (
+  value: number,
+  range: Array<number>,
+  minValue: number,
+  maxValue: number
+): number => {
+  const [minRange, maxRange] = range;
+  if (isNaN(value) || value === 0 || maxValue === 0) {
+    return 0;
+  }
+  if (minValue === maxValue) {
+    return maxRange;
+  }
+  return Math.max(minRange, (value / maxValue) * maxRange);
 };

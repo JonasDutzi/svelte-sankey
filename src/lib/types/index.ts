@@ -1,4 +1,4 @@
-import type { SankeyItem as ItemDataStore } from "../stores/items";
+import type { SankeyItem as ItemDataStore } from "../stores/items.svelte";
 
 type SankeyData = {
     data: Array<SankeyColumn>;

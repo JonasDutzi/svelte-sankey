@@ -8,6 +8,5 @@ export default () => {
     import("./lib/components/Group.svelte");
     import("./lib/components/Item.svelte");
     import("./lib/components/Label.svelte");
-    import("./lib/components/Link.svelte");
     import("./lib/components/SankeyLine.svelte");
 };
