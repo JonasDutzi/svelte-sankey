@@ -15,7 +15,14 @@
     $props();
 </script>
 
-<Sankey {showheaders} {maxpathheight} {highlightpaths}>
+<Sankey
+  {showheaders}
+  {maxpathheight}
+  {highlightpaths}
+  on:pathclick
+  on:pathmouseenter
+  on:pathmouseleave
+>
   {#each chartdata.data as data}
     {#if showheaders}
       <ColumnHeader>

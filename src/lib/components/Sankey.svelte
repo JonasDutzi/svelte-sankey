@@ -63,7 +63,13 @@
       {/each}
     </defs>
     {#each Object.entries(pathsStore.value) as [key, data]}
-      <SankeyLine {key} {data} />
+      <SankeyLine
+        {key}
+        {data}
+        on:pathclick
+        on:pathmouseenter
+        on:pathmouseleave
+      />
     {/each}
   </svg>
   <Children {children}></Children>

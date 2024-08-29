@@ -6,6 +6,7 @@
   import { linksStore } from "../stores/links.svelte.ts";
   import { scaleValue } from "../helper";
   import { sankeyStore } from "../stores/sankey.svelte.ts";
+  import { createEventDispatcher } from "svelte";
 
   type Props = {
     key: string;
@@ -58,6 +59,8 @@
   let { key, data }: Props = $props();
   let pathWidth = $derived(getPathWidth());
 
+  const dispatch = createEventDispatcher();
+
   const FIX_NO_BOX_HEIGHT = 0.0001;
   let x1 = $derived.by(() => {
     const value = getPosition(data.sourcePosition.x, pathWidth ?? 0, Axis.x);
@@ -74,6 +77,18 @@
     getPosition(data.targetPosition.y, pathWidth ?? 0, Axis.y)
   );
   let bezierCurve = $derived.by(() => bezierCurveTo(x1, y1, x2, y2));
+
+  const onPathClicked = () => {
+    dispatch("pathclick", { key, data });
+  };
+
+  const onPathMouseEnter = () => {
+    dispatch("pathmouseenter", { key, data });
+  };
+
+  const onPathMouseLeave = () => {
+    dispatch("pathmouseleave", { key, data });
+  };
 </script>
 
 <path
@@ -82,7 +97,11 @@
   data-sankey-source="path-{key.split('/')[0]}"
   data-sankey-target="path-{key.split('/')[1]}"
   d={bezierCurve}
+  onclick={onPathClicked}
+  onmouseenter={onPathMouseEnter}
+  onmouseleave={onPathMouseLeave}
   style:--path-width={pathWidth}
+  style:--path-width-increased={pathWidth * 1.05}
   style:--stroke-color={data.strokeColor}
   style:--stroke-color-hover={data.strokeColorHover}
   style="stroke: url(#sv-sankey__gradient-{key});"
@@ -95,5 +114,18 @@
     stroke-width: var(--path-width);
     fill: none;
     opacity: 0.8;
+  }
+  path:hover {
+    animation: increase-stroke ease-in-out 0.3s forwards;
+    cursor: pointer;
+  }
+
+  @keyframes increase-stroke {
+    from {
+      stroke-width: var(--path-width);
+    }
+    to {
+      stroke-width: var(--path-width-increased);
+    }
   }
 </style>
