@@ -58,7 +58,7 @@
 >
   <svg width={wrapperStore.value.width} height={wrapperStore.value.height}>
     <defs>
-      {#each Object.entries(pathsStore.value) as [pathKey, pathData]}
+      {#each Object.entries(pathsStore.value) as [pathKey]}
         <Gradient key={pathKey} />
       {/each}
     </defs>
