@@ -20,13 +20,11 @@
 
   let { item, highlightpaths, children }: Props = $props();
 
-  let isPathHighlightingOn = $state(true);
-
-  $effect(() => {
+  let isPathHighlightingOn = $derived.by(() => {
     if (sankeyStore.value.highlightPaths === false) {
-      isPathHighlightingOn = false;
+      return false;
     } else {
-      isPathHighlightingOn = highlightpaths;
+      return highlightpaths;
     }
   });
 

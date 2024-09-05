@@ -73,4 +73,10 @@
     background-color: var(--background-color);
     height: var(--anchor-height);
   }
+  .sv-sankey__anchor:hover {
+    cursor: pointer;
+    transform: scaleX(5.5);
+    transform-origin: left;
+    transition-duration: 400ms;
+  }
 </style>

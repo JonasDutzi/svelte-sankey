@@ -13,6 +13,8 @@
     data: Path;
   };
 
+  let pathElement = $state<SVGPathElement | undefined>();
+
   const getPosition = (
     value: number | undefined,
     pathWidth: number,
@@ -58,6 +60,13 @@
 
   let { key, data }: Props = $props();
   let pathWidth = $derived(getPathWidth());
+  let pathWidthIncreased = $derived.by(() => {
+    if (pathWidth <= 30) {
+      return 30;
+    } else {
+      return pathWidth;
+    }
+  });
 
   const dispatch = createEventDispatcher();
 
@@ -89,6 +98,20 @@
   const onPathMouseLeave = () => {
     dispatch("pathmouseleave", { key, data });
   };
+
+  const onPathThresholdMouseEnter = () => {
+    const paths: any = document.querySelectorAll(`[data-sankey-key='${key}']`);
+    paths.forEach((path: any) => {
+      path.style.strokeWidth = (pathWidth * 1.5).toString();
+    });
+  };
+
+  const onPathThresholdMouseLeave = () => {
+    const paths: any = document.querySelectorAll(`[data-sankey-key='${key}']`);
+    paths.forEach((path: any) => {
+      path.style.strokeWidth = pathWidth.toString();
+    });
+  };
 </script>
 
 <path
@@ -97,14 +120,20 @@
   data-sankey-source="path-{key.split('/')[0]}"
   data-sankey-target="path-{key.split('/')[1]}"
   d={bezierCurve}
-  onclick={onPathClicked}
-  onmouseenter={onPathMouseEnter}
-  onmouseleave={onPathMouseLeave}
   style:--path-width={pathWidth}
   style:--path-width-increased={pathWidth * 1.05}
   style:--stroke-color={data.strokeColor}
   style:--stroke-color-hover={data.strokeColorHover}
   style="stroke: url(#sv-sankey__gradient-{key});"
+/>
+
+<path
+  class="sv-sankey__path-interactive"
+  d={bezierCurve}
+  style:--path-width-threshold={pathWidthIncreased}
+  onclick={onPathClicked}
+  onmouseenter={onPathMouseEnter}
+  onmouseleave={onPathMouseLeave}
 />
 
 <style>
@@ -114,9 +143,16 @@
     stroke-width: var(--path-width);
     fill: none;
     opacity: 0.8;
+    z-index: -1;
   }
-  path:hover {
+  .sv-sankey__path:hover {
     animation: increase-stroke ease-in-out 0.3s forwards;
+  }
+
+  :global(.sv-sankey__path-interactive) {
+    stroke: rgba(0, 0, 0, 0);
+    stroke-width: var(--path-width-threshold);
+    fill: none;
     cursor: pointer;
   }
 
