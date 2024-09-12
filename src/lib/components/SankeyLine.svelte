@@ -99,6 +99,14 @@
     dispatch("pathmouseleave", { key, data });
   };
 
+  const onPathFocused = () => {
+    pathElement?.classList.add("focused-path");
+  };
+
+  const onPathFocusOut = () => {
+    pathElement?.classList.remove("focused-path");
+  };
+
   const onPathThresholdMouseEnter = () => {
     const paths: any = document.querySelectorAll(`[data-sankey-key='${key}']`);
     paths.forEach((path: any) => {
@@ -115,6 +123,21 @@
 </script>
 
 <path
+  role="link"
+  tabindex="0"
+  onkeypress={onPathClicked}
+  class="sv-sankey__path-interactive"
+  d={bezierCurve}
+  style:--path-width-threshold={pathWidthIncreased}
+  onclick={onPathClicked}
+  onfocus={onPathFocused}
+  onfocusout={onPathFocusOut}
+  onmouseenter={onPathMouseEnter}
+  onmouseleave={onPathMouseLeave}
+/>
+
+<path
+  bind:this={pathElement}
   class="sv-sankey__path"
   data-sankey-key={key}
   data-sankey-source="path-{key.split('/')[0]}"
@@ -127,26 +150,21 @@
   style="stroke: url(#sv-sankey__gradient-{key});"
 />
 
-<path
-  class="sv-sankey__path-interactive"
-  d={bezierCurve}
-  style:--path-width-threshold={pathWidthIncreased}
-  onclick={onPathClicked}
-  onmouseenter={onPathMouseEnter}
-  onmouseleave={onPathMouseLeave}
-/>
-
 <style>
   :global(.sv-sankey__path) {
-    z-index: -1;
     /* stroke: var(--stroke-color, rgba(44, 61, 171, 0.3)); */
     stroke-width: var(--path-width);
     fill: none;
-    opacity: 0.8;
-    z-index: -1;
+    cursor: pointer;
   }
   .sv-sankey__path:hover {
-    animation: increase-stroke ease-in-out 0.3s forwards;
+    filter: brightness(0.8);
+    /* animation: increase-stroke ease-in-out 0.3s forwards; */
+  }
+
+  :global(.focused-path) {
+    filter: brightness(0.8);
+    /* animation: increase-stroke ease-in-out 0.3s forwards; */
   }
 
   :global(.sv-sankey__path-interactive) {
@@ -154,8 +172,8 @@
     stroke-width: var(--path-width-threshold);
     fill: none;
     cursor: pointer;
+    outline: none;
   }
-
   @keyframes increase-stroke {
     from {
       stroke-width: var(--path-width);
