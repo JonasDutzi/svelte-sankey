@@ -5,10 +5,11 @@
   import { logError } from "../helper";
   import { linksStore } from "../stores/links.svelte.ts";
   import { sankeyStore } from "../stores/sankey.svelte.ts";
+  import type { Snippet } from "svelte";
 
   type Props = {
     item: SankeyItem;
-    children?: () => {};
+    children?: Snippet;
   };
 
   let { item, children }: Props = $props();

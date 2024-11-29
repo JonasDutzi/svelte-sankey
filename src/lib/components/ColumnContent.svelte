@@ -22,8 +22,3 @@
 <div class="sv-sankey__column-content">
   <slot />
 </div>
-
-<style>
-  :global(.sv-sankey__column-content) {
-  }
-</style>

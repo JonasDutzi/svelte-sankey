@@ -6,11 +6,14 @@
   import { linksStore } from "../stores/links.svelte.ts";
   import { scaleValue } from "../helper";
   import { sankeyStore } from "../stores/sankey.svelte.ts";
+  import { createEventDispatcher } from "svelte";
 
   type Props = {
     key: string;
     data: Path;
   };
+
+  let pathElement = $state<SVGPathElement | undefined>();
 
   const getPosition = (
     value: number | undefined,
@@ -57,6 +60,15 @@
 
   let { key, data }: Props = $props();
   let pathWidth = $derived(getPathWidth());
+  let pathWidthIncreased = $derived.by(() => {
+    if (pathWidth <= 30) {
+      return 30;
+    } else {
+      return pathWidth;
+    }
+  });
+
+  const dispatch = createEventDispatcher();
 
   const FIX_NO_BOX_HEIGHT = 0.0001;
   let x1 = $derived.by(() => {
@@ -74,15 +86,65 @@
     getPosition(data.targetPosition.y, pathWidth ?? 0, Axis.y)
   );
   let bezierCurve = $derived.by(() => bezierCurveTo(x1, y1, x2, y2));
+
+  const onPathClicked = () => {
+    dispatch("pathclick", { key, data });
+  };
+
+  const onPathMouseEnter = () => {
+    dispatch("pathmouseenter", { key, data });
+  };
+
+  const onPathMouseLeave = () => {
+    dispatch("pathmouseleave", { key, data });
+  };
+
+  const onPathFocused = () => {
+    pathElement?.classList.add("focused-path");
+  };
+
+  const onPathFocusOut = () => {
+    pathElement?.classList.remove("focused-path");
+  };
+
+  const onPathThresholdMouseEnter = () => {
+    const paths: any = document.querySelectorAll(`[data-sankey-key='${key}']`);
+    paths.forEach((path: any) => {
+      path.style.strokeWidth = (pathWidth * 1.5).toString();
+    });
+  };
+
+  const onPathThresholdMouseLeave = () => {
+    const paths: any = document.querySelectorAll(`[data-sankey-key='${key}']`);
+    paths.forEach((path: any) => {
+      path.style.strokeWidth = pathWidth.toString();
+    });
+  };
 </script>
 
 <path
+  role="link"
+  tabindex="0"
+  onkeypress={onPathClicked}
+  class="sv-sankey__path-interactive"
+  d={bezierCurve}
+  style:--path-width-threshold={pathWidthIncreased}
+  onclick={onPathClicked}
+  onfocus={onPathFocused}
+  onfocusout={onPathFocusOut}
+  onmouseenter={onPathMouseEnter}
+  onmouseleave={onPathMouseLeave}
+/>
+
+<path
+  bind:this={pathElement}
   class="sv-sankey__path"
   data-sankey-key={key}
   data-sankey-source="path-{key.split('/')[0]}"
   data-sankey-target="path-{key.split('/')[1]}"
   d={bezierCurve}
   style:--path-width={pathWidth}
+  style:--path-width-increased={pathWidth * 1.05}
   style:--stroke-color={data.strokeColor}
   style:--stroke-color-hover={data.strokeColorHover}
   style="stroke: url(#sv-sankey__gradient-{key});"
@@ -90,10 +152,34 @@
 
 <style>
   :global(.sv-sankey__path) {
-    z-index: -1;
     /* stroke: var(--stroke-color, rgba(44, 61, 171, 0.3)); */
     stroke-width: var(--path-width);
     fill: none;
-    opacity: 0.8;
+    cursor: pointer;
+  }
+  .sv-sankey__path:hover {
+    filter: brightness(0.8);
+    /* animation: increase-stroke ease-in-out 0.3s forwards; */
+  }
+
+  :global(.focused-path) {
+    filter: brightness(0.8);
+    /* animation: increase-stroke ease-in-out 0.3s forwards; */
+  }
+
+  :global(.sv-sankey__path-interactive) {
+    stroke: rgba(0, 0, 0, 0);
+    stroke-width: var(--path-width-threshold);
+    fill: none;
+    cursor: pointer;
+    outline: none;
+  }
+  @keyframes increase-stroke {
+    from {
+      stroke-width: var(--path-width);
+    }
+    to {
+      stroke-width: var(--path-width-increased);
+    }
   }
 </style>

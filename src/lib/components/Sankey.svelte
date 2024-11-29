@@ -8,18 +8,23 @@
   import SankeyLine from "./SankeyLine.svelte";
   import type { Snippet } from "svelte";
   import Children from "./Children.svelte";
-  import { anchorsStore } from "../stores/anchors.svelte.ts";
   import Gradient from "./Gradient.svelte";
 
   type Props = {
     showheaders: boolean;
     highlightpaths: boolean;
     maxpathheight: number;
+    minpathheight: number;
     children?: Snippet;
   };
 
-  let { showheaders, highlightpaths, maxpathheight, children }: Props =
-    $props();
+  let {
+    showheaders,
+    highlightpaths,
+    maxpathheight,
+    minpathheight,
+    children,
+  }: Props = $props();
 
   let wrapperRef = $state<HTMLDivElement | undefined>();
 
@@ -29,6 +34,10 @@
 
   $effect(() => {
     sankeyStore.setMaxPathHeight(maxpathheight);
+  });
+
+  $effect(() => {
+    sankeyStore.setMinPathHeight(minpathheight);
   });
 
   $effect(() => {
@@ -58,12 +67,18 @@
 >
   <svg width={wrapperStore.value.width} height={wrapperStore.value.height}>
     <defs>
-      {#each Object.entries(pathsStore.value) as [pathKey, pathData]}
+      {#each Object.entries(pathsStore.value) as [pathKey]}
         <Gradient key={pathKey} />
       {/each}
     </defs>
     {#each Object.entries(pathsStore.value) as [key, data]}
-      <SankeyLine {key} {data} />
+      <SankeyLine
+        {key}
+        {data}
+        on:pathclick
+        on:pathmouseenter
+        on:pathmouseleave
+      />
     {/each}
   </svg>
   <Children {children}></Children>

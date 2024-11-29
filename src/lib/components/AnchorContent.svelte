@@ -6,12 +6,6 @@
   import { sankeyStore } from "../stores/sankey.svelte.ts";
   import Children from "./Children.svelte";
 
-  type SVGPathElement = {
-    style: {
-      filter: string | undefined;
-    };
-  };
-
   type Props = {
     item: SankeyItem;
     highlightpaths: boolean;
@@ -20,13 +14,11 @@
 
   let { item, highlightpaths, children }: Props = $props();
 
-  let isPathHighlightingOn = $state(true);
-
-  $effect(() => {
+  let isPathHighlightingOn = $derived.by(() => {
     if (sankeyStore.value.highlightPaths === false) {
-      isPathHighlightingOn = false;
+      return false;
     } else {
-      isPathHighlightingOn = highlightpaths;
+      return highlightpaths;
     }
   });
 
@@ -57,7 +49,7 @@
     ];
     paths.forEach((path) => {
       window.requestAnimationFrame(() => {
-        (path as unknown as SVGPathElement).style.filter = "brightness(0.8)";
+        (path as unknown as SVGPathElement).classList.add("focused-path");
       });
     });
   };
@@ -69,7 +61,7 @@
     ];
     paths.forEach((path) => {
       window.requestAnimationFrame(() => {
-        (path as unknown as SVGPathElement).style.filter = "";
+        (path as unknown as SVGPathElement).classList.remove("focused-path");
       });
     });
   };
@@ -94,5 +86,9 @@
     margin-inline: 0.75rem;
     padding-inline: 1rem;
     padding-block: 0.5rem;
+  }
+
+  .sv-sankey__anchorcontent:hover {
+    background-color: rgb(208, 208, 208);
   }
 </style>

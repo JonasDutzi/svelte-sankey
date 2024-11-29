@@ -21,6 +21,18 @@
     //console.log(e.detail.item);
   };
 
+  const onPathClicked = (e: any) => {
+    console.log(e.detail);
+  };
+
+  const onPathMouseEnter = (e: any) => {
+    console.log(e.detail);
+  };
+
+  const onPathMouseLeave = (e: any) => {
+    console.log(e.detail);
+  };
+
   //basic example of resizing based on window breakpoints
   $effect(() => {
     window.addEventListener("resize", () => {
@@ -36,7 +48,7 @@
 
   let highlightPaths = $state(true);
   let showHeaders = $state(true);
-  let size = $state(260);
+  let size = $state(50);
 </script>
 
 <main>
@@ -44,10 +56,14 @@
     highlightpaths={highlightPaths}
     showheaders={showHeaders}
     maxpathheight={size}
-    chartdata={dataNegatives}
+    minpathheight={1}
+    chartdata={data}
     on:itemclick={onItemClicked}
     on:anchormouseenter={onAnchorMouseEnter}
     on:anchormouseleave={onAnchorMouseLeave}
+    on:pathclick={onPathClicked}
+    on:pathmouseenter={onPathMouseEnter}
+    on:pathmouseleave={onPathMouseLeave}
   />
   <!-- <SankeyCustomData showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={customData} /> -->
   <!-- <SankeyDataBigger

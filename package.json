@@ -1,7 +1,7 @@
 {
     "name": "svelte-sankey",
     "description": "A svelte & web component library to create sankey diagrams",
-    "version": "0.0.14",
+    "version": "0.0.15",
     "repository": {
         "type": "git",
         "url": "https://github.com/JonasDutzi/svelte-sankey.git"
@@ -24,14 +24,14 @@
         "./webc/*": "./dist/webc/*"
     },
     "devDependencies": {
-        "@sveltejs/package": "^2.3.2",
-        "@sveltejs/vite-plugin-svelte": "^3.1.1",
+        "@sveltejs/package": "^2.3.7",
+        "@sveltejs/vite-plugin-svelte": "^5.0.1",
         "@tsconfig/svelte": "^5.0.4",
-        "svelte": "^5.0.0-next.191",
-        "svelte-check": "^3.8.4",
-        "tslib": "^2.6.3",
-        "typescript": "^5.5.3",
-        "vite": "^5.3.4"
+        "svelte": "^5.2.10",
+        "svelte-check": "^4.1.0",
+        "tslib": "^2.8.1",
+        "typescript": "^5.7.2",
+        "vite": "^6.0.1"
     },
     "peerDependencies": {
         "svelte": "5"
