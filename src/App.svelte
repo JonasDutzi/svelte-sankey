@@ -48,7 +48,7 @@
 
   let highlightPaths = $state(true);
   let showHeaders = $state(true);
-  let size = $state(260);
+  let size = $state(50);
 </script>
 
 <main>
@@ -56,6 +56,7 @@
     highlightpaths={highlightPaths}
     showheaders={showHeaders}
     maxpathheight={size}
+    minpathheight={1}
     chartdata={data}
     on:itemclick={onItemClicked}
     on:anchormouseenter={onAnchorMouseEnter}

@@ -8,16 +8,23 @@
     showheaders: boolean;
     highlightpaths: boolean;
     maxpathheight: number;
+    minpathheight: number;
     chartdata: any;
   };
 
-  let { showheaders, highlightpaths, maxpathheight, chartdata }: Props =
-    $props();
+  let {
+    showheaders,
+    highlightpaths,
+    maxpathheight,
+    minpathheight,
+    chartdata,
+  }: Props = $props();
 </script>
 
 <Sankey
   {showheaders}
   {maxpathheight}
+  {minpathheight}
   {highlightpaths}
   on:pathclick
   on:pathmouseenter
