@@ -88,7 +88,7 @@
     padding-block: 0.5rem;
   }
 
-  .sv-sankey__anchorcontent:hover {
+  :global(.sv-sankey__anchorcontent:hover) {
     background-color: rgb(208, 208, 208);
   }
 </style>

@@ -157,7 +157,7 @@
     fill: none;
     cursor: pointer;
   }
-  .sv-sankey__path:hover {
+  :global(.sv-sankey__path:hover) {
     filter: brightness(0.8);
     /* animation: increase-stroke ease-in-out 0.3s forwards; */
   }
