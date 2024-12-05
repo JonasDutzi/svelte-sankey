@@ -5,18 +5,18 @@
   import AnchorContent from "./AnchorContent.svelte";
   import { ColumnContent, ColumnHeader, Item, Sankey } from "./index";
   type Props = {
-    showheaders: boolean;
-    highlightpaths: boolean;
-    maxpathheight: number;
-    minpathheight: number;
+    showheaders?: boolean;
+    highlightpaths?: boolean;
+    maxpathheight?: number;
+    minpathheight?: number;
     chartdata: any;
   };
 
   let {
-    showheaders,
-    highlightpaths,
-    maxpathheight,
-    minpathheight,
+    showheaders = true,
+    highlightpaths = true,
+    maxpathheight = 32,
+    minpathheight = 1,
     chartdata,
   }: Props = $props();
 </script>

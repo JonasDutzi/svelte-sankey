@@ -11,18 +11,18 @@
   import Gradient from "./Gradient.svelte";
 
   type Props = {
-    showheaders: boolean;
-    highlightpaths: boolean;
-    maxpathheight: number;
-    minpathheight: number;
+    showheaders?: boolean;
+    highlightpaths?: boolean;
+    maxpathheight?: number;
+    minpathheight?: number;
     children?: Snippet;
   };
 
   let {
-    showheaders,
-    highlightpaths,
-    maxpathheight,
-    minpathheight,
+    showheaders = true,
+    highlightpaths = true,
+    maxpathheight = 32,
+    minpathheight = 1,
     children,
   }: Props = $props();
 
