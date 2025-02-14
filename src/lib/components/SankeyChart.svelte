@@ -30,7 +30,7 @@
   on:pathmouseenter
   on:pathmouseleave
 >
-  {#each chartdata.data as data}
+  {#each chartdata.data as data, columnIndex}
     {#if showheaders}
       <ColumnHeader>
         <div
@@ -47,16 +47,23 @@
         <div class="row-label">{row.rowLabel}</div>
         {#each row.items as item}
           <Item {item} on:itemclick on:anchormouseenter on:anchormouseleave>
-            <Anchor {item} />
-            <AnchorContent
-              on:itemclick
-              on:anchormouseenter
-              on:anchormouseleave
-              {item}
-              {highlightpaths}
+            <div
+              class="anchor-group"
+              style:--anchor-position={columnIndex === chartdata.data.length - 1
+                ? "row-reverse"
+                : "row"}
             >
-              <div>{item.label}</div>
-            </AnchorContent>
+              <Anchor {item} />
+              <AnchorContent
+                on:itemclick
+                on:anchormouseenter
+                on:anchormouseleave
+                {item}
+                {highlightpaths}
+              >
+                <div>{item.label}</div>
+              </AnchorContent>
+            </div>
           </Item>
         {/each}
       {/each}
@@ -73,5 +80,10 @@
   .row-label {
     font-weight: 700;
     font-size: 1.025rem;
+  }
+  .anchor-group {
+    display: flex;
+    flex: 1;
+    flex-direction: var(--anchor-position, "row");
   }
 </style>
