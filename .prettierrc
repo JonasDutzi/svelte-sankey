@@ -1,0 +1,21 @@
+{
+    "tabWidth": 4,
+    "printWidth": 160,
+    "semi": true,
+    "trailingComma": "none",
+    "endOfLine": "auto",
+    "overrides": [
+        {
+            "files": ["package.json"],
+            "options": {
+                "tabWidth": 2
+            }
+        },
+        {
+            "files": ["*.md"],
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ]
+}

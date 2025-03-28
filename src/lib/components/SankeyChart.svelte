@@ -1,77 +1,54 @@
 <svelte:options customElement="svsankey-chart" />
 
 <script lang="ts">
-  import Anchor from "./Anchor.svelte";
-  import AnchorContent from "./AnchorContent.svelte";
-  import { ColumnContent, ColumnHeader, Item, Sankey } from "./index";
-  type Props = {
-    showheaders?: boolean;
-    highlightpaths?: boolean;
-    maxpathheight?: number;
-    minpathheight?: number;
-    chartdata: any;
-  };
+    import Anchor from "./Anchor.svelte";
+    import AnchorContent from "./AnchorContent.svelte";
+    import { ColumnContent, ColumnHeader, Item, Sankey } from "./index";
+    type Props = {
+        showheaders?: boolean;
+        highlightpaths?: boolean;
+        maxpathheight?: number;
+        minpathheight?: number;
+        chartdata: any;
+    };
 
-  let {
-    showheaders = true,
-    highlightpaths = true,
-    maxpathheight = 32,
-    minpathheight = 1,
-    chartdata,
-  }: Props = $props();
+    let { showheaders = true, highlightpaths = true, maxpathheight = 32, minpathheight = 1, chartdata }: Props = $props();
 </script>
 
-<Sankey
-  {showheaders}
-  {maxpathheight}
-  {minpathheight}
-  {highlightpaths}
-  on:pathclick
-  on:pathmouseenter
-  on:pathmouseleave
->
-  {#each chartdata.data as data}
-    {#if showheaders}
-      <ColumnHeader>
-        <div
-          style="font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: bold; margin-block: 1rem"
-        >
-          {data.columnLabel === "root"
-            ? data?.rows?.[0].items?.[0]?.label
-            : data.columnLabel}
-        </div>
-      </ColumnHeader>
-    {/if}
-    <ColumnContent {data}>
-      {#each data.rows as row}
-        <div class="row-label">{row.rowLabel}</div>
-        {#each row.items as item}
-          <Item {item} on:itemclick on:anchormouseenter on:anchormouseleave>
-            <Anchor {item} />
-            <AnchorContent
-              on:itemclick
-              on:anchormouseenter
-              on:anchormouseleave
-              {item}
-              {highlightpaths}
-            >
-              <div>{item.label}</div>
-            </AnchorContent>
-          </Item>
-        {/each}
-      {/each}
-    </ColumnContent>
-  {/each}
+<Sankey {showheaders} {maxpathheight} {minpathheight} {highlightpaths} on:pathclick on:pathmouseenter on:pathmouseleave>
+    {#each chartdata.data as data}
+        {#if showheaders}
+            <ColumnHeader>
+                <div style="font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: bold; margin-block: 1rem">
+                    {data.columnLabel === "root" ? data?.rows?.[0].items?.[0]?.label : data.columnLabel}
+                </div>
+            </ColumnHeader>
+        {/if}
+        <ColumnContent {data}>
+            {#each data.rows as row}
+                <div class="row-label">{row.rowLabel}</div>
+                {#each row.items as item}
+                    <Item {item} on:itemclick on:anchormouseenter on:anchormouseleave>
+                        <Anchor {item} />
+                        <AnchorContent on:itemclick on:anchormouseenter on:anchormouseleave {item} {highlightpaths}>
+                            <div>{item.label}</div>
+                        </AnchorContent>
+                    </Item>
+                    <div>jj</div>
+                {/each}
+            {/each}
+        </ColumnContent>
+    {/each}
 </Sankey>
 
 <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  .row-label {
-    font-weight: 700;
-    font-size: 1.025rem;
-  }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .row-label {
+        font-weight: 700;
+        font-size: 1.025rem;
+    }
 </style>
