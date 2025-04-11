@@ -94,6 +94,7 @@
     /* grid-template-rows: max-content; */
     gap: 0.5rem;
     position: relative;
+    justify-content: space-between;
   }
   svg {
     position: absolute;
