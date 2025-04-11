@@ -1,55 +1,52 @@
 {
-    "name": "svelte-sankey",
-    "description": "A svelte & web component library to create sankey diagrams",
-    "version": "0.0.19",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/JonasDutzi/svelte-sankey.git"
+  "name": "svelte-sankey",
+  "description": "A svelte & web component library to create sankey diagrams",
+  "version": "0.0.19",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JonasDutzi/svelte-sankey.git"
+  },
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "pnpm run package && vite build",
+    "preview": "vite preview",
+    "package": "svelte-package",
+    "prepublishOnly": "pnpm run build",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "test:unit": "vitest",
+    "test": "npm run test:unit -- --run"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "svelte": "./dist/index.js"
     },
-    "type": "module",
-    "license": "MIT",
-    "scripts": {
-        "dev": "vite",
-        "build": "pnpm run package && vite build",
-        "preview": "vite preview",
-        "package": "svelte-package",
-        "prepublishOnly": "pnpm run build",
-        "check": "svelte-check --tsconfig ./tsconfig.json",
-        "test:unit": "vitest",
-        "test": "npm run test:unit -- --run"
-    },
-    "exports": {
-        ".": {
-            "types": "./dist/index.d.ts",
-            "svelte": "./dist/index.js"
-        },
-        "./webc/*": "./dist/webc/*"
-    },
-    "devDependencies": {
-        "@sveltejs/package": "^2.3.7",
-        "@sveltejs/vite-plugin-svelte": "^5.0.1",
-        "@testing-library/jest-dom": "^6.6.3",
-        "@testing-library/svelte": "^5.2.4",
-        "@tsconfig/svelte": "^5.0.4",
-        "jsdom": "^25.0.1",
-        "svelte": "^5.2.10",
-        "svelte-check": "^4.1.0",
-        "tslib": "^2.8.1",
-        "typescript": "^5.7.2",
-        "vite": "^6.0.1",
-        "vitest": "^3.0.0"
-    },
-    "peerDependencies": {
-        "svelte": "5"
-    },
-    "files": [
-        "dist"
-    ],
-    "svelte": "./dist/index.js",
-    "types": "./dist/index.d.ts",
-    "pnpm": {
-        "onlyBuiltDependencies": [
-            "esbuild"
-        ]
-    }
+    "./webc/*": "./dist/webc/*"
+  },
+  "devDependencies": {
+    "@sveltejs/package": "^2.3.7",
+    "@sveltejs/vite-plugin-svelte": "^5.0.1",
+    "@tsconfig/svelte": "^5.0.4",
+    "svelte": "^5.2.10",
+    "svelte-check": "^4.1.0",
+    "tslib": "^2.8.1",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.1",
+    "vitest": "^3.0.0"
+  },
+  "peerDependencies": {
+    "svelte": "5"
+  },
+  "files": [
+    "dist"
+  ],
+  "svelte": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
 }
