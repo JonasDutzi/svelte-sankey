@@ -19,5 +19,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'pnpm'
+    - run: npm install -g pnpm
     - run: pnpm ci
     - run: pnpm test:unit
