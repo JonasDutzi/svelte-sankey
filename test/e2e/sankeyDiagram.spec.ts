@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test("render sankey diagram", async ({ page }) => {
-  await page.goto("http://localhost:5173/");
+  await page.goto("http://localhost:5173/tests.html");
   await expect(page.getByRole("button", { name: "Flour" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Biscuit" })).toBeVisible();
   await expect(
