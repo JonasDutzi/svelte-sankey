@@ -16,6 +16,7 @@
     "prepublishOnly": "pnpm run build",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "test:unit": "vitest",
+    "test:unit:coverage": "vitest --coverage",
     "test": "npm run test:unit -- --run"
   },
   "exports": {
