@@ -8,12 +8,14 @@
   let { key }: Props = $props();
 
   const sourceAnchorColor = $derived.by(() => {
-    const source = key.split("/")[0];
-    return anchorsStore.value[source].anchorColor;
+    const direction = document.documentElement.dir === "ltr" ? 0 : 1;
+    const color = key.split("/")[direction];
+    return anchorsStore.value[color].anchorColor;
   });
   const targetAnchorColor = $derived.by(() => {
-    const target = key.split("/")[1];
-    return anchorsStore.value[target].anchorColor;
+    const direction = document.documentElement.dir === "ltr" ? 1 : 0;
+    const color = key.split("/")[direction];
+    return anchorsStore.value[color].anchorColor;
   });
 </script>
 
