@@ -1,6 +1,7 @@
 /// <reference types="vitest/config" />
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
+import IstanbulPlugin from "vite-plugin-istanbul";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -21,12 +22,22 @@ export default defineConfig({
   },
   test: {
     include: ["test/unit/**/*.{test,spec}.{js,ts}"],
+    coverage: {
+      reporter: ["lcov"],
+      provider: "v8",
+      reportsDirectory: "./coverage/vitest-coverage",
+    },
   },
   plugins: [
     svelte({
       compilerOptions: {
         customElement: true,
       },
+    }),
+    IstanbulPlugin({
+      include: ["src/**/*.{js,ts,svelte}"],
+      exclude: ["**/node_modules/**", "**/dist/**", "**/test/**"],
+      extension: [".js", ".ts", ".svelte"],
     }),
   ],
 });
