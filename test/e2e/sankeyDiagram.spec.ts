@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./base";
 
 test("render sankey diagram", async ({ page }) => {
   await page.goto("http://localhost:5173/tests.html");

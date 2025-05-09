@@ -15,11 +15,14 @@
     "package": "svelte-package",
     "prepublishOnly": "pnpm run build",
     "check": "svelte-check --tsconfig ./tsconfig.json",
+    "test": "pnpm run test:unit -- --run && pnpm run test:playwright",
     "test:unit": "vitest",
     "test:unit:coverage": "vitest --coverage",
     "test:playwright": "playwright test",
     "test:playwright:show": "playwright test --ui",
-    "test": "npm run test:unit -- --run"
+    "test:playwright:coverage": "npx nyc report --reporter=lcov --report-dir=./coverage/playwright-coverage",
+    "coverage:merge": "lcov-result-merger coverage/playwright-coverage/lcov.info coverage/vitest-coverage/lcov.info > coverage/merged-lcov.info",
+    "coverage:merge:2": "lcov-result-merger coverage/*/lcov.info > coverage/merged-lcov.info"
   },
   "exports": {
     ".": {
@@ -34,12 +37,15 @@
     "@sveltejs/vite-plugin-svelte": "^5.0.1",
     "@tsconfig/svelte": "^5.0.4",
     "@types/node": "^22.15.2",
+    "@vitest/coverage-istanbul": "3.0.6",
     "@vitest/coverage-v8": "^3.1.2",
+    "lcov-result-merger": "^5.0.1",
     "svelte": "^5.2.10",
     "svelte-check": "^4.1.0",
     "tslib": "^2.8.1",
     "typescript": "^5.7.2",
     "vite": "^6.0.1",
+    "vite-plugin-istanbul": "^7.0.0",
     "vitest": "^3.0.0"
   },
   "peerDependencies": {
