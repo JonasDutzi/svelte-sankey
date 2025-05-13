@@ -11,6 +11,7 @@
 
   const onItemClicked = (e: any) => {
     console.log(e.detail.item);
+    messages.push(JSON.stringify(e.detail.item));
   };
 
   const onAnchorMouseEnter = (e: any) => {
@@ -47,6 +48,8 @@
     });
   });
 
+  let messages = $state<Array<string>>([]);
+
   let highlightPaths = $state(true);
   let showHeaders = $state(true);
   let size = $state(50);
@@ -74,6 +77,12 @@
     chartdata={dataBigger}
   /> -->
   <!-- <SankeyDataBigger showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={dataInconsistent} /> -->
+  <div>
+    <ul>
+      {#each messages as message}
+        <li>{message}</li>{/each}
+    </ul>
+  </div>
   <SankeyInspector
     showStores={true}
     showSettings={true}

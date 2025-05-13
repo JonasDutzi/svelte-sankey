@@ -1,0 +1,5 @@
+{
+  "reporter": ["lcov"],
+  "all": true,
+  "extension": [".js", ".ts", ".svelte"]
+}
