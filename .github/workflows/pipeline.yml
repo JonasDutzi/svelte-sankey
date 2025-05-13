@@ -64,10 +64,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: vitest-coverage
+          path: coverage/vitest-coverage/
       - name: Download playwright coverage
         uses: actions/download-artifact@v4
         with:
           name: playwright-coverage
+          path: coverage/playwright-coverage/
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
         with:
