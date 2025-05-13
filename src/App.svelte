@@ -36,6 +36,7 @@
   //basic example of resizing based on window breakpoints
   $effect(() => {
     window.addEventListener("resize", () => {
+      console.log("resized");
       if (window.innerWidth > 1025) {
         return; //use default size
       } else if (window.innerWidth > 768) {
