@@ -7,6 +7,6 @@ describe("log", () => {
       .spyOn(console, "warn")
       .mockImplementation(() => undefined);
     logWarning("foo");
-    expect(consoleMock).toHaveBeenCalledWith("svelte-sankey: ", "foo");
+    expect(consoleMock).toHaveBeenCalledWith("svelte-sankey-test: ", "foo");
   });
 });
