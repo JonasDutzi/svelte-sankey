@@ -20,7 +20,7 @@
     "test:unit:coverage": "vitest --coverage",
     "test:playwright": "playwright test",
     "test:playwright:show": "playwright test --ui",
-    "test:playwright:coverage": "npx nyc report --reporter=lcov --report-dir=./coverage/playwright-coverage"
+    "test:playwright:coverage": "npm run test:playwright && npx nyc report --reporter=lcov --report-dir=./coverage/playwright-coverage"
   },
   "exports": {
     ".": {
