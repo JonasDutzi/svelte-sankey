@@ -2,7 +2,7 @@ export const logWarning = (
   message?: unknown,
   ...optionalParams: Array<unknown>
 ) => {
-  console.warn("svelte-sankey-test: ", message, ...optionalParams);
+  console.warn("svelte-sankey: ", message, ...optionalParams);
 };
 export const logError = (
   message?: unknown,
