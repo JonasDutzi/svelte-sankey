@@ -1,0 +1,5 @@
+{
+  "reporter": ["text-summary"],
+  "all": true,
+  "extension": [".js", ".ts", ".svelte"]
+}
