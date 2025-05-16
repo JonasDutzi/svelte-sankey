@@ -23,7 +23,7 @@ export default defineConfig({
   test: {
     include: ["test/unit/**/*.{test,spec}.{js,ts}"],
     coverage: {
-      reporter: ["lcov"],
+      reporter: ["lcov", "text"],
       provider: "v8",
       reportsDirectory: "./coverage/vitest-coverage",
     },
@@ -36,7 +36,15 @@ export default defineConfig({
     }),
     IstanbulPlugin({
       include: ["src/**/*.{js,ts,svelte}"],
-      exclude: ["**/node_modules/**", "**/dist/**", "**/test/**"],
+      exclude: [
+        "**/node_modules/**",
+        "**/dist/**",
+        "**/test/**",
+        "src/webc.index.ts",
+        "src/main.ts",
+        "src/inspector/**",
+        "src/testdata/**",
+      ],
       extension: [".js", ".ts", ".svelte"],
     }),
   ],
