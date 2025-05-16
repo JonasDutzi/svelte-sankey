@@ -36,7 +36,15 @@ export default defineConfig({
     }),
     IstanbulPlugin({
       include: ["src/**/*.{js,ts,svelte}"],
-      exclude: ["**/node_modules/**", "**/dist/**", "**/test/**"],
+      exclude: [
+        "**/node_modules/**",
+        "**/dist/**",
+        "**/test/**",
+        "src/webc.index.ts",
+        "src/main.ts",
+        "src/inspector/**",
+        "srv/testdata/**",
+      ],
       extension: [".js", ".ts", ".svelte"],
     }),
   ],
