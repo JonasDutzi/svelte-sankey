@@ -11,6 +11,7 @@
 
   const onItemClicked = (e: any) => {
     console.log(e.detail.item);
+    messages.push(JSON.stringify(e.detail.item));
   };
 
   const onAnchorMouseEnter = (e: any) => {
@@ -36,6 +37,7 @@
   //basic example of resizing based on window breakpoints
   $effect(() => {
     window.addEventListener("resize", () => {
+      console.log("resized");
       if (window.innerWidth > 1025) {
         return; //use default size
       } else if (window.innerWidth > 768) {
@@ -45,6 +47,8 @@
       }
     });
   });
+
+  let messages = $state<Array<string>>([]);
 
   let highlightPaths = $state(true);
   let showHeaders = $state(true);
@@ -73,6 +77,12 @@
     chartdata={dataBigger}
   /> -->
   <!-- <SankeyDataBigger showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={dataInconsistent} /> -->
+  <div>
+    <ul>
+      {#each messages as message}
+        <li>{message}</li>{/each}
+    </ul>
+  </div>
   <SankeyInspector
     showStores={true}
     showSettings={true}
