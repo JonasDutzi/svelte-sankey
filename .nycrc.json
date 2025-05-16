@@ -1,5 +1,6 @@
 {
   "reporter": ["lcov"],
   "all": true,
+  "exclude": ["coverage/**", "src/testdata/**", "src/inspector/**"],
   "extension": [".js", ".ts", ".svelte"]
 }
