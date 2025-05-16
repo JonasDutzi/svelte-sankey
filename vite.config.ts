@@ -23,7 +23,7 @@ export default defineConfig({
   test: {
     include: ["test/unit/**/*.{test,spec}.{js,ts}"],
     coverage: {
-      reporter: ["lcov"],
+      reporter: ["lcov", "text"],
       provider: "v8",
       reportsDirectory: "./coverage/vitest-coverage",
     },
@@ -43,7 +43,7 @@ export default defineConfig({
         "src/webc.index.ts",
         "src/main.ts",
         "src/inspector/**",
-        "srv/testdata/**",
+        "src/testdata/**",
       ],
       extension: [".js", ".ts", ".svelte"],
     }),
