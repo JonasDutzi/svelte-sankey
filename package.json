@@ -20,7 +20,8 @@
     "test:unit:coverage": "vitest --coverage",
     "test:playwright": "playwright test",
     "test:playwright:show": "playwright test --ui",
-    "test:playwright:coverage": "npm run test:playwright && npx nyc report --reporter=lcov --report-dir=./coverage/playwright-coverage"
+    "test:playwright:coverage": "npm run test:playwright && npx nyc report --reporter=lcov --report-dir=./coverage/playwright-coverage",
+    "semantic-release": "semantic-release"
   },
   "exports": {
     ".": {
@@ -50,7 +51,8 @@
     "svelte": "5"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "svelte": "./dist/index.js",
   "types": "./dist/index.d.ts",
