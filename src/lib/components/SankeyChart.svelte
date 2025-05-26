@@ -43,6 +43,7 @@
       </ColumnHeader>
     {/if}
     <ColumnContent {data}>
+      <div>Test</div>
       {#each data.rows as row}
         <div class="row-label">{row.rowLabel}</div>
         {#each row.items as item}
