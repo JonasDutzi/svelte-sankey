@@ -1,4 +1,4 @@
-name: Semantic Release Precheck
+name: Release Precheck
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   semantic-release-dry-run:
-    name: Semantic Release Dry Run
+    name: Semantic Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
