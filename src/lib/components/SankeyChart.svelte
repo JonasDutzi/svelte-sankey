@@ -1,6 +1,7 @@
 <svelte:options customElement="svsankey-chart" />
 
 <script lang="ts">
+  import type { SankeyItem } from "../types";
   import Anchor from "./Anchor.svelte";
   import AnchorContent from "./AnchorContent.svelte";
   import { ColumnContent, ColumnHeader, Item, Sankey } from "./index";
@@ -10,6 +11,9 @@
     maxpathheight?: number;
     minpathheight?: number;
     chartdata: any;
+    onItemClick?: (item: SankeyItem) => void;
+    onAnchorMouseEnter?: (item: SankeyItem) => void;
+    onAnchorMouseLeave?: (item: SankeyItem) => void;
   };
 
   let {
@@ -17,6 +21,9 @@
     highlightpaths = true,
     maxpathheight = 32,
     minpathheight = 1,
+    onItemClick,
+    onAnchorMouseEnter,
+    onAnchorMouseLeave,
     chartdata,
   }: Props = $props();
 </script>
@@ -55,9 +62,9 @@
             >
               <Anchor {item} />
               <AnchorContent
-                on:itemclick
-                on:anchormouseenter
-                on:anchormouseleave
+                {onItemClick}
+                {onAnchorMouseEnter}
+                {onAnchorMouseLeave}
                 {item}
                 {highlightpaths}
               >

@@ -1,7 +1,7 @@
 <svelte:options customElement="svsankey-anchorcontent" />
 
 <script lang="ts">
-  import { createEventDispatcher, type Snippet } from "svelte";
+  import { type Snippet } from "svelte";
   import type { SankeyItem } from "../types";
   import { sankeyStore } from "../stores/sankey.svelte.ts";
   import Children from "./Children.svelte";
@@ -10,9 +10,19 @@
     item: SankeyItem;
     highlightpaths: boolean;
     children?: Snippet;
+    onItemClick?: (item: SankeyItem) => void;
+    onAnchorMouseEnter?: (item: SankeyItem) => void;
+    onAnchorMouseLeave?: (item: SankeyItem) => void;
   };
 
-  let { item, highlightpaths, children }: Props = $props();
+  let {
+    item,
+    highlightpaths,
+    onItemClick,
+    onAnchorMouseEnter,
+    onAnchorMouseLeave,
+    children,
+  }: Props = $props();
 
   let isPathHighlightingOn = $derived.by(() => {
     if (sankeyStore.value.highlightPaths === false) {
@@ -22,24 +32,22 @@
     }
   });
 
-  const dispatch = createEventDispatcher();
-
-  const onContentClicked = () => {
-    dispatch("itemclick", { item });
+  const onClick = () => {
+    onItemClick?.(item);
   };
 
-  const onContentMouseEnter = () => {
+  const onMouseEnter = () => {
     if (isPathHighlightingOn) {
       highlightSankeyPaths();
     }
-    dispatch("anchormouseenter", { item });
+    onAnchorMouseEnter?.(item);
   };
 
-  const onContentMouseLeave = () => {
+  const onMouseLeave = () => {
     if (isPathHighlightingOn) {
       removeSankeyPathsHighlight();
     }
-    dispatch("anchormouseleave", { item });
+    onAnchorMouseLeave?.(item);
   };
 
   const highlightSankeyPaths = () => {
@@ -69,9 +77,9 @@
 
 <button
   class="sv-sankey__anchorcontent"
-  onclick={onContentClicked}
-  onmouseenter={onContentMouseEnter}
-  onmouseleave={onContentMouseLeave}
+  onclick={onClick}
+  onmouseenter={onMouseEnter}
+  onmouseleave={onMouseLeave}
 >
   <Children {children}></Children>
 </button>
@@ -85,7 +93,6 @@
     z-index: 1;
     margin-inline: 0.75rem;
     padding-inline: 1rem;
-    padding-block: 0.5rem;
   }
 
   :global(.sv-sankey__anchorcontent:hover) {
