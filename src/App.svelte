@@ -8,18 +8,19 @@
   import SankeyDataBigger from "./testdata/SankeyDataBigger.svelte";
   import SankeyInspector from "./inspector/Inspector.svelte";
   import SankeyChart from "./lib/components/SankeyChart.svelte";
+  import type { SankeyItem } from "./lib/index.ts";
 
-  const onItemClicked = (e: any) => {
-    console.log(e.detail.item);
-    messages.push(JSON.stringify(e.detail.item));
+  const onItemClick = (item: SankeyItem) => {
+    console.log(item);
+    messages.push(JSON.stringify(item));
   };
 
-  const onAnchorMouseEnter = (e: any) => {
-    //console.log(e.detail.item);
+  const onAnchorMouseEnter = (item: SankeyItem) => {
+    console.log(item);
   };
 
-  const onAnchorMouseLeave = (e: any) => {
-    //console.log(e.detail.item);
+  const onAnchorMouseLeave = (item: SankeyItem) => {
+    console.log(item);
   };
 
   const onPathClicked = (e: any) => {
@@ -62,9 +63,9 @@
     maxpathheight={size}
     minpathheight={1}
     chartdata={data}
-    on:itemclick={onItemClicked}
-    on:anchormouseenter={onAnchorMouseEnter}
-    on:anchormouseleave={onAnchorMouseLeave}
+    {onItemClick}
+    {onAnchorMouseEnter}
+    {onAnchorMouseLeave}
     on:pathclick={onPathClicked}
     on:pathmouseenter={onPathMouseEnter}
     on:pathmouseleave={onPathMouseLeave}
