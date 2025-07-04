@@ -7,16 +7,19 @@
   import { sankeyStore } from "../stores/sankey.svelte.ts";
   import { anchorsStore } from "../stores/anchors.svelte.ts";
   import { wrapperStore } from "../stores/wrapper.svelte.ts";
-  import { createEventDispatcher, type Snippet } from "svelte";
+  import { type Snippet } from "svelte";
   import Children from "./Children.svelte";
 
   type Props = {
     item: SankeyItem;
+    onAnchorClick?: OnAnchorClick;
     children?: Snippet;
   };
 
-  let anchorRef = $state<HTMLDivElement>();
-  let { item, children }: Props = $props();
+  export type OnAnchorClick = (item: SankeyItem) => void;
+
+  let anchorRef = $state<HTMLButtonElement>();
+  let { item, onAnchorClick, children }: Props = $props();
 
   let anchorHeight = $state(1);
 
@@ -49,22 +52,21 @@
     }
   });
 
-  const dispatch = createEventDispatcher();
-
   const onAnchorClicked = () => {
-    dispatch("anchorclick", { item });
+    onAnchorClick?.(item);
   };
 </script>
 
-<div
+<button
   class="sv-sankey__anchor"
   data-sankey-key={item.id}
   style:--anchor-height="{anchorHeight}px"
   style:--background-color={item.anchorColor}
   bind:this={anchorRef}
+  onclick={onAnchorClicked}
 >
   <Children {children}></Children>
-</div>
+</button>
 
 <style>
   :global(.sv-sankey__anchor) {
@@ -72,6 +74,7 @@
     width: 20px;
     background-color: var(--background-color);
     height: var(--anchor-height);
+    border: none;
   }
   /* .sv-sankey__anchor:hover {
     cursor: pointer;

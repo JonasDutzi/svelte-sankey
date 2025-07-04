@@ -1,8 +1,8 @@
 <svelte:options customElement="svsankey-chart" />
 
 <script lang="ts">
-  import type { SankeyItem } from "../types";
-  import Anchor from "./Anchor.svelte";
+  import type { SankeyColumn, SankeyItem } from "../types";
+  import Anchor, { type OnAnchorClick } from "./Anchor.svelte";
   import AnchorContent from "./AnchorContent.svelte";
   import { ColumnContent, ColumnHeader, Item, Sankey } from "./index";
   type Props = {
@@ -12,8 +12,12 @@
     minpathheight?: number;
     chartdata: any;
     onItemClick?: (item: SankeyItem) => void;
+    onAnchorClick?: OnAnchorClick;
     onAnchorMouseEnter?: (item: SankeyItem) => void;
     onAnchorMouseLeave?: (item: SankeyItem) => void;
+    onPathClick?: (data: { source: SankeyItem; target: SankeyItem }) => void;
+    onPathMouseEnter?: () => void;
+    onPathMouseLeave?: () => void;
   };
 
   let {
@@ -22,8 +26,12 @@
     maxpathheight = 32,
     minpathheight = 1,
     onItemClick,
+    onAnchorClick,
     onAnchorMouseEnter,
     onAnchorMouseLeave,
+    onPathClick,
+    onPathMouseEnter,
+    onPathMouseLeave,
     chartdata,
   }: Props = $props();
 </script>
@@ -33,9 +41,9 @@
   {maxpathheight}
   {minpathheight}
   {highlightpaths}
-  on:pathclick
-  on:pathmouseenter
-  on:pathmouseleave
+  {onPathClick}
+  {onPathMouseEnter}
+  {onPathMouseLeave}
 >
   {#each chartdata.data as data, columnIndex}
     {#if showheaders}
@@ -60,7 +68,7 @@
                 ? "row-reverse"
                 : "row"}
             >
-              <Anchor {item} />
+              <Anchor {item} {onAnchorClick} />
               <AnchorContent
                 {onItemClick}
                 {onAnchorMouseEnter}
