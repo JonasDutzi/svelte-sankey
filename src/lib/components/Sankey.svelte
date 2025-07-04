@@ -9,12 +9,16 @@
   import type { Snippet } from "svelte";
   import Children from "./Children.svelte";
   import Gradient from "./Gradient.svelte";
+  import type { SankeyItem } from "../types/index.ts";
 
   type Props = {
     showheaders?: boolean;
     highlightpaths?: boolean;
     maxpathheight?: number;
     minpathheight?: number;
+    onPathClick?: (data: { source: SankeyItem; target: SankeyItem }) => void;
+    onPathMouseEnter?: () => void;
+    onPathMouseLeave?: () => void;
     children?: Snippet;
   };
 
@@ -23,6 +27,9 @@
     highlightpaths = true,
     maxpathheight = 32,
     minpathheight = 1,
+    onPathClick,
+    onPathMouseEnter,
+    onPathMouseLeave,
     children,
   }: Props = $props();
 
@@ -75,9 +82,9 @@
       <SankeyLine
         {key}
         {data}
-        on:pathclick
-        on:pathmouseenter
-        on:pathmouseleave
+        {onPathClick}
+        {onPathMouseEnter}
+        {onPathMouseLeave}
       />
     {/each}
   </svg>

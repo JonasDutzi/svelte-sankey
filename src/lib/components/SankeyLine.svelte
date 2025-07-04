@@ -2,16 +2,22 @@
 
 <script lang="ts">
   import type { Path } from "../stores/paths.svelte.ts";
-  import { Axis } from "../types";
+  import { Axis, type SankeyColumn, type SankeyItem } from "../types";
   import { linksStore } from "../stores/links.svelte.ts";
   import { scaleValue } from "../helper";
   import { sankeyStore } from "../stores/sankey.svelte.ts";
-  import { createEventDispatcher } from "svelte";
+  import { dataStore } from "../stores/data.svelte.ts";
+  import { itemsStore } from "../stores/items.svelte.ts";
 
   type Props = {
     key: string;
     data: Path;
+    onPathClick?: (data: { source: SankeyItem; target: SankeyItem }) => void;
+    onPathMouseEnter?: () => void;
+    onPathMouseLeave?: () => void;
   };
+  let { key, data, onPathClick, onPathMouseEnter, onPathMouseLeave }: Props =
+    $props();
 
   let pathElement = $state<SVGPathElement | undefined>();
 
@@ -58,7 +64,6 @@
     return `M${x1},${y1} C${xFactor},${y1} ${xFactor},${y2}  ${x2},${y2}`;
   };
 
-  let { key, data }: Props = $props();
   let pathWidth = $derived(getPathWidth());
   let pathWidthIncreased = $derived.by(() => {
     if (pathWidth <= 30) {
@@ -67,8 +72,6 @@
       return pathWidth;
     }
   });
-
-  const dispatch = createEventDispatcher();
 
   const FIX_NO_BOX_HEIGHT = 0.0001;
   let x1 = $derived.by(() => {
@@ -88,15 +91,18 @@
   let bezierCurve = $derived.by(() => bezierCurveTo(x1, y1, x2, y2));
 
   const onPathClicked = () => {
-    dispatch("pathclick", { key, data });
+    const [sourceKey, targetKey] = key.split("/");
+    const source = itemsStore.value[sourceKey];
+    const target = itemsStore.value[targetKey];
+    onPathClick?.({ source, target });
   };
 
-  const onPathMouseEnter = () => {
-    dispatch("pathmouseenter", { key, data });
+  const onPathMouseEntered = () => {
+    onPathMouseEnter?.();
   };
 
-  const onPathMouseLeave = () => {
-    dispatch("pathmouseleave", { key, data });
+  const onPathMouseLeft = () => {
+    onPathMouseLeave?.();
   };
 
   const onPathFocused = () => {
@@ -132,8 +138,8 @@
   onclick={onPathClicked}
   onfocus={onPathFocused}
   onfocusout={onPathFocusOut}
-  onmouseenter={onPathMouseEnter}
-  onmouseleave={onPathMouseLeave}
+  onmouseenter={onPathMouseEntered}
+  onmouseleave={onPathMouseLeft}
 />
 
 <path
@@ -157,8 +163,9 @@
     fill: none;
     cursor: pointer;
   }
-  :global(.sv-sankey__path:hover) {
-    filter: brightness(0.8);
+  :global(.sv-sankey__path:hover),
+  :global(.sv-sankey__path:focus) {
+    filter: brightness(0.6);
     /* animation: increase-stroke ease-in-out 0.3s forwards; */
   }
 

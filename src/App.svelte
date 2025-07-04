@@ -9,31 +9,25 @@
   import SankeyInspector from "./inspector/Inspector.svelte";
   import SankeyChart from "./lib/components/SankeyChart.svelte";
   import type { SankeyItem } from "./lib/index.ts";
+  import type { OnAnchorClick } from "./lib/components/Anchor.svelte";
 
   const onItemClick = (item: SankeyItem) => {
-    console.log(item);
     messages.push(JSON.stringify(item));
   };
 
-  const onAnchorMouseEnter = (item: SankeyItem) => {
+  const onAnchorMouseEnter = (item: SankeyItem) => {};
+
+  const onAnchorMouseLeave = (item: SankeyItem) => {};
+
+  const onPathClick = (e: any) => {};
+
+  const onAnchorClick: OnAnchorClick = (item) => {
     console.log(item);
   };
 
-  const onAnchorMouseLeave = (item: SankeyItem) => {
-    console.log(item);
-  };
+  const onPathMouseEnter = () => {};
 
-  const onPathClicked = (e: any) => {
-    console.log(e.detail);
-  };
-
-  const onPathMouseEnter = (e: any) => {
-    console.log(e.detail);
-  };
-
-  const onPathMouseLeave = (e: any) => {
-    console.log(e.detail);
-  };
+  const onPathMouseLeave = () => {};
 
   //basic example of resizing based on window breakpoints
   $effect(() => {
@@ -64,11 +58,12 @@
     minpathheight={1}
     chartdata={data}
     {onItemClick}
+    {onAnchorClick}
     {onAnchorMouseEnter}
     {onAnchorMouseLeave}
-    on:pathclick={onPathClicked}
-    on:pathmouseenter={onPathMouseEnter}
-    on:pathmouseleave={onPathMouseLeave}
+    {onPathClick}
+    {onPathMouseEnter}
+    {onPathMouseLeave}
   />
   <!-- <SankeyCustomData showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={customData} /> -->
   <!-- <SankeyDataBigger
@@ -84,13 +79,13 @@
         <li>{message}</li>{/each}
     </ul>
   </div>
-  <SankeyInspector
+  <!-- <SankeyInspector
     showStores={true}
     showSettings={true}
     bind:showHeaders
     bind:size
     bind:highlightPaths
-  />
+  /> -->
 </main>
 
 <style>
