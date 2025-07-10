@@ -8,26 +8,28 @@
   import SankeyDataBigger from "./testdata/SankeyDataBigger.svelte";
   import SankeyInspector from "./inspector/Inspector.svelte";
   import SankeyChart from "./lib/components/SankeyChart.svelte";
-  import type { SankeyItem } from "./lib/index.ts";
+  import type {
+    OnAnchorMouseEnter,
+    OnAnchorMouseLeave,
+    OnItemClick,
+    OnPathClick,
+    OnPathMouseEnter,
+    OnPathMouseLeave,
+    SankeyItem,
+  } from "./lib/index.ts";
   import type { OnAnchorClick } from "./lib/components/Anchor.svelte";
 
-  const onItemClick = (item: SankeyItem) => {
+  const onItemClick: OnItemClick = (item) => {
     messages.push(JSON.stringify(item));
   };
 
-  const onAnchorMouseEnter = (item: SankeyItem) => {};
+  const onAnchorClick: OnAnchorClick = (item) => {};
+  const onAnchorMouseEnter: OnAnchorMouseEnter = (item) => {};
+  const onAnchorMouseLeave: OnAnchorMouseLeave = (item) => {};
 
-  const onAnchorMouseLeave = (item: SankeyItem) => {};
-
-  const onPathClick = (e: any) => {};
-
-  const onAnchorClick: OnAnchorClick = (item) => {
-    console.log(item);
-  };
-
-  const onPathMouseEnter = () => {};
-
-  const onPathMouseLeave = () => {};
+  const onPathClick: OnPathClick = ({ source, target }) => {};
+  const onPathMouseEnter: OnPathMouseEnter = ({ source, target }) => {};
+  const onPathMouseLeave: OnPathMouseLeave = ({ source, target }) => {};
 
   //basic example of resizing based on window breakpoints
   $effect(() => {

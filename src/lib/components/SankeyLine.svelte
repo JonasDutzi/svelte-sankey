@@ -2,19 +2,24 @@
 
 <script lang="ts">
   import type { Path } from "../stores/paths.svelte.ts";
-  import { Axis, type SankeyColumn, type SankeyItem } from "../types";
+  import {
+    Axis,
+    type OnPathClick,
+    type OnPathMouseEnter,
+    type OnPathMouseLeave,
+    type SankeyItem,
+  } from "../types";
   import { linksStore } from "../stores/links.svelte.ts";
   import { scaleValue } from "../helper";
   import { sankeyStore } from "../stores/sankey.svelte.ts";
-  import { dataStore } from "../stores/data.svelte.ts";
   import { itemsStore } from "../stores/items.svelte.ts";
 
   type Props = {
     key: string;
     data: Path;
-    onPathClick?: (data: { source: SankeyItem; target: SankeyItem }) => void;
-    onPathMouseEnter?: () => void;
-    onPathMouseLeave?: () => void;
+    onPathClick?: OnPathClick;
+    onPathMouseEnter?: OnPathMouseEnter;
+    onPathMouseLeave?: OnPathMouseLeave;
   };
   let { key, data, onPathClick, onPathMouseEnter, onPathMouseLeave }: Props =
     $props();
@@ -90,19 +95,23 @@
   );
   let bezierCurve = $derived.by(() => bezierCurveTo(x1, y1, x2, y2));
 
-  const onPathClicked = () => {
+  let sourceAndTargetData = $derived.by(() => {
     const [sourceKey, targetKey] = key.split("/");
     const source = itemsStore.value[sourceKey];
     const target = itemsStore.value[targetKey];
-    onPathClick?.({ source, target });
+    return { source, target };
+  });
+
+  const onPathClicked = () => {
+    onPathClick?.(sourceAndTargetData);
   };
 
   const onPathMouseEntered = () => {
-    onPathMouseEnter?.();
+    onPathMouseEnter?.(sourceAndTargetData);
   };
 
   const onPathMouseLeft = () => {
-    onPathMouseLeave?.();
+    onPathMouseLeave?.(sourceAndTargetData);
   };
 
   const onPathFocused = () => {

@@ -1,7 +1,14 @@
 <svelte:options customElement="svsankey-chart" />
 
 <script lang="ts">
-  import type { SankeyColumn, SankeyItem } from "../types";
+  import type {
+    OnAnchorMouseEnter,
+    OnAnchorMouseLeave,
+    OnItemClick,
+    OnPathClick,
+    OnPathMouseEnter,
+    OnPathMouseLeave,
+  } from "../types";
   import Anchor, { type OnAnchorClick } from "./Anchor.svelte";
   import AnchorContent from "./AnchorContent.svelte";
   import { ColumnContent, ColumnHeader, Item, Sankey } from "./index";
@@ -11,13 +18,13 @@
     maxpathheight?: number;
     minpathheight?: number;
     chartdata: any;
-    onItemClick?: (item: SankeyItem) => void;
+    onItemClick?: OnItemClick;
     onAnchorClick?: OnAnchorClick;
-    onAnchorMouseEnter?: (item: SankeyItem) => void;
-    onAnchorMouseLeave?: (item: SankeyItem) => void;
-    onPathClick?: (data: { source: SankeyItem; target: SankeyItem }) => void;
-    onPathMouseEnter?: () => void;
-    onPathMouseLeave?: () => void;
+    onAnchorMouseEnter?: OnAnchorMouseEnter;
+    onAnchorMouseLeave?: OnAnchorMouseLeave;
+    onPathClick?: OnPathClick;
+    onPathMouseEnter?: OnPathMouseEnter;
+    onPathMouseLeave?: OnPathMouseLeave;
   };
 
   let {
@@ -61,7 +68,7 @@
       {#each data.rows as row}
         <div class="row-label">{row.rowLabel}</div>
         {#each row.items as item}
-          <Item {item} on:itemclick on:anchormouseenter on:anchormouseleave>
+          <Item {item}>
             <div
               class="anchor-group"
               style:--anchor-position={columnIndex === chartdata.data.length - 1

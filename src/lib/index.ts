@@ -1,2 +1,26 @@
-export { Anchor, Column, ColumnContent, ColumnHeader, Group, Item, Label, Sankey, SankeyChart } from "./components/index";
-export type { Axis, SankeyColumn, SankeyData, SankeyItem, SankeyKey, SankeyLink, SankeyRow } from "./types/index";
+export {
+  Anchor,
+  Column,
+  ColumnContent,
+  ColumnHeader,
+  Item,
+  Label,
+  Sankey,
+  SankeyChart,
+} from "./components/index";
+export type {
+  Axis,
+  SankeyColumn,
+  SankeyData,
+  SankeyItem,
+  SankeyKey,
+  SankeyLink,
+  SankeyRow,
+  ItemData,
+  OnItemClick,
+  OnAnchorMouseEnter,
+  OnAnchorMouseLeave,
+  OnPathClick,
+  OnPathMouseEnter,
+  OnPathMouseLeave,
+} from "./types/index";
