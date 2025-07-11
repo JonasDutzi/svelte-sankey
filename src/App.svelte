@@ -3,7 +3,6 @@
   import { sankeyData as data } from "./testdata/data.customdata.ts";
   import { sankeyData as dataBigger } from "./testdata/data.bigger.ts";
   import { sankeyData as dataNegatives } from "./testdata/data.negatives.ts";
-  // import { sankeyData as dataInconsistent } from "./testdata/data.inconsistent.ts";
   import SankeyCustomData from "./testdata/SankeyCustomData.svelte";
   import SankeyDataBigger from "./testdata/SankeyDataBigger.svelte";
   import SankeyInspector from "./inspector/Inspector.svelte";
