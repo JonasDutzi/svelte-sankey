@@ -2,7 +2,12 @@
 
 <script lang="ts">
   import { type Snippet } from "svelte";
-  import type { SankeyItem } from "../types";
+  import type {
+    OnItemClick,
+    OnAnchorMouseEnter,
+    OnAnchorMouseLeave,
+    SankeyItem,
+  } from "../types";
   import { sankeyStore } from "../stores/sankey.svelte.ts";
   import Children from "./Children.svelte";
 
@@ -10,9 +15,9 @@
     item: SankeyItem;
     highlightpaths: boolean;
     children?: Snippet;
-    onItemClick?: (item: SankeyItem) => void;
-    onAnchorMouseEnter?: (item: SankeyItem) => void;
-    onAnchorMouseLeave?: (item: SankeyItem) => void;
+    onItemClick?: OnItemClick;
+    onAnchorMouseEnter?: OnAnchorMouseEnter;
+    onAnchorMouseLeave?: OnAnchorMouseLeave;
   };
 
   let {

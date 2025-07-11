@@ -8,32 +8,28 @@
   import SankeyDataBigger from "./testdata/SankeyDataBigger.svelte";
   import SankeyInspector from "./inspector/Inspector.svelte";
   import SankeyChart from "./lib/components/SankeyChart.svelte";
-  import type { SankeyItem } from "./lib/index.ts";
+  import type {
+    OnAnchorMouseEnter,
+    OnAnchorMouseLeave,
+    OnItemClick,
+    OnPathClick,
+    OnPathMouseEnter,
+    OnPathMouseLeave,
+    SankeyItem,
+  } from "./lib/index.ts";
+  import type { OnAnchorClick } from "./lib/components/Anchor.svelte";
 
-  const onItemClick = (item: SankeyItem) => {
-    console.log(item);
+  const onItemClick: OnItemClick = (item) => {
     messages.push(JSON.stringify(item));
   };
 
-  const onAnchorMouseEnter = (item: SankeyItem) => {
-    console.log(item);
-  };
+  const onAnchorClick: OnAnchorClick = (item) => {};
+  const onAnchorMouseEnter: OnAnchorMouseEnter = (item) => {};
+  const onAnchorMouseLeave: OnAnchorMouseLeave = (item) => {};
 
-  const onAnchorMouseLeave = (item: SankeyItem) => {
-    console.log(item);
-  };
-
-  const onPathClicked = (e: any) => {
-    console.log(e.detail);
-  };
-
-  const onPathMouseEnter = (e: any) => {
-    console.log(e.detail);
-  };
-
-  const onPathMouseLeave = (e: any) => {
-    console.log(e.detail);
-  };
+  const onPathClick: OnPathClick = ({ source, target }) => {};
+  const onPathMouseEnter: OnPathMouseEnter = ({ source, target }) => {};
+  const onPathMouseLeave: OnPathMouseLeave = ({ source, target }) => {};
 
   //basic example of resizing based on window breakpoints
   $effect(() => {
@@ -64,11 +60,12 @@
     minpathheight={1}
     chartdata={data}
     {onItemClick}
+    {onAnchorClick}
     {onAnchorMouseEnter}
     {onAnchorMouseLeave}
-    on:pathclick={onPathClicked}
-    on:pathmouseenter={onPathMouseEnter}
-    on:pathmouseleave={onPathMouseLeave}
+    {onPathClick}
+    {onPathMouseEnter}
+    {onPathMouseLeave}
   />
   <!-- <SankeyCustomData showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={customData} /> -->
   <!-- <SankeyDataBigger
@@ -84,13 +81,13 @@
         <li>{message}</li>{/each}
     </ul>
   </div>
-  <SankeyInspector
+  <!-- <SankeyInspector
     showStores={true}
     showSettings={true}
     bind:showHeaders
     bind:size
     bind:highlightPaths
-  />
+  /> -->
 </main>
 
 <style>
