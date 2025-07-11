@@ -1,7 +1,7 @@
 <svelte:options customElement="svsankey-anchor" />
 
 <script lang="ts">
-  import type { SankeyItem } from "../types";
+  import type { OnAnchorClick, SankeyItem } from "../types";
   import { scaleValue } from "../helper";
   import { itemsStore } from "../stores/items.svelte.ts";
   import { sankeyStore } from "../stores/sankey.svelte.ts";
@@ -15,8 +15,6 @@
     onAnchorClick?: OnAnchorClick;
     children?: Snippet;
   };
-
-  export type OnAnchorClick = (item: SankeyItem) => void;
 
   let anchorRef = $state<HTMLButtonElement>();
   let { item, onAnchorClick, children }: Props = $props();

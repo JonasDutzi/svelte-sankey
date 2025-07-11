@@ -18,6 +18,7 @@ export type {
   SankeyRow,
   ItemData,
   OnItemClick,
+  OnAnchorClick,
   OnAnchorMouseEnter,
   OnAnchorMouseLeave,
   OnPathClick,

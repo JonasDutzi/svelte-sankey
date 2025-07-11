@@ -9,6 +9,7 @@ export type {
   SankeyLink,
   SankeyRow,
   OnItemClick,
+  OnAnchorClick,
   OnAnchorMouseEnter,
   OnAnchorMouseLeave,
   OnPathClick,
@@ -62,6 +63,7 @@ export enum Axis {
 type OnItemClick = (item: SankeyItem) => void;
 type OnAnchorMouseEnter = OnItemClick;
 type OnAnchorMouseLeave = OnItemClick;
+type OnAnchorClick = OnItemClick;
 
 type OnPathClick = (data: { source: SankeyItem; target: SankeyItem }) => void;
 type OnPathMouseEnter = OnPathClick;
