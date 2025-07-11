@@ -66,7 +66,6 @@
     {onPathMouseEnter}
     {onPathMouseLeave}
   />
-  <!-- <SankeyCustomData showheaders={showHeaders} maxpathheight={size} highlightpaths={highlightPaths} chartdata={customData} /> -->
   <!-- <SankeyDataBigger
     showheaders={showHeaders}
     maxpathheight={size}
