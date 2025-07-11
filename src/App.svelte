@@ -66,12 +66,6 @@
     {onPathMouseEnter}
     {onPathMouseLeave}
   />
-  <!-- <SankeyDataBigger
-    showheaders={showHeaders}
-    maxpathheight={size}
-    highlightpaths={highlightPaths}
-    chartdata={dataBigger}
-  /> -->
   <div>
     <ul>
       {#each messages as message}
