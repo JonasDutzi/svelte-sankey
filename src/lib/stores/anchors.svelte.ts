@@ -16,7 +16,7 @@ export type NewAnchor = {
 export type AnchorsStore = Record<SankeyKey, Anchor>;
 
 const createAnchorsStore = () => {
-  let anchorsStore = $state<AnchorsStore>({});
+  const anchorsStore = $state<AnchorsStore>({});
 
   const setAnchor = (anchor: NewAnchor) => {
     const { id, ...data } = anchor;

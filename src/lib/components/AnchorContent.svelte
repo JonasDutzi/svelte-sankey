@@ -13,7 +13,7 @@
 
   type Props = {
     item: SankeyItem;
-    highlightpaths: boolean;
+    highlightpaths?: boolean;
     children?: Snippet;
     onItemClick?: OnItemClick;
     onAnchorMouseEnter?: OnAnchorMouseEnter;

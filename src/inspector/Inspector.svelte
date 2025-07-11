@@ -16,6 +16,8 @@
     showSettings: boolean;
   };
 
+  //FIXME: enable eslint
+  // eslint-disable-next-line
   let stores = $state<any>([]);
 
   $effect(() => {

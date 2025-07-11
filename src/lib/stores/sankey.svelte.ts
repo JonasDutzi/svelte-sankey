@@ -8,7 +8,7 @@ export type SankeyStore = {
 };
 
 const createSankeyStore = () => {
-  let sankeyStore = $state<SankeyStore>({
+  const sankeyStore = $state<SankeyStore>({
     minPathHeight: 1,
     maxPathHeight: 0,
     minValue: 0,

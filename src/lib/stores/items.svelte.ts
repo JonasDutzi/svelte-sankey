@@ -70,7 +70,7 @@ const createItemsStore = () => {
     return items;
   };
 
-  let items = $derived(getItems());
+  const items = $derived(getItems());
   return {
     get value() {
       return items;

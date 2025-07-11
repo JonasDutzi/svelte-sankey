@@ -13,7 +13,6 @@
     OnPathClick,
     OnPathMouseEnter,
     OnPathMouseLeave,
-    SankeyItem,
   } from "../types/index.ts";
 
   type Props = {

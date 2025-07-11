@@ -8,6 +8,7 @@
   import SankeyInspector from "./inspector/Inspector.svelte";
   import SankeyChart from "./lib/components/SankeyChart.svelte";
   import type {
+    OnAnchorClick,
     OnAnchorMouseEnter,
     OnAnchorMouseLeave,
     OnItemClick,
@@ -16,7 +17,6 @@
     OnPathMouseLeave,
     SankeyItem,
   } from "./lib/index.ts";
-  import type { OnAnchorClick } from "./lib/components/Anchor.svelte";
 
   const onItemClick: OnItemClick = (item) => {
     messages.push(JSON.stringify(item));

@@ -1,14 +1,17 @@
 <svelte:options customElement="svsankey-column-header" />
 
 <script lang="ts">
+  import type { Snippet } from "svelte";
+  import Children from "./Children.svelte";
+
   type Props = {
-    children?: () => {};
+    children?: Snippet;
   };
   let { children }: Props = $props();
 </script>
 
 <div class="sv-sankey__column-header">
-  <slot />
+  <Children {children}></Children>
 </div>
 
 <style>

@@ -7,7 +7,6 @@
     type OnPathClick,
     type OnPathMouseEnter,
     type OnPathMouseLeave,
-    type SankeyItem,
   } from "../types";
   import { linksStore } from "../stores/links.svelte.ts";
   import { scaleValue } from "../helper";
@@ -45,8 +44,8 @@
     let pathValue = 0;
     if (linkData.value === 0) {
       return 1;
-    } else if (linkData?.value! > sankeyStore.value.minPathHeight) {
-      pathValue = linkData?.value!;
+    } else if (linkData.value > sankeyStore.value.minPathHeight) {
+      pathValue = linkData.value;
     } else {
       pathValue = sankeyStore.value.minPathHeight;
     }

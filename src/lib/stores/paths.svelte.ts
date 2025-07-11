@@ -70,7 +70,7 @@ const createPathsStore = () => {
     return paths;
   };
 
-  let paths = $derived(getPaths());
+  const paths = $derived(getPaths());
   return {
     get value() {
       return paths;

@@ -44,7 +44,7 @@
         }
       }
     }
-    () => {
+    return () => {
       if (item.links) {
         for (const link of item.links) {
           linksStore.remove({
