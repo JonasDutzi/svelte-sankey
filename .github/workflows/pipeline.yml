@@ -22,6 +22,8 @@ jobs:
           cache: "pnpm"
       - name: Install dependencies
         run: pnpm install
+      - name: Run Build
+        run: pnpm run build
       - name: Run Unit Tests
         run: pnpm test:unit:coverage
       - uses: actions/upload-artifact@v4
