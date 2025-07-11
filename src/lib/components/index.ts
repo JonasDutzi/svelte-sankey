@@ -8,14 +8,4 @@ import ColumnHeader from "./ColumnHeader.svelte";
 import Item from "./Item.svelte";
 import Label from "./Label.svelte";
 
-export {
-  Sankey,
-  SankeyChart,
-  Anchor,
-  AnchorContent,
-  Column,
-  ColumnContent,
-  ColumnHeader,
-  Item,
-  Label,
-};
+export { Sankey, SankeyChart, Anchor, AnchorContent, Column, ColumnContent, ColumnHeader, Item, Label };
