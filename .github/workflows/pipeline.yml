@@ -8,6 +8,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   lint-and-build:
+    name: Build/Lint/Format
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
@@ -26,6 +27,8 @@ jobs:
         run: pnpm run build
       - name: Run Lint
         run: pnpm run lint
+      - name: Run Format Check
+        run: pnpm run format:check
   unit-tests:
     runs-on: ubuntu-22.04
     steps:
