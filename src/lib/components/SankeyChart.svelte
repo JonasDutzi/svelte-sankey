@@ -1,8 +1,8 @@
 <svelte:options customElement="svsankey-chart" />
 
 <script lang="ts">
-	import type { OnAnchorMouseEnter, OnAnchorMouseLeave, OnItemClick, OnPathClick, OnPathMouseEnter, OnPathMouseLeave } from "../types";
-	import Anchor, { type OnAnchorClick } from "./Anchor.svelte";
+	import type { OnAnchorClick, OnAnchorMouseEnter, OnAnchorMouseLeave, OnItemClick, OnPathClick, OnPathMouseEnter, OnPathMouseLeave } from "../types";
+	import Anchor from "./Anchor.svelte";
 	import AnchorContent from "./AnchorContent.svelte";
 	import { ColumnContent, ColumnHeader, Item, Sankey } from "./index";
 	type Props = {
@@ -11,7 +11,7 @@
 		maxpathheight?: number;
 		minpathheight?: number;
 		chartdata: any;
-		onItemClick?: OnItemClick;
+		itemclick?: OnItemClick;
 		onAnchorClick?: OnAnchorClick;
 		onAnchorMouseEnter?: OnAnchorMouseEnter;
 		onAnchorMouseLeave?: OnAnchorMouseLeave;
@@ -25,7 +25,7 @@
 		highlightpaths = true,
 		maxpathheight = 32,
 		minpathheight = 1,
-		onItemClick,
+		itemclick,
 		onAnchorClick,
 		onAnchorMouseEnter,
 		onAnchorMouseLeave,
@@ -52,7 +52,7 @@
 					<Item {item}>
 						<div class="anchor-group" style:--anchor-position={columnIndex === chartdata.data.length - 1 ? "row-reverse" : "row"}>
 							<Anchor {item} {onAnchorClick} />
-							<AnchorContent {onItemClick} {onAnchorMouseEnter} {onAnchorMouseLeave} {item} {highlightpaths}>
+							<AnchorContent {itemclick} {onAnchorMouseEnter} {onAnchorMouseLeave} {item} {highlightpaths}>
 								<div>{item.label}</div>
 							</AnchorContent>
 						</div>

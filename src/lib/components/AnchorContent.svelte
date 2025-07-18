@@ -10,12 +10,12 @@
 		item: SankeyItem;
 		highlightpaths?: boolean;
 		children?: Snippet;
-		onItemClick?: OnItemClick;
+		itemclick?: OnItemClick;
 		onAnchorMouseEnter?: OnAnchorMouseEnter;
 		onAnchorMouseLeave?: OnAnchorMouseLeave;
 	};
 
-	let { item, highlightpaths, onItemClick, onAnchorMouseEnter, onAnchorMouseLeave, children }: Props = $props();
+	let { item, highlightpaths, itemclick, onAnchorMouseEnter, onAnchorMouseLeave, children }: Props = $props();
 
 	let isPathHighlightingOn = $derived.by(() => {
 		if (sankeyStore.value.highlightPaths === false) {
@@ -26,7 +26,7 @@
 	});
 
 	const onClick = () => {
-		onItemClick?.(item);
+		itemclick?.(item);
 	};
 
 	const onMouseEnter = () => {
