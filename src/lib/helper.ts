@@ -9,11 +9,18 @@
 export const dispatchCustomEvent = <T>(hostElement: HTMLElement | undefined, eventHandler: ((data: T) => void) | undefined, customEventName: string, data: T) => {
 	if (eventHandler) {
 		eventHandler(data);
+		return;
+	}
+	if (hostElement) {
+		hostElement.dispatchEvent(new CustomEvent(customEventName, { detail: data, bubbles: true, composed: true }));
 	} else {
-		hostElement!.dispatchEvent(new CustomEvent(customEventName, { detail: data, bubbles: true, composed: true }));
+		logInfo(`No host element found to dispatch event '${customEventName}'`);
 	}
 };
 
+export const logInfo = (message?: unknown, ...optionalParams: Array<unknown>) => {
+	console.info("svelte-sankey: ", message, ...optionalParams);
+};
 export const logWarning = (message?: unknown, ...optionalParams: Array<unknown>) => {
 	console.warn("svelte-sankey: ", message, ...optionalParams);
 };
