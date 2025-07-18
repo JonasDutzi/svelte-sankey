@@ -6,8 +6,6 @@
 	import { sankeyStore } from "../stores/sankey.svelte.ts";
 	import { dispatchCustomEvent } from "../helper.ts";
 
-	let hostElement: HTMLButtonElement;
-
 	type Props = {
 		item: SankeyItem;
 		highlightpaths?: boolean;
@@ -64,7 +62,7 @@
 	};
 </script>
 
-<button bind:this={hostElement} class="sv-sankey__anchorcontent" onclick={onClick} onmouseenter={onMouseEnter} onmouseleave={onMouseLeave}>
+<button class="sv-sankey__anchorcontent" onclick={onClick} onmouseenter={onMouseEnter} onmouseleave={onMouseLeave}>
 	<slot />
 </button>
 
