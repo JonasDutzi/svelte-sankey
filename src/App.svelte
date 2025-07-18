@@ -7,7 +7,17 @@
 	import SankeyDataBigger from "./testdata/SankeyDataBigger.svelte";
 	import SankeyInspector from "./inspector/Inspector.svelte";
 	import SankeyChart from "./lib/components/SankeyChart.svelte";
-	import type { OnAnchorClick, OnAnchorMouseEnter, OnAnchorMouseLeave, OnItemClick, OnPathClick, OnPathMouseEnter, OnPathMouseLeave, SankeyItem } from "./lib/index.ts";
+	import {
+		Anchor,
+		type OnAnchorClick,
+		type OnAnchorMouseEnter,
+		type OnAnchorMouseLeave,
+		type OnItemClick,
+		type OnPathClick,
+		type OnPathMouseEnter,
+		type OnPathMouseLeave
+	} from "./lib/index.ts";
+	import "./lib/components/AnchorContent.svelte";
 
 	const onItemClick: OnItemClick = (item) => {
 		messages.push(JSON.stringify(item));

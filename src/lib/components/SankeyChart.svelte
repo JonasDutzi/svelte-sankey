@@ -5,6 +5,7 @@
 	import Anchor from "./Anchor.svelte";
 	import AnchorContent from "./AnchorContent.svelte";
 	import { ColumnContent, ColumnHeader, Item, Sankey } from "./index";
+	import { dispatchCustomEvent } from "../helper.ts";
 	type Props = {
 		showheaders?: boolean;
 		highlightpaths?: boolean;
@@ -34,6 +35,10 @@
 		onPathMouseLeave,
 		chartdata
 	}: Props = $props();
+
+	const onItemClicked = (item: any) => {
+		dispatchCustomEvent($host(), onItemClick, "itemclick", item);
+	};
 </script>
 
 <Sankey {showheaders} {maxpathheight} {minpathheight} {highlightpaths} {onPathClick} {onPathMouseEnter} {onPathMouseLeave}>
@@ -52,7 +57,7 @@
 					<Item {item}>
 						<div class="anchor-group" style:--anchor-position={columnIndex === chartdata.data.length - 1 ? "row-reverse" : "row"}>
 							<Anchor {item} {onAnchorClick} />
-							<AnchorContent {onItemClick} {onAnchorMouseEnter} {onAnchorMouseLeave} {item} {highlightpaths}>
+							<AnchorContent onItemClick={() => onItemClicked(item)} {onAnchorMouseEnter} {onAnchorMouseLeave} {item} {highlightpaths}>
 								<div>{item.label}</div>
 							</AnchorContent>
 						</div>
