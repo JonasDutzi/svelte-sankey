@@ -17,7 +17,7 @@
 
 	let { item, highlightpaths, onItemClick, onAnchorMouseEnter, onAnchorMouseLeave, children }: Props = $props();
 
-	let hostElement: HTMLElement | undefined = $state(undefined);
+	let hostElement: HTMLElement | undefined;
 
 	let isPathHighlightingOn = $derived.by(() => {
 		if (sankeyStore.value.highlightPaths === false) {
