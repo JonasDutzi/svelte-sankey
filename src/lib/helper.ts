@@ -10,7 +10,7 @@ export const dispatchCustomEvent = <T>(hostElement: HTMLElement, eventHandler: (
 	if (eventHandler) {
 		eventHandler(data);
 	} else {
-		hostElement.dispatchEvent(new CustomEvent(customEventName, { detail: data }));
+		hostElement.dispatchEvent(new CustomEvent(customEventName, { detail: data, bubbles: true, composed: true }));
 	}
 };
 
