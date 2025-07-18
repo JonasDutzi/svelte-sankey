@@ -6,11 +6,11 @@
  * @param customEventName - The name of the custom event to be dispatched.
  * @param data - The data to be passed to the event handler or included in the custom event's detail.
  */
-export const dispatchCustomEvent = <T>(hostElement: HTMLElement, eventHandler: ((data: T) => void) | undefined, customEventName: string, data: T) => {
+export const dispatchCustomEvent = <T>(hostElement: HTMLElement | undefined, eventHandler: ((data: T) => void) | undefined, customEventName: string, data: T) => {
 	if (eventHandler) {
 		eventHandler(data);
 	} else {
-		hostElement.dispatchEvent(new CustomEvent(customEventName, { detail: data, bubbles: true, composed: true }));
+		hostElement!.dispatchEvent(new CustomEvent(customEventName, { detail: data, bubbles: true, composed: true }));
 	}
 };
 

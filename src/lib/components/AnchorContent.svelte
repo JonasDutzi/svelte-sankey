@@ -17,6 +17,8 @@
 
 	let { item, highlightpaths, onItemClick, onAnchorMouseEnter, onAnchorMouseLeave, children }: Props = $props();
 
+	let hostElement: HTMLElement | undefined = $state(undefined);
+
 	let isPathHighlightingOn = $derived.by(() => {
 		if (sankeyStore.value.highlightPaths === false) {
 			return false;
@@ -26,21 +28,21 @@
 	});
 
 	const onClick = () => {
-		dispatchCustomEvent($host(), onItemClick, "itemclick", item);
+		dispatchCustomEvent(hostElement, onItemClick, "itemclick", item);
 	};
 
 	const onMouseEnter = () => {
 		if (isPathHighlightingOn) {
 			highlightSankeyPaths();
 		}
-		dispatchCustomEvent($host(), onAnchorMouseEnter, "anchormouseenter", item);
+		dispatchCustomEvent(hostElement, onAnchorMouseEnter, "anchormouseenter", item);
 	};
 
 	const onMouseLeave = () => {
 		if (isPathHighlightingOn) {
 			removeSankeyPathsHighlight();
 		}
-		dispatchCustomEvent($host(), onAnchorMouseLeave, "anchormouseleave", item);
+		dispatchCustomEvent(hostElement, onAnchorMouseLeave, "anchormouseleave", item);
 	};
 
 	const highlightSankeyPaths = () => {
@@ -62,7 +64,7 @@
 	};
 </script>
 
-<button class="sv-sankey__anchorcontent" onclick={onClick} onmouseenter={onMouseEnter} onmouseleave={onMouseLeave}>
+<button bind:this={hostElement} class="sv-sankey__anchorcontent" onclick={onClick} onmouseenter={onMouseEnter} onmouseleave={onMouseLeave}>
 	<slot />
 </button>
 
