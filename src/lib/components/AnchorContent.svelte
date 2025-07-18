@@ -4,10 +4,9 @@
 	import { type Snippet } from "svelte";
 	import type { OnItemClick, OnAnchorMouseEnter, OnAnchorMouseLeave, SankeyItem } from "../types";
 	import { sankeyStore } from "../stores/sankey.svelte.ts";
-	import Children from "./Children.svelte";
 	import { dispatchCustomEvent } from "../helper.ts";
 
-	let host: HTMLButtonElement;
+	let hostElement: HTMLButtonElement;
 
 	type Props = {
 		item: SankeyItem;
@@ -29,21 +28,21 @@
 	});
 
 	const onClick = () => {
-		dispatchCustomEvent(host, onItemClick, "itemclick", item);
+		dispatchCustomEvent($host(), onItemClick, "itemclick", item);
 	};
 
 	const onMouseEnter = () => {
 		if (isPathHighlightingOn) {
 			highlightSankeyPaths();
 		}
-		dispatchCustomEvent(host, onAnchorMouseEnter, "anchormouseenter", item);
+		dispatchCustomEvent($host(), onAnchorMouseEnter, "anchormouseenter", item);
 	};
 
 	const onMouseLeave = () => {
 		if (isPathHighlightingOn) {
 			removeSankeyPathsHighlight();
 		}
-		onAnchorMouseLeave?.(item);
+		dispatchCustomEvent($host(), onAnchorMouseLeave, "anchormouseleave", item);
 	};
 
 	const highlightSankeyPaths = () => {
@@ -65,8 +64,8 @@
 	};
 </script>
 
-<button bind:this={host} class="sv-sankey__anchorcontent" onclick={onClick} onmouseenter={onMouseEnter} onmouseleave={onMouseLeave}>
-	<Children {children}></Children>
+<button bind:this={hostElement} class="sv-sankey__anchorcontent" onclick={onClick} onmouseenter={onMouseEnter} onmouseleave={onMouseLeave}>
+	<slot />
 </button>
 
 <style>

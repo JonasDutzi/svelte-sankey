@@ -7,7 +7,6 @@
  * @param data - The data to be passed to the event handler or included in the custom event's detail.
  */
 export const dispatchCustomEvent = <T>(hostElement: HTMLElement, eventHandler: ((data: T) => void) | undefined, customEventName: string, data: T) => {
-	console.log("dispatchCustomEvent");
 	if (eventHandler) {
 		eventHandler(data);
 	} else {
