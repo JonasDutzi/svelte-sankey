@@ -49,7 +49,7 @@
 		maxpathheight={size}
 		minpathheight={1}
 		chartdata={data}
-		itemclick={onItemClick}
+		{onItemClick}
 		{onAnchorClick}
 		{onAnchorMouseEnter}
 		{onAnchorMouseLeave}

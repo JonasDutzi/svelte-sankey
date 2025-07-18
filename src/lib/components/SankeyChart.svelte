@@ -11,7 +11,7 @@
 		maxpathheight?: number;
 		minpathheight?: number;
 		chartdata: any;
-		itemclick?: OnItemClick;
+		onItemClick?: OnItemClick;
 		onAnchorClick?: OnAnchorClick;
 		onAnchorMouseEnter?: OnAnchorMouseEnter;
 		onAnchorMouseLeave?: OnAnchorMouseLeave;
@@ -25,7 +25,7 @@
 		highlightpaths = true,
 		maxpathheight = 32,
 		minpathheight = 1,
-		itemclick,
+		onItemClick,
 		onAnchorClick,
 		onAnchorMouseEnter,
 		onAnchorMouseLeave,
@@ -52,7 +52,7 @@
 					<Item {item}>
 						<div class="anchor-group" style:--anchor-position={columnIndex === chartdata.data.length - 1 ? "row-reverse" : "row"}>
 							<Anchor {item} {onAnchorClick} />
-							<AnchorContent {itemclick} {onAnchorMouseEnter} {onAnchorMouseLeave} {item} {highlightpaths}>
+							<AnchorContent {onItemClick} {onAnchorMouseEnter} {onAnchorMouseLeave} {item} {highlightpaths}>
 								<div>{item.label}</div>
 							</AnchorContent>
 						</div>
