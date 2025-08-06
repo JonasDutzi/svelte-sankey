@@ -12,6 +12,10 @@
 </div>
 
 <style>
+	:host {
+		margin-inline: 0.5rem;
+		position: relative;
+	}
 	.sv-sankey__label {
 		margin-inline: 0.5rem;
 		position: relative;

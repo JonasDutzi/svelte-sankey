@@ -1,4 +1,8 @@
-<svelte:options customElement="sv-sankey" />
+<svelte:options
+	customElement={{
+		tag: "sv-sankey"
+	}}
+/>
 
 <script lang="ts">
 	import { sankeyStore } from "../stores/sankey.svelte.ts";
@@ -7,7 +11,6 @@
 
 	import SankeyLine from "./SankeyLine.svelte";
 	import type { Snippet } from "svelte";
-	import Children from "./Children.svelte";
 	import Gradient from "./Gradient.svelte";
 	import type { OnPathClick, OnPathMouseEnter, OnPathMouseLeave } from "../types/index.ts";
 
@@ -69,8 +72,10 @@
 			<SankeyLine {key} {data} {onPathClick} {onPathMouseEnter} {onPathMouseLeave} />
 		{/each}
 	</svg>
-	<Children {children}></Children>
+	<slot />
 </div>
+
+<!-- <slot /> -->
 
 <style>
 	:global(.sv-sankey__wrapper) {
