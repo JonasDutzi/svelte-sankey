@@ -3,11 +3,9 @@
 <script lang="ts">
 	import type { SankeyColumn } from "../types";
 	import { dataStore } from "../stores/data.svelte";
-	import type { Snippet } from "svelte";
 
 	type Props = {
 		data: SankeyColumn;
-		children?: Snippet;
 	};
 
 	let { data }: Props = $props();
