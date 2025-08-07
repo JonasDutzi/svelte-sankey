@@ -38,7 +38,7 @@
 
 	let messages = $state<Array<string>>([]);
 
-	let customSankey = $state(false);
+	let showWebcomponentSankey = $state(true);
 
 	let highlightPaths = $state(true);
 	let showHeaders = $state(true);
@@ -46,9 +46,7 @@
 </script>
 
 <main>
-	<input id="custom" type="checkbox" bind:checked={customSankey} />
-	<label for="custom">Custom Chart</label>
-	{#if customSankey}
+	{#if showWebcomponentSankey}
 		<WebcomponentSankey maxpathheight={size} minpathheight={1} highlightpaths={highlightPaths} showheaders={showHeaders} />
 	{:else}
 		<SankeyChart
@@ -72,6 +70,8 @@
 			</ul>
 		</div>
 	{/if}
+	<input id="custom" type="checkbox" bind:checked={showWebcomponentSankey} />
+	<label for="custom">Show Webcomponent Sankey</label>
 	<SankeyInspector showStores={true} showSettings={true} bind:showHeaders bind:size bind:highlightPaths />
 </main>
 
@@ -84,5 +84,8 @@
 	}
 	:global(body) {
 		background-color: hsl(0, 0%, 93%);
+	}
+	#custom {
+		margin-top: 5rem;
 	}
 </style>

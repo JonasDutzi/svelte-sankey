@@ -75,8 +75,6 @@
 	<slot />
 </div>
 
-<!-- <slot /> -->
-
 <style>
 	:global(.sv-sankey__wrapper) {
 		margin: 0;
