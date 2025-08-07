@@ -15,7 +15,7 @@
 	const onAnchorMouseLeave: OnAnchorMouseLeave = () => {};
 
 	const onPathClick: OnPathClick = () => {};
-	const onPathMouseEnter: OnPathMouseEnter = ({ source, target }) => {};
+	const onPathMouseEnter: OnPathMouseEnter = () => {};
 	const onPathMouseLeave: OnPathMouseLeave = ({ source, target }) => {};
 
 	//basic example of resizing based on window breakpoints
