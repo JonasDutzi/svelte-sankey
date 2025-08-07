@@ -11,8 +11,7 @@
 		messages.push(JSON.stringify(item));
 	};
 
-	const onAnchorClick: OnAnchorClick = (item) => {};
-	const onAnchorMouseEnter: OnAnchorMouseEnter = (item) => {};
+	const onAnchorMouseEnter: OnAnchorMouseEnter = () => {};
 	const onAnchorMouseLeave: OnAnchorMouseLeave = (item) => {};
 
 	const onPathClick: OnPathClick = ({ source, target }) => {};
@@ -53,7 +52,6 @@
 			minpathheight={1}
 			chartdata={data}
 			{onItemClick}
-			{onAnchorClick}
 			{onAnchorMouseEnter}
 			{onAnchorMouseLeave}
 			{onPathClick}
