@@ -1,10 +1,11 @@
 <svelte:options customElement="svsankey-chart" />
 
 <script lang="ts">
-	import type { OnAnchorMouseEnter, OnAnchorMouseLeave, OnItemClick, OnPathClick, OnPathMouseEnter, OnPathMouseLeave } from "../types";
-	import Anchor, { type OnAnchorClick } from "./Anchor.svelte";
+	import type { OnAnchorClick, OnAnchorMouseEnter, OnAnchorMouseLeave, OnItemClick, OnPathClick, OnPathMouseEnter, OnPathMouseLeave } from "../types";
+	import Anchor from "./Anchor.svelte";
 	import AnchorContent from "./AnchorContent.svelte";
 	import { ColumnContent, ColumnHeader, Item, Sankey } from "./index";
+	import { dispatchCustomEvent } from "../helper.ts";
 	type Props = {
 		showheaders?: boolean;
 		highlightpaths?: boolean;
@@ -34,6 +35,10 @@
 		onPathMouseLeave,
 		chartdata
 	}: Props = $props();
+
+	const forwardEvent = (handler: ((data: any) => void) | undefined, eventName: string, data: any) => {
+		dispatchCustomEvent($host(), handler, eventName, data);
+	};
 </script>
 
 <Sankey {showheaders} {maxpathheight} {minpathheight} {highlightpaths} {onPathClick} {onPathMouseEnter} {onPathMouseLeave}>
@@ -52,7 +57,13 @@
 					<Item {item}>
 						<div class="anchor-group" style:--anchor-position={columnIndex === chartdata.data.length - 1 ? "row-reverse" : "row"}>
 							<Anchor {item} {onAnchorClick} />
-							<AnchorContent {onItemClick} {onAnchorMouseEnter} {onAnchorMouseLeave} {item} {highlightpaths}>
+							<AnchorContent
+								onItemClick={() => forwardEvent(onItemClick, "itemclick", item)}
+								onAnchorMouseEnter={() => forwardEvent(onAnchorMouseEnter, "anchormouseenter", item)}
+								onAnchorMouseLeave={() => forwardEvent(onAnchorMouseLeave, "anchormouseleave", item)}
+								{item}
+								{highlightpaths}
+							>
 								<div>{item.label}</div>
 							</AnchorContent>
 						</div>
