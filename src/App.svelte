@@ -1,7 +1,6 @@
 <script lang="ts">
 	import "./index.css";
 	import { sankeyData as data } from "./testdata/data.customdata.ts";
-	import { sankeyData as dataBigger } from "./testdata/data.bigger.ts";
 
 	import SankeyInspector from "./inspector/Inspector.svelte";
 	import SankeyChart from "./lib/components/SankeyChart.svelte";
