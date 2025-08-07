@@ -4,18 +4,20 @@
 	import { type Snippet } from "svelte";
 	import type { OnItemClick, OnAnchorMouseEnter, OnAnchorMouseLeave, SankeyItem } from "../types";
 	import { sankeyStore } from "../stores/sankey.svelte.ts";
-	import Children from "./Children.svelte";
+	import { dispatchCustomEvent } from "../helper.ts";
 
 	type Props = {
 		item: SankeyItem;
 		highlightpaths?: boolean;
 		children?: Snippet;
-		onItemClick?: OnItemClick;
 		onAnchorMouseEnter?: OnAnchorMouseEnter;
 		onAnchorMouseLeave?: OnAnchorMouseLeave;
+		onItemClick?: OnItemClick;
 	};
 
 	let { item, highlightpaths, onItemClick, onAnchorMouseEnter, onAnchorMouseLeave, children }: Props = $props();
+
+	let hostElement: HTMLElement | undefined;
 
 	let isPathHighlightingOn = $derived.by(() => {
 		if (sankeyStore.value.highlightPaths === false) {
@@ -26,21 +28,21 @@
 	});
 
 	const onClick = () => {
-		onItemClick?.(item);
+		dispatchCustomEvent(hostElement, onItemClick, "itemclick", item);
 	};
 
 	const onMouseEnter = () => {
 		if (isPathHighlightingOn) {
 			highlightSankeyPaths();
 		}
-		onAnchorMouseEnter?.(item);
+		dispatchCustomEvent(hostElement, onAnchorMouseEnter, "anchormouseenter", item);
 	};
 
 	const onMouseLeave = () => {
 		if (isPathHighlightingOn) {
 			removeSankeyPathsHighlight();
 		}
-		onAnchorMouseLeave?.(item);
+		dispatchCustomEvent(hostElement, onAnchorMouseLeave, "anchormouseleave", item);
 	};
 
 	const highlightSankeyPaths = () => {
@@ -62,11 +64,20 @@
 	};
 </script>
 
-<button class="sv-sankey__anchorcontent" onclick={onClick} onmouseenter={onMouseEnter} onmouseleave={onMouseLeave}>
-	<Children {children}></Children>
+<button bind:this={hostElement} class="sv-sankey__anchorcontent" onclick={onClick} onmouseenter={onMouseEnter} onmouseleave={onMouseLeave}>
+	<slot />
 </button>
 
 <style>
+	:host {
+		cursor: pointer;
+		background-color: rgba(255, 255, 255);
+		border: 1px solid rgba(239, 239, 239, 0.2);
+		border-radius: 5px;
+		z-index: 1;
+		margin-inline: 0.75rem;
+		padding-inline: 1rem;
+	}
 	:global(.sv-sankey__anchorcontent) {
 		cursor: pointer;
 		background-color: rgba(255, 255, 255);

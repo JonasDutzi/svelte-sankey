@@ -3,11 +3,10 @@
 	import { sankeyData as data } from "./testdata/data.customdata.ts";
 	import { sankeyData as dataBigger } from "./testdata/data.bigger.ts";
 	import { sankeyData as dataNegatives } from "./testdata/data.negatives.ts";
-	import SankeyCustomData from "./testdata/SankeyCustomData.svelte";
-	import SankeyDataBigger from "./testdata/SankeyDataBigger.svelte";
 	import SankeyInspector from "./inspector/Inspector.svelte";
 	import SankeyChart from "./lib/components/SankeyChart.svelte";
 	import type { OnAnchorClick, OnAnchorMouseEnter, OnAnchorMouseLeave, OnItemClick, OnPathClick, OnPathMouseEnter, OnPathMouseLeave, SankeyItem } from "./lib/index.ts";
+	import WebcomponentSankey from "./testdata/WebcomponentSankey.svelte";
 
 	const onItemClick: OnItemClick = (item) => {
 		messages.push(JSON.stringify(item));
@@ -37,39 +36,41 @@
 
 	let messages = $state<Array<string>>([]);
 
+	let showWebcomponentSankey = $state(false);
+
 	let highlightPaths = $state(true);
 	let showHeaders = $state(true);
 	let size = $state(50);
 </script>
 
 <main>
-	<SankeyChart
-		highlightpaths={highlightPaths}
-		showheaders={showHeaders}
-		maxpathheight={size}
-		minpathheight={1}
-		chartdata={data}
-		{onItemClick}
-		{onAnchorClick}
-		{onAnchorMouseEnter}
-		{onAnchorMouseLeave}
-		{onPathClick}
-		{onPathMouseEnter}
-		{onPathMouseLeave}
-	/>
-	<div>
-		<ul>
-			{#each messages as message}
-				<li>{message}</li>{/each}
-		</ul>
-	</div>
-	<!-- <SankeyInspector
-    showStores={true}
-    showSettings={true}
-    bind:showHeaders
-    bind:size
-    bind:highlightPaths
-  /> -->
+	{#if showWebcomponentSankey}
+		<WebcomponentSankey maxpathheight={size} minpathheight={1} highlightpaths={highlightPaths} showheaders={showHeaders} />
+	{:else}
+		<SankeyChart
+			highlightpaths={highlightPaths}
+			showheaders={showHeaders}
+			maxpathheight={size}
+			minpathheight={1}
+			chartdata={data}
+			{onItemClick}
+			{onAnchorClick}
+			{onAnchorMouseEnter}
+			{onAnchorMouseLeave}
+			{onPathClick}
+			{onPathMouseEnter}
+			{onPathMouseLeave}
+		/>
+		<div>
+			<ul>
+				{#each messages as message}
+					<li>{message}</li>{/each}
+			</ul>
+		</div>
+	{/if}
+	<input id="custom" type="checkbox" bind:checked={showWebcomponentSankey} />
+	<label for="custom">Show Webcomponent Sankey</label>
+	<SankeyInspector showStores={true} showSettings={true} bind:showHeaders bind:size bind:highlightPaths />
 </main>
 
 <style>
@@ -81,5 +82,8 @@
 	}
 	:global(body) {
 		background-color: hsl(0, 0%, 93%);
+	}
+	#custom {
+		margin-top: 5rem;
 	}
 </style>

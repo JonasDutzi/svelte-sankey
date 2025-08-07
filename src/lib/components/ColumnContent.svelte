@@ -3,15 +3,12 @@
 <script lang="ts">
 	import type { SankeyColumn } from "../types";
 	import { dataStore } from "../stores/data.svelte";
-	import type { Snippet } from "svelte";
-	import Children from "./Children.svelte";
 
 	type Props = {
 		data: SankeyColumn;
-		children?: Snippet;
 	};
 
-	let { data, children }: Props = $props();
+	let { data }: Props = $props();
 
 	$effect(() => {
 		dataStore.addColumn(data);
@@ -22,5 +19,5 @@
 </script>
 
 <div class="sv-sankey__column-content">
-	<Children {children}></Children>
+	<slot />
 </div>

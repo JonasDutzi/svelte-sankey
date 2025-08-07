@@ -61,6 +61,13 @@
 </div>
 
 <style>
+	:host {
+		display: flex;
+		align-items: center;
+		justify-content: start;
+		flex-direction: row;
+		margin-block: 1em;
+	}
 	:global(.sv-sankey__item) {
 		display: flex;
 		align-items: center;
