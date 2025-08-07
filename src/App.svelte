@@ -38,7 +38,7 @@
 
 	let messages = $state<Array<string>>([]);
 
-	let showWebcomponentSankey = $state(true);
+	let showWebcomponentSankey = $state(false);
 
 	let highlightPaths = $state(true);
 	let showHeaders = $state(true);
