@@ -12,7 +12,7 @@
 	};
 
 	const onAnchorMouseEnter: OnAnchorMouseEnter = () => {};
-	const onAnchorMouseLeave: OnAnchorMouseLeave = (item) => {};
+	const onAnchorMouseLeave: OnAnchorMouseLeave = () => {};
 
 	const onPathClick: OnPathClick = ({ source, target }) => {};
 	const onPathMouseEnter: OnPathMouseEnter = ({ source, target }) => {};
