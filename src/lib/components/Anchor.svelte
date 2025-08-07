@@ -55,7 +55,7 @@
 	bind:this={anchorRef}
 	onclick={onAnchorClicked}
 >
-	<Children {children}></Children>
+	<slot />
 </button>
 
 <style>
