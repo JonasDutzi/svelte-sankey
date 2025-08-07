@@ -11,7 +11,6 @@
 		messages.push(JSON.stringify(item));
 	};
 
-	const onAnchorClick: OnAnchorClick = (item) => {};
 	const onAnchorMouseEnter: OnAnchorMouseEnter = (item) => {};
 	const onAnchorMouseLeave: OnAnchorMouseLeave = (item) => {};
 
