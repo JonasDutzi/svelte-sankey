@@ -1,26 +1,3 @@
-/**
- * Dispatches a custom event or calls the provided event handler with the given data.
- *
- * @param hostElement - The HTML element that will dispatch the event if no event handler is provided.
- * @param eventHandler - The event handler function to be called with the data, if provided.
- * @param customEventName - The name of the custom event to be dispatched.
- * @param data - The data to be passed to the event handler or included in the custom event's detail.
- */
-export const dispatchCustomEvent = <T>(hostElement: HTMLElement | undefined, eventHandler: ((data: T) => void) | undefined, customEventName: string, data: T) => {
-	if (eventHandler) {
-		eventHandler(data);
-		return;
-	}
-	if (hostElement) {
-		hostElement.dispatchEvent(new CustomEvent(customEventName, { detail: data, bubbles: true, composed: true }));
-	} else {
-		logInfo(`No host element found to dispatch event '${customEventName}'`);
-	}
-};
-
-export const logInfo = (message?: unknown, ...optionalParams: Array<unknown>) => {
-	console.info("svelte-sankey: ", message, ...optionalParams);
-};
 export const logWarning = (message?: unknown, ...optionalParams: Array<unknown>) => {
 	console.warn("svelte-sankey: ", message, ...optionalParams);
 };
