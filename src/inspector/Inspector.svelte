@@ -68,7 +68,7 @@
 
 <style>
 	.inspector {
-		margin-top: 8rem;
+		margin-top: 1rem;
 	}
 	.stores {
 		margin: 2rem;
