@@ -62,7 +62,9 @@
 </script>
 
 <div bind:this={wrapperRef} style:--grid-auto-flow={showheaders ? "row" : "column"} class="sv-sankey__wrapper">
-	<svg width={wrapperStore.value.width} height={wrapperStore.value.height}>
+	<svg aria-labelledby="sankey-title" aria-describedby="sankey-desc" width={wrapperStore.value.width} height={wrapperStore.value.height}>
+		<title id="sankey-title">Sankey diagram</title>
+		<desc id="sankey-desc">Interactive flow diagram with</desc>
 		<defs>
 			{#each Object.entries(pathsStore.value) as [pathKey]}
 				<Gradient key={pathKey} />

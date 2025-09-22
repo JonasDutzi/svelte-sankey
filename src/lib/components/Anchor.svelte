@@ -16,7 +16,7 @@
 		children?: Snippet;
 	};
 
-	let anchorRef = $state<HTMLButtonElement>();
+	let anchorRef = $state<HTMLElement>();
 	let { item, onAnchorClick, children }: Props = $props();
 
 	let anchorHeight = $state(1);
@@ -47,7 +47,9 @@
 	};
 </script>
 
-<button
+<svelte:element
+	this={onAnchorClick ? "button" : "div"}
+	role={onAnchorClick ? "button" : "none"}
 	class="sv-sankey__anchor"
 	data-sankey-key={item.id}
 	style:--anchor-height="{anchorHeight}px"
@@ -56,7 +58,7 @@
 	onclick={onAnchorClicked}
 >
 	<slot />
-</button>
+</svelte:element>
 
 <style>
 	:global(.sv-sankey__anchor) {

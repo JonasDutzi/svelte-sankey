@@ -17,7 +17,8 @@ export const sankeyData: SankeyData = {
 									target: "semi_finished_good",
 									value: 5,
 									strokeColor: "var(--stroke-color-1)",
-									strokeColorHover: "var(--stroke-color-1-hover)"
+									strokeColorHover: "var(--stroke-color-1-hover)",
+									ariaLabel: "bli bla blub"
 								}
 							],
 							data: {

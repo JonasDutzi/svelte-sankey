@@ -6,6 +6,7 @@ export type Link = {
 	value: number;
 	strokeColor?: string;
 	strokeColorHover?: string;
+	ariaLabel?: string;
 };
 
 export type LinksStore = Record<string, Link>;
@@ -19,7 +20,8 @@ const createLinksStore = () => {
 			target: newLink.target,
 			value: newLink.value <= 0 ? 0 : newLink.value,
 			strokeColor: newLink.strokeColor,
-			strokeColorHover: newLink.strokeColorHover
+			strokeColorHover: newLink.strokeColorHover,
+			ariaLabel: newLink.ariaLabel
 		};
 	};
 
