@@ -10,7 +10,7 @@ export type SankeyItem = {
 	sources?: Array<SankeyEdge>;
 	targets?: Array<SankeyEdge>;
 	totalValues: TotalValues;
-};
+} & Record<string, unknown>;
 
 export type TotalValues = {
 	sources: number;
@@ -50,8 +50,7 @@ const createItemsStore = () => {
 							logError(`Sankey Item id must be unique. Item with id "${item.id}" already exists.`);
 						} else {
 							items[item.id] = {
-								id: item.id,
-								label: item.label,
+								...item,
 								columnKey,
 								sources,
 								targets,

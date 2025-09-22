@@ -26,13 +26,13 @@ type SankeyColumn = {
 	id: SankeyKey;
 	rows: Array<SankeyRow>;
 	columnLabel?: string;
-	data?: Record<any, any>;
+	data?: any;
 };
 
 type SankeyRow = {
 	items: Array<SankeyItem>;
 	rowLabel?: string;
-	data?: Record<any, any>;
+	data?: any;
 };
 
 type SankeyItem = {
@@ -40,7 +40,7 @@ type SankeyItem = {
 	label: string;
 	links?: Array<SankeyLink>;
 	anchorColor?: string;
-	data?: Record<any, any>;
+	data?: any;
 };
 
 type ItemData = ItemDataStore & { value: number };
@@ -50,7 +50,8 @@ type SankeyLink = {
 	value: number;
 	strokeColor?: string;
 	strokeColorHover?: string;
-	data?: Record<any, any>;
+	ariaLabel?: string;
+	data?: any;
 };
 
 type SankeyKey = string | number;

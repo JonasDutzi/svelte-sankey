@@ -4,6 +4,7 @@
 	import { type Snippet } from "svelte";
 	import type { OnItemClick, OnAnchorMouseEnter, OnAnchorMouseLeave, SankeyItem } from "../types";
 	import { sankeyStore } from "../stores/sankey.svelte.ts";
+	import { tabIndexStore } from "../stores/tabIndex.svelte.ts";
 	import { dispatchCustomEvent } from "../helper.ts";
 
 	type Props = {
@@ -26,6 +27,8 @@
 			return highlightpaths;
 		}
 	});
+
+	let tabIndex = $derived(tabIndexStore.value.anchors[item.id] || 0);
 
 	const onClick = () => {
 		dispatchCustomEvent(hostElement, onItemClick, "itemclick", item);
@@ -64,7 +67,7 @@
 	};
 </script>
 
-<button bind:this={hostElement} class="sv-sankey__anchorcontent" onclick={onClick} onmouseenter={onMouseEnter} onmouseleave={onMouseLeave}>
+<button bind:this={hostElement} class="sv-sankey__anchorcontent" tabindex={tabIndex} onclick={onClick} onmouseenter={onMouseEnter} onmouseleave={onMouseLeave}>
 	<slot />
 </button>
 

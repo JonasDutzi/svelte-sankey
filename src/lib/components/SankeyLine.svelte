@@ -7,6 +7,8 @@
 	import { scaleValue } from "../helper";
 	import { sankeyStore } from "../stores/sankey.svelte.ts";
 	import { itemsStore } from "../stores/items.svelte.ts";
+	import { tabIndexStore } from "../stores/tabIndex.svelte.ts";
+	const FIX_NO_BOX_HEIGHT = 0.0001;
 
 	type Props = {
 		key: string;
@@ -18,19 +20,16 @@
 	let { key, data, onPathClick, onPathMouseEnter, onPathMouseLeave }: Props = $props();
 
 	let pathElement = $state<SVGPathElement | undefined>();
+	let visualPathElement = $state<SVGPathElement | undefined>();
 
-	const getPosition = (value: number | undefined, pathWidth: number, axis: Axis): number => {
-		if (axis === Axis.x && value) {
-			return value;
+	let pathLabel = $derived.by(() => {
+		if (linkData.ariaLabel) {
+			return linkData.ariaLabel;
 		}
-		if (axis === Axis.y && value) {
-			return value + pathWidth / 2;
-		}
-		return 0;
-	};
+		return `Data stream from ${sourceData.label} to ${targetData.label} with value ${sourceData.totalValues.targets}`;
+	});
 
 	const getPathWidth = () => {
-		const linkData = linksStore.value[key];
 		let pathValue = 0;
 		if (linkData.value === 0) {
 			return 1;
@@ -41,13 +40,6 @@
 		}
 		return scaleValue(pathValue, [sankeyStore.value.minPathHeight, sankeyStore.value.maxPathHeight], sankeyStore.value.minValue, sankeyStore.value.maxValue);
 	};
-
-	const bezierCurveTo = (x1: number, y1: number, x2: number, y2: number): string => {
-		const xMove = 2;
-		const xFactor = (x1 + x2) * (1 / xMove);
-		return `M${x1},${y1} C${xFactor},${y1} ${xFactor},${y2}  ${x2},${y2}`;
-	};
-
 	let pathWidth = $derived(getPathWidth());
 	let pathWidthIncreased = $derived.by(() => {
 		if (pathWidth <= 30) {
@@ -57,7 +49,6 @@
 		}
 	});
 
-	const FIX_NO_BOX_HEIGHT = 0.0001;
 	let x1 = $derived.by(() => {
 		const value = getPosition(data.sourcePosition.x, pathWidth ?? 0, Axis.x);
 		return value + FIX_NO_BOX_HEIGHT;
@@ -71,11 +62,40 @@
 	let bezierCurve = $derived.by(() => bezierCurveTo(x1, y1, x2, y2));
 
 	let sourceAndTargetData = $derived.by(() => {
-		const [sourceKey, targetKey] = key.split("/");
-		const source = itemsStore.value[sourceKey];
-		const target = itemsStore.value[targetKey];
-		return { source, target };
+		return { source: sourceData, target: targetData };
 	});
+
+	let sourceData = $derived.by(() => {
+		const [sourceKey, _] = key.split("/");
+		const source = itemsStore.value[sourceKey];
+		return source;
+	});
+
+	let targetData = $derived.by(() => {
+		const [_, targetKey] = key.split("/");
+		const target = itemsStore.value[targetKey];
+		return target;
+	});
+
+	let tabIndex = $derived(tabIndexStore.value.paths[key]);
+
+	const linkData = $derived(linksStore.value[key]);
+
+	const getPosition = (value: number | undefined, pathWidth: number, axis: Axis): number => {
+		if (axis === Axis.x && value) {
+			return value;
+		}
+		if (axis === Axis.y && value) {
+			return value + pathWidth / 2;
+		}
+		return 0;
+	};
+
+	const bezierCurveTo = (x1: number, y1: number, x2: number, y2: number): string => {
+		const xMove = 2;
+		const xFactor = (x1 + x2) * (1 / xMove);
+		return `M${x1},${y1} C${xFactor},${y1} ${xFactor},${y2}  ${x2},${y2}`;
+	};
 
 	const onPathClicked = () => {
 		onPathClick?.(sourceAndTargetData);
@@ -90,11 +110,11 @@
 	};
 
 	const onPathFocused = () => {
-		pathElement?.classList.add("focused-path");
+		visualPathElement?.classList.add("focused-path");
 	};
 
 	const onPathFocusOut = () => {
-		pathElement?.classList.remove("focused-path");
+		visualPathElement?.classList.remove("focused-path");
 	};
 
 	const onPathThresholdMouseEnter = () => {
@@ -113,8 +133,10 @@
 </script>
 
 <path
-	role="link"
-	tabindex="0"
+	bind:this={pathElement}
+	role="button"
+	tabindex={tabIndex}
+	aria-label={pathLabel}
 	onkeypress={onPathClicked}
 	class="sv-sankey__path-interactive"
 	d={bezierCurve}
@@ -127,7 +149,8 @@
 />
 
 <path
-	bind:this={pathElement}
+	bind:this={visualPathElement}
+	role="presentation"
 	class="sv-sankey__path"
 	data-sankey-key={key}
 	data-sankey-source="path-{key.split('/')[0]}"

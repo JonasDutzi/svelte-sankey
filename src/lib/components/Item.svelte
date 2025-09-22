@@ -26,10 +26,7 @@
 				}
 				linksStore.add({
 					source: item.id,
-					target: link.target,
-					value: link.value,
-					strokeColor: link.strokeColor,
-					strokeColorHover: link.strokeColorHover
+					...link
 				});
 				if (link.value && link.value > sankeyStore.value.maxValue) {
 					sankeyStore.setMaxValue(link.value);
