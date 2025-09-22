@@ -1,0 +1,24 @@
+:root {
+	--custom-color: rgb(0, 208, 205);
+	--stroke-color: hsla(203, 100%, 67%, 0.7);
+	--stroke-color-hover: hsla(203, 100%, 50%, 0.9);
+
+	--stroke-color-1: hsla(43, 100%, 99%, 0.7);
+	--stroke-color-1-hover: hsla(41, 100%, 15%, 80%);
+
+	--stroke-color-2: hsla(172, 100%, 25%, 70%);
+	--stroke-color-2-hover: hsla(172, 100%, 15%, 80%);
+
+	--stroke-color-3: hwb(202 0% 50% / 0.7);
+	--stroke-color-3-hover: hsla(203, 100%, 60%, 0.8);
+
+	--stroke-color-4: hsla(221, 100%, 25%, 70%);
+	--stroke-color-4-hover: hsla(221, 100%, 15%, 80%);
+
+	--anchor-color-1: hsl(130, 100%, 50%, 0.6);
+	--anchor-color-2: hsl(71, 100%, 50%, 0.6);
+	--anchor-color-3: hsl(33, 100%, 50%, 0.6);
+	--anchor-color-4: hsl(191, 100%, 50%, 0.6);
+	--anchor-color-5: hsl(242, 100%, 50%, 0.6);
+	--anchor-color-6: hsl(336, 100%, 50%, 0.6);
+}
