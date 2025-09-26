@@ -28,11 +28,7 @@ export const test = baseTest.extend<AxeFixture>({
 		}
 	},
 	axe: async ({ page }, use) => {
-		const makeAxeBuilder = () =>
-			new AxeBuilder({ page }).disableRules([
-				"page-has-heading-one",
-				"tabindex" //FIXME: tabindex should never be more than 0
-			]);
+		const makeAxeBuilder = () => new AxeBuilder({ page }).disableRules(["page-has-heading-one"]);
 
 		await use(makeAxeBuilder);
 	}
