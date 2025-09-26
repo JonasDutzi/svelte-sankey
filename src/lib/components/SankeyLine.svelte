@@ -2,12 +2,12 @@
 
 <script lang="ts">
 	import type { Path } from "../stores/paths.svelte.ts";
-	import { Axis, type OnPathClick, type OnPathMouseEnter, type OnPathMouseLeave } from "../types";
+	import { Axis, type OnPathClick, type OnPathMouseEnter, type OnPathMouseLeave, type SankeyKey } from "../types";
 	import { linksStore } from "../stores/links.svelte.ts";
 	import { scaleValue } from "../helper";
 	import { sankeyStore } from "../stores/sankey.svelte.ts";
 	import { itemsStore } from "../stores/items.svelte.ts";
-	import { tabIndexStore } from "../stores/tabIndex.svelte.ts";
+	import { navigationStore } from "../stores/navigation.svelte.ts";
 	const FIX_NO_BOX_HEIGHT = 0.0001;
 
 	type Props = {
@@ -27,6 +27,16 @@
 			return linkData.ariaLabel;
 		}
 		return `Data stream from ${sourceData.label} to ${targetData.label} with value ${sourceData.totalValues.targets}`;
+	});
+
+	// Compute tabindex based on whether this path is currently focused
+	let tabIndex = $derived.by(() => {
+		// If no item is focused yet, paths should not be focusable until navigation starts
+		if (navigationStore.value.focusedItemId === null) {
+			return -1;
+		}
+		// Check if this path is the currently focused item
+		return navigationStore.value.focusedItemId === key ? 0 : -1;
 	});
 
 	const getPathWidth = () => {
@@ -77,8 +87,6 @@
 		return target;
 	});
 
-	let tabIndex = $derived(tabIndexStore.value.paths[key]);
-
 	const linkData = $derived(linksStore.value[key]);
 
 	const getPosition = (value: number | undefined, pathWidth: number, axis: Axis): number => {
@@ -113,8 +121,58 @@
 		visualPathElement?.classList.add("focused-path");
 	};
 
+	const onPathItemFocused = () => {
+		// Set this path as the currently focused item in the navigation store
+		navigationStore.setFocusedItem(key);
+		onPathFocused();
+	};
+
 	const onPathFocusOut = () => {
 		visualPathElement?.classList.remove("focused-path");
+	};
+
+	const onKeyDown = (event: KeyboardEvent) => {
+		// Handle arrow key navigation
+		if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)) {
+			event.preventDefault();
+			navigateWithKeys(event.key);
+		}
+		// Handle Enter/Space for activation
+		else if (event.key === "Enter" || event.key === " ") {
+			event.preventDefault();
+			onPathClicked();
+		}
+	};
+
+	const navigateWithKeys = (key: string) => {
+		let targetItemId: SankeyKey | null = null;
+
+		switch (key) {
+			case "ArrowUp":
+				targetItemId = navigationStore.navigateVertical("up");
+				break;
+			case "ArrowDown":
+				targetItemId = navigationStore.navigateVertical("down");
+				break;
+			case "ArrowLeft":
+				targetItemId = navigationStore.navigateHorizontal("left");
+				break;
+			case "ArrowRight":
+				targetItemId = navigationStore.navigateHorizontal("right");
+				break;
+		}
+
+		if (targetItemId) {
+			focusItemById(String(targetItemId));
+		}
+	};
+
+	const focusItemById = (itemId: string) => {
+		// Find and focus the element with the target item ID (could be anchor or path)
+		const targetElement = document.querySelector(`[data-item-id="${itemId}"]`) as HTMLButtonElement | SVGPathElement;
+		if (targetElement) {
+			targetElement.focus();
+		}
 	};
 
 	const onPathThresholdMouseEnter = () => {
@@ -137,12 +195,13 @@
 	role="button"
 	tabindex={tabIndex}
 	aria-label={pathLabel}
-	onkeypress={onPathClicked}
+	data-item-id={key}
+	onkeydown={onKeyDown}
 	class="sv-sankey__path-interactive"
 	d={bezierCurve}
 	style:--path-width-threshold={pathWidthIncreased}
 	onclick={onPathClicked}
-	onfocus={onPathFocused}
+	onfocus={onPathItemFocused}
 	onfocusout={onPathFocusOut}
 	onmouseenter={onPathMouseEntered}
 	onmouseleave={onPathMouseLeft}

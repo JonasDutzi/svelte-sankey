@@ -61,10 +61,16 @@
 	});
 </script>
 
-<div bind:this={wrapperRef} style:--grid-auto-flow={showheaders ? "row" : "column"} class="sv-sankey__wrapper">
+<div
+	bind:this={wrapperRef}
+	style:--grid-auto-flow={showheaders ? "row" : "column"}
+	class="sv-sankey__wrapper"
+	role="application"
+	aria-label="Sankey diagram - Use arrow keys to navigate between anchors, Tab to exit"
+>
 	<svg aria-labelledby="sankey-title" aria-describedby="sankey-desc" width={wrapperStore.value.width} height={wrapperStore.value.height}>
 		<title id="sankey-title">Sankey diagram</title>
-		<desc id="sankey-desc">Interactive flow diagram with</desc>
+		<desc id="sankey-desc">Interactive flow diagram - Use arrow keys to navigate between data points, Enter or Space to activate</desc>
 		<defs>
 			{#each Object.entries(pathsStore.value) as [pathKey]}
 				<Gradient key={pathKey} />

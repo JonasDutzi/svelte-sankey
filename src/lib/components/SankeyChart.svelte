@@ -64,7 +64,9 @@
 								{item}
 								{highlightpaths}
 							>
-								<div>{item.label}</div>
+								<div>
+									{item.label}
+								</div>
 							</AnchorContent>
 						</div>
 					</Item>
