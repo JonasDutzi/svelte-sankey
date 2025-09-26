@@ -29,15 +29,18 @@
 		return `Data stream from ${sourceData.label} to ${targetData.label} with value ${sourceData.totalValues.targets}`;
 	});
 
-	// Compute tabindex based on whether this path is currently focused
+	// Compute tabindex based on whether this path is currently focused and interactive
 	let tabIndex = $derived.by(() => {
-		// If no item is focused yet, paths should not be focusable until navigation starts
-		if (navigationStore.value.focusedItemId === null) {
+		// If no click handler, this path is not interactive
+		if (!onPathClick) {
 			return -1;
 		}
 		// Check if this path is the currently focused item
 		return navigationStore.value.focusedItemId === key ? 0 : -1;
 	});
+
+	// Determine if this path is interactive
+	let isInteractive = $derived(!!onPathClick);
 
 	const getPathWidth = () => {
 		let pathValue = 0;
@@ -190,22 +193,34 @@
 	};
 </script>
 
-<path
-	bind:this={pathElement}
-	role="button"
-	tabindex={tabIndex}
-	aria-label={pathLabel}
-	data-item-id={key}
-	onkeydown={onKeyDown}
-	class="sv-sankey__path-interactive"
-	d={bezierCurve}
-	style:--path-width-threshold={pathWidthIncreased}
-	onclick={onPathClicked}
-	onfocus={onPathItemFocused}
-	onfocusout={onPathFocusOut}
-	onmouseenter={onPathMouseEntered}
-	onmouseleave={onPathMouseLeft}
-/>
+{#if isInteractive}
+	<path
+		bind:this={pathElement}
+		role="button"
+		tabindex={tabIndex}
+		aria-label={pathLabel}
+		data-item-id={key}
+		onkeydown={onKeyDown}
+		class="sv-sankey__path-interactive"
+		d={bezierCurve}
+		style:--path-width-threshold={pathWidthIncreased}
+		onclick={onPathClicked}
+		onfocus={onPathItemFocused}
+		onfocusout={onPathFocusOut}
+		onmouseenter={onPathMouseEntered}
+		onmouseleave={onPathMouseLeft}
+	/>
+{:else}
+	<path
+		bind:this={pathElement}
+		role="none"
+		class="sv-sankey__path-interactive"
+		d={bezierCurve}
+		style:--path-width-threshold={pathWidthIncreased}
+		onmouseenter={onPathMouseEntered}
+		onmouseleave={onPathMouseLeft}
+	/>
+{/if}
 
 <path
 	bind:this={visualPathElement}
@@ -215,6 +230,7 @@
 	data-sankey-source="path-{key.split('/')[0]}"
 	data-sankey-target="path-{key.split('/')[1]}"
 	d={bezierCurve}
+	style:--cursor-type={isInteractive ? "pointer" : "default"}
 	style:--path-width={pathWidth}
 	style:--path-width-increased={pathWidth * 1.05}
 	style:--stroke-color={data.strokeColor}
@@ -227,7 +243,7 @@
 		/* stroke: var(--stroke-color, rgba(44, 61, 171, 0.3)); */
 		stroke-width: var(--path-width);
 		fill: none;
-		cursor: pointer;
+		cursor: var(--cursor-type, default);
 	}
 	:global(.sv-sankey__path:hover),
 	:global(.sv-sankey__path:focus) {
@@ -244,8 +260,15 @@
 		stroke: rgba(0, 0, 0, 0);
 		stroke-width: var(--path-width-threshold);
 		fill: none;
-		cursor: pointer;
 		outline: none;
+	}
+
+	:global(.sv-sankey__path-interactive[role="button"]) {
+		cursor: pointer;
+	}
+
+	:global(.sv-sankey__path-interactive[role="none"]) {
+		cursor: default;
 	}
 	@keyframes increase-stroke {
 		from {
