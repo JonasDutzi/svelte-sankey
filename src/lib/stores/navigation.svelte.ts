@@ -120,7 +120,7 @@ const createNavigationStore = () => {
 		const grid = getNavigationGrid();
 		for (const column of grid.columns) {
 			for (const item of column.items) {
-				if (item.type === "path" && item.sourceId === anchorId) {
+				if (item.type === "path" && item.sourceId === anchorId && isItemInteractive(item.id)) {
 					return item;
 				}
 			}
@@ -144,12 +144,25 @@ const createNavigationStore = () => {
 		const grid = getNavigationGrid();
 		for (const column of grid.columns) {
 			for (const item of column.items) {
-				if (item.type === "path" && item.targetId === anchorId) {
+				if (item.type === "path" && item.targetId === anchorId && isItemInteractive(item.id)) {
 					return item;
 				}
 			}
 		}
 		return null;
+	};
+
+	const isItemInteractive = (itemId: SankeyKey): boolean => {
+		// Check if the element exists in the DOM and is focusable
+		const element = document.querySelector(`[data-item-id="${itemId}"]`);
+		if (element) {
+			// Check if element has role="button" (interactive paths)
+			const role = element.getAttribute("role");
+			return role === "button";
+		}
+
+		// If element doesn't exist in DOM, it's not interactive
+		return false;
 	};
 
 	// Set focus to a specific item
@@ -230,12 +243,12 @@ const createNavigationStore = () => {
 		const targetColumnPosition = findItemPosition(targetAnchor.id);
 		if (!targetColumnPosition) return null;
 
-		// Get all paths that target the same column (same "flow level")
+		// Get all interactive paths that target the same column (same "flow level")
 		const pathsInSameFlowLevel: NavigationItem[] = [];
 
 		grid.columns.forEach((column) => {
 			column.items.forEach((item) => {
-				if (item.type === "path" && item.targetId) {
+				if (item.type === "path" && item.targetId && isItemInteractive(item.id)) {
 					const pathTargetAnchor = findAnchorById(item.targetId);
 					if (pathTargetAnchor) {
 						const pathTargetPosition = findItemPosition(pathTargetAnchor.id);
@@ -411,8 +424,12 @@ const createNavigationStore = () => {
 
 	const getFirstFocusableItemId = (): SankeyKey | null => {
 		const grid = getNavigationGrid();
-		if (grid.columns.length > 0 && grid.columns[0].items.length > 0) {
-			return grid.columns[0].items[0].id;
+		if (grid.columns.length > 0) {
+			// Find the first anchor (not path) in the first column
+			const firstAnchor = grid.columns[0].items.find((item) => item.type === "anchor");
+			if (firstAnchor) {
+				return firstAnchor.id;
+			}
 		}
 		return null;
 	};
