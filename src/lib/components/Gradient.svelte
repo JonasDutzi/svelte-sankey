@@ -10,12 +10,12 @@
 	const sourceAnchorColor = $derived.by(() => {
 		const direction = document.documentElement.dir === "ltr" ? 0 : 1;
 		const color = key.split("/")[direction];
-		return anchorsStore.value[color].anchorColor;
+		return anchorsStore.data[color].anchorColor;
 	});
 	const targetAnchorColor = $derived.by(() => {
 		const direction = document.documentElement.dir === "ltr" ? 1 : 0;
 		const color = key.split("/")[direction];
-		return anchorsStore.value[color].anchorColor;
+		return anchorsStore.data[color].anchorColor;
 	});
 </script>
 

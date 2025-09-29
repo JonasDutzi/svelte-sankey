@@ -32,10 +32,10 @@
 			}
 			const anchorRect = anchorRef?.getBoundingClientRect();
 			if (anchorRect) {
-				anchorsStore.setAnchor({
+				anchorsStore.add({
 					id: item.id,
-					positionX: anchorRect.x - wrapperStore.value.left,
-					positionY: anchorRect.y - wrapperStore.value.top,
+					positionX: anchorRect.x - wrapperStore.left,
+					positionY: anchorRect.y - wrapperStore.top,
 					anchorColor: item.anchorColor
 				});
 			}

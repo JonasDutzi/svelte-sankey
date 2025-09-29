@@ -31,7 +31,7 @@ const createItemsStore = () => {
 			Object.keys(dataStore.value).length > 0 &&
 			Object.keys(linksStore.value).length > 0
 			// &&
-			// Object.keys(anchorsStore.value).length === Object.keys(linksStore.value).length
+			// Object.keys(anchorsStore.data).length === Object.keys(linksStore.value).length
 		) {
 			for (const [columnKey, columnData] of Object.entries(dataStore.value)) {
 				for (const row of columnData.rows) {

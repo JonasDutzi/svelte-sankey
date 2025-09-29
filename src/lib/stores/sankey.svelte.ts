@@ -1,4 +1,4 @@
-export type SankeyStore = {
+export type Sankey = {
 	minPathHeight: number;
 	maxPathHeight: number;
 	minValue: number;
@@ -7,8 +7,8 @@ export type SankeyStore = {
 	highlightPaths?: boolean;
 };
 
-const createSankeyStore = () => {
-	const sankeyStore = $state<SankeyStore>({
+class SankeyStore {
+	data = $state<Sankey>({
 		minPathHeight: 1,
 		maxPathHeight: 0,
 		minValue: 0,
@@ -17,36 +17,80 @@ const createSankeyStore = () => {
 		highlightPaths: true
 	});
 
-	const setMinValue = (value: number) => {
-		sankeyStore.minValue = value;
-	};
+	get value() {
+		return this.data;
+	}
 
-	const setMaxValue = (value: number) => {
-		sankeyStore.maxValue = value;
-	};
+	get minPathHeight() {
+		return this.data.minPathHeight;
+	}
 
-	const setHighlightPaths = (value: boolean) => {
-		sankeyStore.highlightPaths = value;
-	};
+	set minPathHeight(value: number) {
+		this.data.minPathHeight = value;
+	}
 
-	const setMaxPathHeight = (value: number) => {
-		sankeyStore.maxPathHeight = value;
-	};
+	get maxPathHeight() {
+		return this.data.maxPathHeight;
+	}
 
-	const setMinPathHeight = (value: number) => {
-		sankeyStore.minPathHeight = value;
-	};
+	set maxPathHeight(value: number) {
+		this.data.maxPathHeight = value;
+	}
 
-	return {
-		get value() {
-			return sankeyStore;
-		},
-		setMinValue,
-		setMaxValue,
-		setHighlightPaths,
-		setMaxPathHeight,
-		setMinPathHeight
-	};
-};
+	get minValue() {
+		return this.data.minValue;
+	}
 
-export const sankeyStore = createSankeyStore();
+	set minValue(value: number) {
+		this.data.minValue = value;
+	}
+
+	get maxValue() {
+		return this.data.maxValue;
+	}
+
+	set maxValue(value: number) {
+		this.data.maxValue = value;
+	}
+
+	get isLoading() {
+		return this.data.isLoading;
+	}
+
+	set isLoading(value: boolean) {
+		this.data.isLoading = value;
+	}
+
+	get highlightPaths() {
+		return this.data.highlightPaths;
+	}
+
+	set highlightPaths(value: boolean | undefined) {
+		this.data.highlightPaths = value;
+	}
+
+	set(value: Sankey) {
+		this.data = value;
+	}
+
+	setLoading(value: boolean) {
+		this.data.isLoading = value;
+	}
+
+	update(updater: (current: Sankey) => Sankey) {
+		this.data = updater(this.data);
+	}
+
+	reset() {
+		this.data = {
+			minPathHeight: 1,
+			maxPathHeight: 0,
+			minValue: 0,
+			maxValue: 0,
+			isLoading: true,
+			highlightPaths: true
+		};
+	}
+}
+
+export const sankeyStore = new SankeyStore();
