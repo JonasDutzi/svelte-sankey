@@ -16,25 +16,26 @@ export type Position = {
 	y: number | undefined;
 };
 
-export type PathsStore = Record<string, Path>;
+export type Paths = Record<string, Path>;
 
 type Positions = Record<SankeyKey, number>;
 
-const createPathsStore = () => {
-	const getPaths = () => {
-		const paths: PathsStore = {};
+class PathsStore {
+	data = $derived(this.getPaths());
+
+	get value() {
+		return this.data;
+	}
+
+	getPaths(): Paths {
+		const paths: Paths = {};
 		if (Object.entries(linksStore.value).length > 0) {
 			const targetPositions: Positions = {};
 			const sourcePositions: Positions = {};
 			for (const [linkKey, linkData] of Object.entries(linksStore.value)) {
 				const sourceAnchor = anchorsStore.value[linkData.source];
 				const targetAnchor = anchorsStore.value[linkData.target];
-				const scaledLinkValue = scaleValue(
-					linkData.value,
-					[sankeyStore.value.minPathHeight, sankeyStore.value.maxPathHeight],
-					sankeyStore.value.minValue,
-					sankeyStore.value.maxValue
-				);
+				const scaledLinkValue = scaleValue(linkData.value, [sankeyStore.minPathHeight, sankeyStore.maxPathHeight], sankeyStore.minValue, sankeyStore.maxValue);
 				if (sourceAnchor && targetAnchor) {
 					paths[linkKey] = {
 						sourcePosition: {
@@ -62,14 +63,7 @@ const createPathsStore = () => {
 			}
 		}
 		return paths;
-	};
+	}
+}
 
-	const paths = $derived(getPaths());
-	return {
-		get value() {
-			return paths;
-		}
-	};
-};
-
-export const pathsStore = createPathsStore();
+export const pathsStore = new PathsStore();

@@ -30,15 +30,22 @@
 	let wrapperRef = $state<HTMLDivElement | undefined>();
 
 	$effect(() => {
-		sankeyStore.setHighlightPaths(highlightpaths);
+		sankeyStore.highlightPaths = highlightpaths;
 	});
 
 	$effect(() => {
-		sankeyStore.setMaxPathHeight(maxpathheight);
+		sankeyStore.maxPathHeight = maxpathheight;
 	});
 
 	$effect(() => {
-		sankeyStore.setMinPathHeight(minpathheight);
+		sankeyStore.minPathHeight = minpathheight;
+	});
+
+	// Set loading to false when paths are calculated and ready
+	$effect(() => {
+		if (Object.keys(pathsStore.value).length > 0) {
+			sankeyStore.isLoading = false;
+		}
 	});
 
 	$effect(() => {

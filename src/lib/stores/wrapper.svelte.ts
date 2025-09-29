@@ -1,28 +1,41 @@
-export type WrapperStore = {
+export type Wrapper = {
 	height: number;
 	width: number;
 	top: number;
 	left: number;
 };
 
-const createWrapperStore = () => {
-	let wrapperStore = $state<WrapperStore>({
+class WrapperStore {
+	data = $state<Wrapper>({
 		height: 0,
 		width: 0,
 		top: 0,
 		left: 0
 	});
 
-	const set = (value: WrapperStore) => {
-		wrapperStore = value;
-	};
+	get value() {
+		return this.data;
+	}
 
-	return {
-		get value() {
-			return wrapperStore;
-		},
-		set
-	};
-};
+	get height() {
+		return this.data.height;
+	}
 
-export const wrapperStore = createWrapperStore();
+	get width() {
+		return this.data.width;
+	}
+
+	get top() {
+		return this.data.top;
+	}
+
+	get left() {
+		return this.data.left;
+	}
+
+	set(value: Wrapper) {
+		this.data = value;
+	}
+}
+
+export const wrapperStore = new WrapperStore();

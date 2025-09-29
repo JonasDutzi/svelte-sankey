@@ -13,27 +13,19 @@ export type NewAnchor = {
 	anchorColor?: string;
 };
 
-export type AnchorsStore = Record<SankeyKey, Anchor>;
+export type Anchors = Record<SankeyKey, Anchor>;
 
-const createAnchorsStore = () => {
-	const anchorsStore = $state<AnchorsStore>({});
+class AnchorsStore {
+	data = $state<Anchors>({});
 
-	const setAnchor = (anchor: NewAnchor) => {
+	get value() {
+		return this.data;
+	}
+
+	add(anchor: NewAnchor) {
 		const { id, ...data } = anchor;
-		anchorsStore[id] = data;
-	};
+		this.data[id] = data;
+	}
+}
 
-	const remove = (anchorId: SankeyKey) => {
-		delete anchorsStore[anchorId];
-	};
-
-	return {
-		get value() {
-			return anchorsStore;
-		},
-		setAnchor,
-		remove
-	};
-};
-
-export const anchorsStore = createAnchorsStore();
+export const anchorsStore = new AnchorsStore();

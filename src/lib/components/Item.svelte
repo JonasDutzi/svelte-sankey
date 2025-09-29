@@ -29,7 +29,7 @@
 					...link
 				});
 				if (link.value && link.value > sankeyStore.value.maxValue) {
-					sankeyStore.setMaxValue(link.value);
+					sankeyStore.maxValue = link.value;
 				}
 
 				if (link.value && link.value > 0 && sankeyStore.value.minValue) {
