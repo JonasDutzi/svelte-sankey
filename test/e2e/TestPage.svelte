@@ -26,12 +26,11 @@
 	let messages = $state<Array<string>>([]);
 
 	let highlightPaths = $state(true);
-	let showHeaders = $state(true);
 	let size = $state(50);
 </script>
 
 <main>
-	<SankeyChart highlightpaths={highlightPaths} showheaders={showHeaders} maxpathheight={size} minpathheight={1} chartdata={data} {onItemClick} />
+	<SankeyChart highlightpaths={highlightPaths} maxpathheight={size} minpathheight={1} chartdata={data} {onItemClick} />
 	<div>
 		<ul>
 			{#each messages as message}

@@ -5,13 +5,12 @@
 		minpathheight?: number;
 		maxpathheight?: number;
 		highlightpaths?: boolean;
-		showheaders?: boolean;
 	};
 
-	let { maxpathheight = 50, minpathheight = 1, highlightpaths = true, showheaders = true }: Props = $props();
+	let { maxpathheight = 50, minpathheight = 1, highlightpaths = true }: Props = $props();
 </script>
 
-<sv-sankey {highlightpaths} {minpathheight} {maxpathheight} {showheaders} class="custom-chart">
+<sv-sankey {highlightpaths} {minpathheight} {maxpathheight} class="custom-chart">
 	{#each sankeyData.data as data, columnIndex}
 		<svsankey-column-header>
 			<div>
@@ -35,7 +34,7 @@
 	{/each}
 </sv-sankey>
 
-<SankeyInspector showStores={true} showSettings={true} highlightPaths={true} showHeaders={true} size={50} />
+<SankeyInspector showStores={true} showSettings={true} highlightPaths={true} size={50} />
 
 <style>
 	* {

@@ -39,17 +39,15 @@
 	let showWebcomponentSankey = $state(false);
 
 	let highlightPaths = $state(true);
-	let showHeaders = $state(true);
 	let size = $state(50);
 </script>
 
 <main>
 	{#if showWebcomponentSankey}
-		<WebcomponentSankey maxpathheight={size} minpathheight={1} highlightpaths={highlightPaths} showheaders={showHeaders} />
+		<WebcomponentSankey maxpathheight={size} minpathheight={1} highlightpaths={highlightPaths} />
 	{:else}
 		<SankeyChart
 			highlightpaths={highlightPaths}
-			showheaders={showHeaders}
 			maxpathheight={size}
 			minpathheight={1}
 			chartdata={data}
@@ -69,7 +67,7 @@
 	{/if}
 	<input id="custom" type="checkbox" bind:checked={showWebcomponentSankey} />
 	<label for="custom">Show Webcomponent Sankey</label>
-	<SankeyInspector showStores={true} showSettings={true} bind:showHeaders bind:size bind:highlightPaths />
+	<SankeyInspector showStores={true} showSettings={true} bind:size bind:highlightPaths />
 </main>
 
 <style>

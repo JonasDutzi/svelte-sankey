@@ -10,7 +10,6 @@
 
 	type Props = {
 		size: number;
-		showHeaders: boolean;
 		highlightPaths: boolean;
 		showStores: boolean;
 		showSettings: boolean;
@@ -32,7 +31,7 @@
 		];
 	});
 
-	let { size = $bindable(), showHeaders = $bindable(), highlightPaths = $bindable(), showStores = $bindable(), showSettings = $bindable() }: Props = $props();
+	let { size = $bindable(), highlightPaths = $bindable(), showStores = $bindable(), showSettings = $bindable() }: Props = $props();
 </script>
 
 <div class="inspector">
@@ -43,10 +42,6 @@
 			<div>
 				<div>Size (maxpathheight):</div>
 				<input type="range" min="1" max="400" bind:value={size} />
-			</div>
-			<div>
-				<div>Headers (showheaders):</div>
-				<input type="checkbox" bind:checked={showHeaders} />
 			</div>
 			<div>
 				<div>Highlight Paths (highlightpaths):</div>
