@@ -8,7 +8,6 @@
 	import { anchorsStore } from "../stores/anchors.svelte.ts";
 	import { wrapperStore } from "../stores/wrapper.svelte.ts";
 	import { type Snippet } from "svelte";
-	import Children from "./Children.svelte";
 
 	type Props = {
 		item: SankeyItem;
