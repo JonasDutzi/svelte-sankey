@@ -14,9 +14,7 @@
 	const onAnchorMouseEnter: OnAnchorMouseEnter = () => {};
 	const onAnchorMouseLeave: OnAnchorMouseLeave = () => {};
 
-	const onPathClick: OnPathClick = () => {
-		console.log("path clicked");
-	};
+	const onPathClick: OnPathClick = () => {};
 	const onPathMouseEnter: OnPathMouseEnter = ({ source, target }) => {};
 	const onPathMouseLeave: OnPathMouseLeave = ({ source, target }) => {};
 
