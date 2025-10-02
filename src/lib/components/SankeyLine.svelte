@@ -7,7 +7,7 @@
 	import { scaleValue } from "../helper";
 	import { sankeyStore } from "../stores/sankey.svelte.ts";
 	import { itemsStore } from "../stores/items.svelte.ts";
-	import { navigationStore } from "../stores/navigation.svelte.ts";
+	import { keyboardNavStore } from "../stores/keyboardNavigation.svelte.ts";
 	const FIX_NO_BOX_HEIGHT = 0.0001;
 
 	type Props = {
@@ -36,7 +36,7 @@
 			return -1;
 		}
 		// Check if this path is the currently focused item
-		return navigationStore.value.focusedItemId === key ? 0 : -1;
+		return keyboardNavStore.focusedItemId === key ? 0 : -1;
 	});
 
 	// Determine if this path is interactive
@@ -126,7 +126,7 @@
 
 	const onPathItemFocused = () => {
 		// Set this path as the currently focused item in the navigation store
-		navigationStore.setFocusedItem(key);
+		keyboardNavStore.setFocusedItem(key);
 		onPathFocused();
 	};
 
@@ -152,16 +152,16 @@
 
 		switch (key) {
 			case "ArrowUp":
-				targetItemId = navigationStore.navigateVertical("up");
+				targetItemId = keyboardNavStore.navigateVertical("up");
 				break;
 			case "ArrowDown":
-				targetItemId = navigationStore.navigateVertical("down");
+				targetItemId = keyboardNavStore.navigateVertical("down");
 				break;
 			case "ArrowLeft":
-				targetItemId = navigationStore.navigateHorizontal("left");
+				targetItemId = keyboardNavStore.navigateHorizontal("left");
 				break;
 			case "ArrowRight":
-				targetItemId = navigationStore.navigateHorizontal("right");
+				targetItemId = keyboardNavStore.navigateHorizontal("right");
 				break;
 		}
 
