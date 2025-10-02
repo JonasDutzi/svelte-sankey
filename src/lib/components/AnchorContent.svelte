@@ -21,7 +21,7 @@
 	let hostElement: HTMLElement | undefined;
 
 	let isPathHighlightingOn = $derived.by(() => {
-		if (sankeyStore.value.highlightPaths === false) {
+		if (sankeyStore.data.highlightPaths === false) {
 			return false;
 		} else {
 			return highlightpaths;

@@ -17,10 +17,6 @@ class SankeyStore {
 		highlightPaths: true
 	});
 
-	get value() {
-		return this.data;
-	}
-
 	get minPathHeight() {
 		return this.data.minPathHeight;
 	}

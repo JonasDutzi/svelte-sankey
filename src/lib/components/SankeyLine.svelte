@@ -46,12 +46,12 @@
 		let pathValue = 0;
 		if (linkData.value === 0) {
 			return 1;
-		} else if (linkData.value > sankeyStore.value.minPathHeight) {
+		} else if (linkData.value > sankeyStore.data.minPathHeight) {
 			pathValue = linkData.value;
 		} else {
-			pathValue = sankeyStore.value.minPathHeight;
+			pathValue = sankeyStore.data.minPathHeight;
 		}
-		return scaleValue(pathValue, [sankeyStore.value.minPathHeight, sankeyStore.value.maxPathHeight], sankeyStore.value.minValue, sankeyStore.value.maxValue);
+		return scaleValue(pathValue, [sankeyStore.data.minPathHeight, sankeyStore.data.maxPathHeight], sankeyStore.data.minValue, sankeyStore.data.maxValue);
 	};
 	let pathWidth = $derived(getPathWidth());
 	let pathWidthIncreased = $derived.by(() => {
@@ -80,17 +80,17 @@
 
 	let sourceData = $derived.by(() => {
 		const [sourceKey, _] = key.split("/");
-		const source = itemsStore.value[sourceKey];
+		const source = itemsStore.data[sourceKey];
 		return source;
 	});
 
 	let targetData = $derived.by(() => {
 		const [_, targetKey] = key.split("/");
-		const target = itemsStore.value[targetKey];
+		const target = itemsStore.data[targetKey];
 		return target;
 	});
 
-	const linkData = $derived(linksStore.value[key]);
+	const linkData = $derived(linksStore.data[key]);
 
 	const getPosition = (value: number | undefined, pathWidth: number, axis: Axis): number => {
 		if (axis === Axis.x && value) {

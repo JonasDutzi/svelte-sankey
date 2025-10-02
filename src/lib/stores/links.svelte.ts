@@ -9,13 +9,13 @@ export type Link = {
 	ariaLabel?: string;
 };
 
-export type LinksStore = Record<string, Link>;
+export type Links = Record<string, Link>;
 
-const createLinksStore = () => {
-	const linksStore = $state<LinksStore>({});
+class LinksStore {
+	data = $state<Links>({});
 
-	const add = (newLink: Link) => {
-		linksStore[`${newLink.source}/${newLink.target}`] = {
+	add(newLink: Link) {
+		this.data[`${newLink.source}/${newLink.target}`] = {
 			source: newLink.source,
 			target: newLink.target,
 			value: newLink.value <= 0 ? 0 : newLink.value,
@@ -23,19 +23,11 @@ const createLinksStore = () => {
 			strokeColorHover: newLink.strokeColorHover,
 			ariaLabel: newLink.ariaLabel
 		};
-	};
+	}
 
-	const remove = (link: Link) => {
-		delete linksStore[`${link.source}/${link.target}`];
-	};
+	remove(link: Link) {
+		delete this.data[`${link.source}/${link.target}`];
+	}
+}
 
-	return {
-		get value() {
-			return linksStore;
-		},
-		add,
-		remove
-	};
-};
-
-export const linksStore = createLinksStore();
+export const linksStore = new LinksStore();

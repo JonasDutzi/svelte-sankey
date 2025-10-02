@@ -72,7 +72,7 @@ const createNavigationStore = () => {
 
 	const getNavigationGrid = (): NavigationGrid => {
 		// Check if data store has any data
-		const dataValue = dataStore.value;
+		const dataValue = dataStore.data;
 		if (!dataValue || Object.keys(dataValue).length === 0) {
 			return { columns: [] };
 		}

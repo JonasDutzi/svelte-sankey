@@ -43,7 +43,7 @@
 
 	// Set loading to false when paths are calculated and ready
 	$effect(() => {
-		if (Object.keys(pathsStore.value).length > 0) {
+		if (Object.keys(pathsStore.data).length > 0) {
 			sankeyStore.isLoading = false;
 		}
 	});
@@ -75,15 +75,15 @@
 	role="application"
 	aria-label="Sankey diagram - Use arrow keys to navigate between anchors, Tab to exit"
 >
-	<svg aria-labelledby="sankey-title" aria-describedby="sankey-desc" width={wrapperStore.value.width} height={wrapperStore.value.height}>
+	<svg aria-labelledby="sankey-title" aria-describedby="sankey-desc" width={wrapperStore.data.width} height={wrapperStore.data.height}>
 		<title id="sankey-title">Sankey diagram</title>
 		<desc id="sankey-desc">Interactive flow diagram - Use arrow keys to navigate between data points, Enter or Space to activate</desc>
 		<defs>
-			{#each Object.entries(pathsStore.value) as [pathKey]}
+			{#each Object.entries(pathsStore.data) as [pathKey]}
 				<Gradient key={pathKey} />
 			{/each}
 		</defs>
-		{#each Object.entries(pathsStore.value) as [key, data]}
+		{#each Object.entries(pathsStore.data) as [key, data]}
 			<SankeyLine {key} {data} {onPathClick} {onPathMouseEnter} {onPathMouseLeave} />
 		{/each}
 	</svg>

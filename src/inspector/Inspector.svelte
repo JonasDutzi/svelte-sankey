@@ -22,13 +22,13 @@
 
 	$effect(() => {
 		stores = [
-			{ store: linksStore.value, name: "Links", iterable: false },
-			{ store: dataStore.value, name: "Data", iterable: false },
-			{ store: itemsStore.value, name: "Items", iterable: false },
+			{ store: linksStore.data, name: "Links", iterable: false },
+			{ store: dataStore.data, name: "Data", iterable: false },
+			{ store: itemsStore.data, name: "Items", iterable: false },
 			{ store: anchorsStore.data, name: "Anchors", iterable: false },
-			{ store: pathsStore.value, name: "Paths", iterable: false },
-			{ store: wrapperStore.value, name: "Wrapper", iterable: false },
-			{ store: sankeyStore.value, name: "Sankey", iterable: false }
+			{ store: pathsStore.data, name: "Paths", iterable: false },
+			{ store: wrapperStore.data, name: "Wrapper", iterable: false },
+			{ store: sankeyStore.data, name: "Sankey", iterable: false }
 		];
 	});
 
