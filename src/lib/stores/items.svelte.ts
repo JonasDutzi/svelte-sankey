@@ -22,23 +22,25 @@ export type SankeyEdge = {
 	value: number;
 };
 
-export type ItemsStore = Record<string, SankeyItem>;
+export type Items = Record<string, SankeyItem>;
 
-const createItemsStore = () => {
-	const getItems = () => {
-		const items: ItemsStore = {};
+class ItemsStore {
+	data = $derived(this.getItems());
+
+	getItems(): Items {
+		const items: Items = {};
 		if (
-			Object.keys(dataStore.value).length > 0 &&
-			Object.keys(linksStore.value).length > 0
+			Object.keys(dataStore.data).length > 0 &&
+			Object.keys(linksStore.data).length > 0
 			// &&
-			// Object.keys(anchorsStore.data).length === Object.keys(linksStore.value).length
+			// Object.keys(anchorsStore.data).length === Object.keys(linksStore.data).length
 		) {
-			for (const [columnKey, columnData] of Object.entries(dataStore.value)) {
+			for (const [columnKey, columnData] of Object.entries(dataStore.data)) {
 				for (const row of columnData.rows) {
 					for (const item of row.items) {
 						const sources: Array<SankeyEdge> = [];
 						const targets: Array<SankeyEdge> = [];
-						for (const [, link] of Object.entries(linksStore.value)) {
+						for (const [, link] of Object.entries(linksStore.data)) {
 							if (link.source === item.id) {
 								targets.push({ id: link.target, value: link.value });
 							}
@@ -65,15 +67,8 @@ const createItemsStore = () => {
 			}
 		}
 		return items;
-	};
-
-	const items = $derived(getItems());
-	return {
-		get value() {
-			return items;
-		}
-	};
-};
+	}
+}
 
 const getEdgeTotalValue = (edges: Array<SankeyEdge>): number => {
 	if (edges.length > 0) {
@@ -90,4 +85,4 @@ const sumUpItemValues = (edges: Array<SankeyEdge>) => {
 	return sum;
 };
 
-export const itemsStore = createItemsStore();
+export const itemsStore = new ItemsStore();

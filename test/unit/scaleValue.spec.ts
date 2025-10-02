@@ -14,4 +14,8 @@ describe("scaleValue", () => {
 		const result = scaleValue(10, [1, 100], 0, 50);
 		expect(result).toBe(20);
 	});
+	it("should return maxRange when minValue equals maxValue", () => {
+		const result = scaleValue(25, [5, 80], 25, 25);
+		expect(result).toBe(80);
+	});
 });

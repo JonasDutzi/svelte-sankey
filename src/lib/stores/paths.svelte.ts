@@ -23,18 +23,14 @@ type Positions = Record<SankeyKey, number>;
 class PathsStore {
 	data = $derived(this.getPaths());
 
-	get value() {
-		return this.data;
-	}
-
 	getPaths(): Paths {
 		const paths: Paths = {};
-		if (Object.entries(linksStore.value).length > 0) {
+		if (Object.entries(linksStore.data).length > 0) {
 			const targetPositions: Positions = {};
 			const sourcePositions: Positions = {};
-			for (const [linkKey, linkData] of Object.entries(linksStore.value)) {
-				const sourceAnchor = anchorsStore.value[linkData.source];
-				const targetAnchor = anchorsStore.value[linkData.target];
+			for (const [linkKey, linkData] of Object.entries(linksStore.data)) {
+				const sourceAnchor = anchorsStore.data[linkData.source];
+				const targetAnchor = anchorsStore.data[linkData.target];
 				const scaledLinkValue = scaleValue(linkData.value, [sankeyStore.minPathHeight, sankeyStore.maxPathHeight], sankeyStore.minValue, sankeyStore.maxValue);
 				if (sourceAnchor && targetAnchor) {
 					paths[linkKey] = {

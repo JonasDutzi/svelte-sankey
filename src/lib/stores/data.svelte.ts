@@ -1,25 +1,17 @@
 import type { SankeyColumn, SankeyKey } from "../types";
 
-type DataStore = Record<SankeyKey, SankeyColumn>;
+type Data = Record<SankeyKey, SankeyColumn>;
 
-const createDataStore = () => {
-	const dataStore = $state<DataStore>({});
+class DataStore {
+	data = $state<Data>({});
 
-	const addColumn = (column: SankeyColumn) => {
-		dataStore[column.id] = column;
-	};
+	addColumn(column: SankeyColumn) {
+		this.data[column.id] = column;
+	}
 
-	const removeColumn = (column: SankeyColumn) => {
-		delete dataStore[column.id];
-	};
+	removeColumn(column: SankeyColumn) {
+		delete this.data[column.id];
+	}
+}
 
-	return {
-		get value() {
-			return dataStore;
-		},
-		addColumn,
-		removeColumn
-	};
-};
-
-export const dataStore = createDataStore();
+export const dataStore = new DataStore();

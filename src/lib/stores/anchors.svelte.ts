@@ -18,10 +18,6 @@ export type Anchors = Record<SankeyKey, Anchor>;
 class AnchorsStore {
 	data = $state<Anchors>({});
 
-	get value() {
-		return this.data;
-	}
-
 	add(anchor: NewAnchor) {
 		const { id, ...data } = anchor;
 		this.data[id] = data;

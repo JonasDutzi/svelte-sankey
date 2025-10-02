@@ -13,10 +13,6 @@ class WrapperStore {
 		left: 0
 	});
 
-	get value() {
-		return this.data;
-	}
-
 	get height() {
 		return this.data.height;
 	}

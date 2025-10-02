@@ -28,13 +28,13 @@
 					source: item.id,
 					...link
 				});
-				if (link.value && link.value > sankeyStore.value.maxValue) {
+				if (link.value && link.value > sankeyStore.data.maxValue) {
 					sankeyStore.maxValue = link.value;
 				}
 
-				if (link.value && link.value > 0 && sankeyStore.value.minValue) {
-					if (sankeyStore.value.minValue > link.value) {
-						sankeyStore.value.minValue = link.value;
+				if (link.value && link.value > 0 && sankeyStore.data.minValue) {
+					if (sankeyStore.data.minValue > link.value) {
+						sankeyStore.data.minValue = link.value;
 					}
 				}
 			}

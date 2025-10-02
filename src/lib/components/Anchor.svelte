@@ -21,12 +21,12 @@
 
 	let anchorHeight = $state(1);
 
-	let currentItem: any = $derived.by(() => itemsStore.value[item.id]);
+	let currentItem: any = $derived.by(() => itemsStore.data[item.id]);
 
 	$effect(() => {
 		if (currentItem) {
 			const value = Math.max(currentItem.totalValues.sources, currentItem.totalValues.targets);
-			const scaledValue = scaleValue(value, [sankeyStore.value.minPathHeight, sankeyStore.value.maxPathHeight], sankeyStore.value.minValue, sankeyStore.value.maxValue);
+			const scaledValue = scaleValue(value, [sankeyStore.data.minPathHeight, sankeyStore.data.maxPathHeight], sankeyStore.data.minValue, sankeyStore.data.maxValue);
 			if (scaledValue !== 0) {
 				anchorHeight = scaledValue;
 			}
