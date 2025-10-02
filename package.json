@@ -17,7 +17,7 @@
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"test": "pnpm run test:unit -- --run && pnpm run test:playwright",
 		"test:unit": "vitest",
-		"test:unit:coverage": "vitest --coverage",
+		"test:unit:coverage": "vitest --coverage --run",
 		"test:playwright": "playwright test",
 		"test:playwright:show": "playwright test --ui",
 		"test:playwright:coverage": "npm run test:playwright && npx nyc report --reporter=lcov --report-dir=./coverage/playwright-coverage",
