@@ -104,3 +104,6 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: JonasDutzi/svelte-sankey
+          files: ./coverage/vitest-coverage/lcov.info,./coverage/playwright-coverage/lcov.info
+          flags: unit,e2e
+          name: codecov-umbrella
