@@ -21,6 +21,7 @@
 		"test:playwright": "playwright test",
 		"test:playwright:show": "playwright test --ui",
 		"test:playwright:coverage": "npm run test:playwright && npx nyc report --reporter=lcov --report-dir=./coverage/playwright-coverage",
+		"test:coverage": "pnpm run test:unit:coverage && pnpm run test:playwright:coverage",
 		"semantic-release": "semantic-release",
 		"lint": "eslint . && prettier --check .",
 		"format": "prettier --write .",
