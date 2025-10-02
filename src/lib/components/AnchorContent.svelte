@@ -4,7 +4,7 @@
 	import { type Snippet } from "svelte";
 	import type { OnItemClick, OnAnchorMouseEnter, OnAnchorMouseLeave, SankeyItem, SankeyKey } from "../types";
 	import { sankeyStore } from "../stores/sankey.svelte.ts";
-	import { navigationStore } from "../stores/navigation.svelte.ts";
+	import { keyboardNavStore } from "../stores/keyboardNavigation.svelte.ts";
 	import { dispatchCustomEvent } from "../helper.ts";
 
 	type Props = {
@@ -31,12 +31,12 @@
 	// Compute tabindex based on whether this item is currently focused
 	let tabIndex = $derived.by(() => {
 		// If no item is focused yet, make the first item focusable
-		if (navigationStore.value.focusedItemId === null) {
-			const firstItemId = navigationStore.getFirstFocusableItemId();
+		if (keyboardNavStore.focusedItemId === null) {
+			const firstItemId = keyboardNavStore.getFirstFocusableItemId();
 			return firstItemId === item.id ? 0 : -1;
 		}
 		// Otherwise, only the currently focused item should be in the tab sequence
-		return navigationStore.value.focusedItemId === item.id ? 0 : -1;
+		return keyboardNavStore.focusedItemId === item.id ? 0 : -1;
 	});
 
 	const onClick = () => {
@@ -45,16 +45,16 @@
 
 	const onFocus = () => {
 		// Set this item as the currently focused item in the navigation store
-		navigationStore.setFocusedItem(item.id);
+		keyboardNavStore.setFocusedItem(item.id);
 	};
 
 	// Initialize focus if this is the first item and no focus is set
 	$effect(() => {
-		if (navigationStore.value.focusedItemId === null) {
-			const firstItemId = navigationStore.getFirstFocusableItemId();
+		if (keyboardNavStore.focusedItemId === null) {
+			const firstItemId = keyboardNavStore.getFirstFocusableItemId();
 			if (firstItemId === item.id) {
 				// This is the first item, initialize focus
-				navigationStore.initializeFocus();
+				keyboardNavStore.initializeFocus();
 			}
 		}
 	});
@@ -109,16 +109,16 @@
 
 		switch (key) {
 			case "ArrowUp":
-				targetItemId = navigationStore.navigateVertical("up");
+				targetItemId = keyboardNavStore.navigateVertical("up");
 				break;
 			case "ArrowDown":
-				targetItemId = navigationStore.navigateVertical("down");
+				targetItemId = keyboardNavStore.navigateVertical("down");
 				break;
 			case "ArrowLeft":
-				targetItemId = navigationStore.navigateHorizontal("left");
+				targetItemId = keyboardNavStore.navigateHorizontal("left");
 				break;
 			case "ArrowRight":
-				targetItemId = navigationStore.navigateHorizontal("right");
+				targetItemId = keyboardNavStore.navigateHorizontal("right");
 				break;
 		}
 
