@@ -15,7 +15,6 @@
 	import type { OnPathClick, OnPathMouseEnter, OnPathMouseLeave } from "../types/index.ts";
 
 	type Props = {
-		showheaders?: boolean;
 		highlightpaths?: boolean;
 		maxpathheight?: number;
 		minpathheight?: number;
@@ -25,7 +24,7 @@
 		children?: Snippet;
 	};
 
-	let { showheaders = true, highlightpaths = true, maxpathheight = 32, minpathheight = 1, onPathClick, onPathMouseEnter, onPathMouseLeave, children }: Props = $props();
+	let { highlightpaths = true, maxpathheight = 32, minpathheight = 1, onPathClick, onPathMouseEnter, onPathMouseLeave, children }: Props = $props();
 
 	let wrapperRef = $state<HTMLDivElement | undefined>();
 
@@ -68,13 +67,7 @@
 	});
 </script>
 
-<div
-	bind:this={wrapperRef}
-	style:--grid-auto-flow={showheaders ? "row" : "column"}
-	class="sv-sankey__wrapper"
-	role="application"
-	aria-label="Sankey diagram - Use arrow keys to navigate between anchors, Tab to exit"
->
+<div bind:this={wrapperRef} class="sv-sankey__wrapper" role="application" aria-label="Sankey diagram - Use arrow keys to navigate between anchors, Tab to exit">
 	<svg aria-labelledby="sankey-title" aria-describedby="sankey-desc" width={wrapperStore.data.width} height={wrapperStore.data.height}>
 		<title id="sankey-title">Sankey diagram</title>
 		<desc id="sankey-desc">Interactive flow diagram - Use arrow keys to navigate between data points, Enter or Space to activate</desc>
@@ -96,7 +89,7 @@
 		padding: 0;
 		box-sizing: border-box;
 		display: grid;
-		grid-auto-flow: var(--grid-auto-flow);
+		grid-auto-flow: column;
 		/* grid-template-rows: max-content; */
 		gap: 0.5rem;
 		position: relative;

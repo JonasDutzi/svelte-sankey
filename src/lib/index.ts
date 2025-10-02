@@ -1,4 +1,4 @@
-export { Anchor, Column, ColumnContent, ColumnHeader, Item, Label, Sankey, SankeyChart } from "./components/index";
+export { Anchor, Column, ColumnContent, Item, Label, Sankey } from "./components/index";
 export type {
 	Axis,
 	SankeyColumn,

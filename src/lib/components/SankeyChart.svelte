@@ -4,10 +4,9 @@
 	import type { OnAnchorClick, OnAnchorMouseEnter, OnAnchorMouseLeave, OnItemClick, OnPathClick, OnPathMouseEnter, OnPathMouseLeave } from "../types";
 	import Anchor from "./Anchor.svelte";
 	import AnchorContent from "./AnchorContent.svelte";
-	import { ColumnContent, ColumnHeader, Item, Sankey } from "./index";
+	import { ColumnContent, Item, Sankey } from "./index";
 	import { dispatchCustomEvent } from "../helper.ts";
 	type Props = {
-		showheaders?: boolean;
 		highlightpaths?: boolean;
 		maxpathheight?: number;
 		minpathheight?: number;
@@ -22,7 +21,6 @@
 	};
 
 	let {
-		showheaders = true,
 		highlightpaths = true,
 		maxpathheight = 32,
 		minpathheight = 1,
@@ -41,16 +39,12 @@
 	};
 </script>
 
-<Sankey {showheaders} {maxpathheight} {minpathheight} {highlightpaths} {onPathClick} {onPathMouseEnter} {onPathMouseLeave}>
+<Sankey {maxpathheight} {minpathheight} {highlightpaths} {onPathClick} {onPathMouseEnter} {onPathMouseLeave}>
 	{#each chartdata.data as data, columnIndex}
-		{#if showheaders}
-			<ColumnHeader>
-				<div style="font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: bold; margin-block: 1rem">
-					{data.columnLabel === "root" ? data?.rows?.[0].items?.[0]?.label : data.columnLabel}
-				</div>
-			</ColumnHeader>
-		{/if}
 		<ColumnContent {data}>
+			<div style="font-size: clamp(1.125rem, 2vw, 1.5rem); font-weight: bold; margin-block: 1rem">
+				{data.columnLabel === "root" ? data?.rows?.[0].items?.[0]?.label : data.columnLabel}
+			</div>
 			{#each data.rows as row}
 				<div class="row-label">{row.rowLabel}</div>
 				{#each row.items as item}
