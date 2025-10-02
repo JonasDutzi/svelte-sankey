@@ -21,6 +21,7 @@ export default defineConfig({
 		}
 	},
 	test: {
+		environment: "jsdom",
 		include: ["test/unit/**/*.{test,spec}.{js,ts}"],
 		coverage: {
 			reporter: ["lcov", "text"],
